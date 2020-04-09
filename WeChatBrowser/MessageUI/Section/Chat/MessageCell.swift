@@ -19,15 +19,23 @@ class MessageCell: CommonCell {
     // 头像视图
     private let avatarView = NSImageView().then {
         $0.imageAlignment = .alignCenter
+        $0.layer?.masksToBounds = true
+        $0.layer?.cornerRadius = 4
     }
+    
     // 昵称标签
-    private let nameLabel = Label()
-
+    private let nameLabel = Label().then {
+        $0.font = NSFont.systemFont(ofSize: 13)
+        $0.textColor = .gray
+    }
+    
     /**
      *  容器视图。
      *  包裹了 MesageCell 的各类视图，作为 MessageCell 的“底”，方便进行视图管理与布局。
      */
-    private let container = NSView()
+    private let container = NSView().then {
+        $0.layer?.backgroundColor = .clear
+    }
     private let readReceiptLabel = Label()
 
     /**
@@ -36,14 +44,6 @@ class MessageCell: CommonCell {
      *  messageData 详细信息请参考：Section\Chat\CellData\TUIMessageCellData.h
      */
 //    @property (readonly) TUIMessageCellData *messageData;
-
-    
-
-    /**
-     *  协议委托
-     *  负责实现 TMessageCellDelegate 协议中的功能。
-     */
-//    @property (nonatomic, weak) id<TMessageCellDelegate> delegate;
 
     /**
      *  单元填充函数
@@ -70,105 +70,33 @@ class MessageCell: CommonCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-//            //nameLabel
-//            _nameLabel = [[UILabel alloc] init];
-//            _nameLabel.font = [UIFont systemFontOfSize:13];
-//            _nameLabel.textColor = [UIColor grayColor];
-//            [self addSubview:_nameLabel];
-//
-//            //container
-//            _container = [[UIView alloc] init];
-//            _container.backgroundColor = [UIColor clearColor];
-//            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onSelectMessage:)];
-//            [_container addGestureRecognizer:tap];
-//            UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(onLongPress:)];
-//            [_container addGestureRecognizer:longPress];
-//            [self addSubview:_container];
-//            
-//            //indicator
-//            _indicator = [[UIActivityIndicatorView alloc] init];
-//            _indicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-//            [self addSubview:_indicator];
-//            
-//            //error
-//            _retryView = [[UIImageView alloc] init];
-//            _retryView.userInteractionEnabled = YES;
-//            UITapGestureRecognizer *resendTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onRetryMessage:)];
-//            [_retryView addGestureRecognizer:resendTap];
-//            [self addSubview:_retryView];
-//            
-//            //已读label,由于 indicator 和 error，所以默认隐藏，消息发送成功后进行显示
-//            _readReceiptLabel = [[UILabel alloc] init];
-//            _readReceiptLabel.hidden = YES;
-//            _readReceiptLabel.font = [UIFont systemFontOfSize:12];
-//            _readReceiptLabel.textColor = [UIColor grayColor];
-//            _readReceiptLabel.lineBreakMode = NSLineBreakByCharWrapping;
-//            [self addSubview:_readReceiptLabel];
-//            
-//            self.selectionStyle = UITableViewCellSelectionStyleNone;
-//        }
-//        return self;
-//    }
-//
-//    - (void)fillWithData:(TUIMessageCellData *)data
-//    {
-//        [super fillWithData:data];
-//        self.messageData = data;
-//
-//        [self.avatarView setImage:data.avatarImage];
-//        @weakify(self)
-//        [[[RACObserve(data, avatarUrl) takeUntil:self.rac_prepareForReuseSignal] ignore:nil] subscribeNext:^(NSURL *url) {
-//            @strongify(self)
-//            [self.avatarView sd_setImageWithURL:url placeholderImage:self.messageData.avatarImage];
-//        }];
-//
-//
-//        if ([TUIKit sharedInstance].config.avatarType == TAvatarTypeRounded) {
-//            self.avatarView.layer.masksToBounds = YES;
-//            self.avatarView.layer.cornerRadius = data.cellLayout.avatarSize.height / 2;
-//        } else if ([TUIKit sharedInstance].config.avatarType == TAvatarTypeRadiusCorner) {
-//            self.avatarView.layer.masksToBounds = YES;
-//            self.avatarView.layer.cornerRadius = [TUIKit sharedInstance].config.avatarCornerRadius;
-//        }
-//        
-//        //set data
-//        self.nameLabel.text = data.name;
-//        self.nameLabel.textColor = data.nameColor;
-//        self.nameLabel.font = data.nameFont;
-//        
-//        //由于tableView的刷新策略，导致部分情况下可能会出现未读label未显示的bug。原因是因为在label显示时，内容为空。
-//        //label内容的变化不会引起tableView的刷新，但是hiddend状态的变化会引起tableView刷新。
-//        //所以未读标签选择直接赋值，而不是在发送成功时赋值。显示时机由hidden属性控制。
-//        self.readReceiptLabel.text = @"未读";
-//        _readReceiptLabel.text = [self getReadReceiptResult];
-//        
-//        if(data.status == Msg_Status_Fail){
-//            [_indicator stopAnimating];
-//            self.retryView.image = [UIImage imageNamed:TUIKitResource(@"msg_error")];
-//            _readReceiptLabel.hidden = YES;
-//        } else {
-//            if (data.status == Msg_Status_Sending_2) {
-//                [_indicator startAnimating];
-//                _readReceiptLabel.hidden = YES;
-//            }
-//            else if(data.status == Msg_Status_Succ){
-//                [_indicator stopAnimating];
-//                //发送成功，说明 indicator 和 error 已不会显示在 label 中,可以开始显示已读回执label
-//                if(self.messageData.direction == MsgDirectionOutgoing
-//                   && self.messageData.showReadReceipt
-//                   && self.messageData.innerMessage.getConversation.getType == TIM_C2C){//只对发送的消息进行label显示。
-//                    _readReceiptLabel.hidden = NO;
-//                }
-//                
-//            }
-//            else if(data.status == Msg_Status_Sending){
-//                [_indicator stopAnimating];
-//                _readReceiptLabel.hidden = YES;
-//            }
-//            self.retryView.image = nil;
-//        }
-//    }
-//
+    override func fill(withData data: CommonCellData) {
+        super.fill(withData: data)
+        guard let messageData = data as? UIMessageCellData else {
+            return
+        }
+        self.messageData = messageData
+        
+        avatarView.image = messageData.avatarImage
+        nameLabel.stringValue = messageData.name ?? ""
+        nameLabel.textColor = messageData.nameColor
+        nameLabel.font = messageData.nameFont
+    }
+
+    override func layout() {
+        super.layout()
+        guard let messageData = self.messageData else {
+            return
+        }
+        if messageData.showName {
+            nameLabel.isHidden = false
+            nameLabel.sizeToFit()
+        } else {
+            nameLabel.isHidden = false
+            nameLabel.height = 0
+        }
+    }
+    
 //    - (void)layoutSubviews
 //    {
 //        [super layoutSubviews];
@@ -221,52 +149,7 @@ class MessageCell: CommonCell {
 //        }
 //    }
 //
-//
-//    - (void)onLongPress:(UIGestureRecognizer *)recognizer
-//    {
-//        if([recognizer isKindOfClass:[UILongPressGestureRecognizer class]] &&
-//           recognizer.state == UIGestureRecognizerStateBegan){
-//            if(_delegate && [_delegate respondsToSelector:@selector(onLongPressMessage:)]){
-//                [_delegate onLongPressMessage:self];
-//            }
-//        }
-//    }
-//
-//    - (void)onRetryMessage:(UIGestureRecognizer *)recognizer
-//    {
-//        if (_messageData.status == Msg_Status_Fail)
-//            if (_delegate && [_delegate respondsToSelector:@selector(onRetryMessage:)]) {
-//                [_delegate onRetryMessage:self];
-//            }
-//    }
-//
-//
-//    - (void)onSelectMessage:(UIGestureRecognizer *)recognizer
-//    {
-//        if(_delegate && [_delegate respondsToSelector:@selector(onSelectMessage:)]){
-//            [_delegate onSelectMessage:self];
-//        }
-//    }
-//
-//    - (void)onSelectMessageAvatar:(UIGestureRecognizer *)recognizer
-//    {
-//        if(_delegate && [_delegate respondsToSelector:@selector(onSelectMessageAvatar:)]){
-//            [_delegate onSelectMessageAvatar:self];
-//        }
-//    }
-//
-//    - (NSString *)getReadReceiptResult{
-//        if([self.messageData.innerMessage isPeerReaded])
-//            return @"已读";
-//        else
-//            return @"未读";
-//    }
-//
-//    - (void)prepareForReuse{
-//        [super prepareForReuse];
-//        //今后任何关于复用产生的 UI 问题，都可以在此尝试编码解决。
-//        _readReceiptLabel.text = @"未读";//一但消息复用，说明即将新消息出现，label内容改为未读。
-//    }
-//    }
-
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
 }

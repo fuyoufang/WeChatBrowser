@@ -24,6 +24,12 @@
 		C555FFA0243EBAE000997166 /* IMGroupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FF9F243EBAE000997166 /* IMGroupManager.swift */; };
 		C555FFA2243EBAFA00997166 /* IMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFA1243EBAFA00997166 /* IMManager.swift */; };
 		C555FFA4243EBB0A00997166 /* IMManager+MsgExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFA3243EBB0A00997166 /* IMManager+MsgExt.swift */; };
+		C555FFA6243F08FB00997166 /* NSView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFA5243F08FB00997166 /* NSView+Layout.swift */; };
+		C555FFA9243F0B0200997166 /* TUIIncommingTextCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFA8243F0B0200997166 /* TUIIncommingTextCellLayout.swift */; };
+		C555FFAB243F0B4300997166 /* TUIMessageCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFAA243F0B4300997166 /* TUIMessageCellLayout.swift */; };
+		C555FFAD243F0B6700997166 /* TUIOutgoingTextCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFAC243F0B6700997166 /* TUIOutgoingTextCellLayout.swift */; };
+		C555FFAF243F0B8C00997166 /* TUISystemMessageCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFAE243F0B8C00997166 /* TUISystemMessageCellLayout.swift */; };
+		C555FFB2243F158700997166 /* NSEdgeInsets+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFB1243F158700997166 /* NSEdgeInsets+Extension.swift */; };
 		C5FB3DA2243DBB1E00C09814 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB3DA1243DBB1E00C09814 /* AppDelegate.swift */; };
 		C5FB3DA4243DBB1E00C09814 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB3DA3243DBB1E00C09814 /* ViewController.swift */; };
 		C5FB3DA6243DBB2100C09814 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5FB3DA5243DBB2100C09814 /* Assets.xcassets */; };
@@ -109,6 +115,12 @@
 		C555FF9F243EBAE000997166 /* IMGroupManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMGroupManager.swift; sourceTree = "<group>"; };
 		C555FFA1243EBAFA00997166 /* IMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMManager.swift; sourceTree = "<group>"; };
 		C555FFA3243EBB0A00997166 /* IMManager+MsgExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IMManager+MsgExt.swift"; sourceTree = "<group>"; };
+		C555FFA5243F08FB00997166 /* NSView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Layout.swift"; sourceTree = "<group>"; };
+		C555FFA8243F0B0200997166 /* TUIIncommingTextCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIIncommingTextCellLayout.swift; sourceTree = "<group>"; };
+		C555FFAA243F0B4300997166 /* TUIMessageCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIMessageCellLayout.swift; sourceTree = "<group>"; };
+		C555FFAC243F0B6700997166 /* TUIOutgoingTextCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIOutgoingTextCellLayout.swift; sourceTree = "<group>"; };
+		C555FFAE243F0B8C00997166 /* TUISystemMessageCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUISystemMessageCellLayout.swift; sourceTree = "<group>"; };
+		C555FFB1243F158700997166 /* NSEdgeInsets+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSEdgeInsets+Extension.swift"; sourceTree = "<group>"; };
 		C5FB3D9E243DBB1E00C09814 /* WeChatBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeChatBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5FB3DA1243DBB1E00C09814 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5FB3DA3243DBB1E00C09814 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -196,6 +208,7 @@
 		C555FF84243EA65300997166 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C555FFB0243F156A00997166 /* Extension */,
 				C555FF85243EA65800997166 /* UI */,
 			);
 			path = Common;
@@ -233,6 +246,26 @@
 				C555FFA3243EBB0A00997166 /* IMManager+MsgExt.swift */,
 			);
 			path = IM;
+			sourceTree = "<group>";
+		};
+		C555FFA7243F0AE200997166 /* CellLayout */ = {
+			isa = PBXGroup;
+			children = (
+				C555FFA8243F0B0200997166 /* TUIIncommingTextCellLayout.swift */,
+				C555FFAA243F0B4300997166 /* TUIMessageCellLayout.swift */,
+				C555FFAC243F0B6700997166 /* TUIOutgoingTextCellLayout.swift */,
+				C555FFAE243F0B8C00997166 /* TUISystemMessageCellLayout.swift */,
+			);
+			path = CellLayout;
+			sourceTree = "<group>";
+		};
+		C555FFB0243F156A00997166 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				C555FFA5243F08FB00997166 /* NSView+Layout.swift */,
+				C555FFB1243F158700997166 /* NSEdgeInsets+Extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		C5FB3D95243DBB1E00C09814 = {
@@ -332,6 +365,7 @@
 		C5FB406A243DD4B700C09814 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				C555FFA7243F0AE200997166 /* CellLayout */,
 				C555FF8B243EAAFF00997166 /* CellData */,
 				C5FB4090243DD72C00C09814 /* MessageCell.swift */,
 				C5FB406B243DD4BD00C09814 /* Cell */,
@@ -614,22 +648,28 @@
 				C555FFA0243EBAE000997166 /* IMGroupManager.swift in Sources */,
 				C5FB4089243DD55F00C09814 /* VideoMessageCell.swift in Sources */,
 				C555FF98243EBA7800997166 /* IMConversation+MsgExt.swift in Sources */,
+				C555FFA9243F0B0200997166 /* TUIIncommingTextCellLayout.swift in Sources */,
 				C5FB4085243DD54B00C09814 /* TextMessageCell.swift in Sources */,
 				C555FF8A243EA7A000997166 /* CommonCellData.swift in Sources */,
 				C5FB4098243DD7EC00C09814 /* CommonCell.swift in Sources */,
 				C5FB4071243DD4FC00C09814 /* FaceMessageCell.swift in Sources */,
 				C5FB4081243DD53D00C09814 /* SystemMessageCell.swift in Sources */,
 				C555FF96243EBA6200997166 /* IMConversation.swift in Sources */,
+				C555FFAF243F0B8C00997166 /* TUISystemMessageCellLayout.swift in Sources */,
 				C555FF94243EBA4C00997166 /* IMCallback.swift in Sources */,
+				C555FFA6243F08FB00997166 /* NSView+Layout.swift in Sources */,
 				C5FB3DD8243DC44600C09814 /* UserMessageViewController.swift in Sources */,
 				C5FB3DD4243DBEC500C09814 /* UserListViewController.swift in Sources */,
+				C555FFAD243F0B6700997166 /* TUIOutgoingTextCellLayout.swift in Sources */,
 				C555FF9C243EBAA200997166 /* IMFriendshipDefine.swift in Sources */,
+				C555FFAB243F0B4300997166 /* TUIMessageCellLayout.swift in Sources */,
 				C5FB3DA4243DBB1E00C09814 /* ViewController.swift in Sources */,
 				C555FFA2243EBAFA00997166 /* IMManager.swift in Sources */,
 				C5FB406D243DD4DA00C09814 /* BubbleMessageCell.swift in Sources */,
 				C555FF88243EA66800997166 /* Label.swift in Sources */,
 				C5FB4079243DD52000C09814 /* ImageMessageCell.swift in Sources */,
 				C555FF92243EB9D700997166 /* IMComm.swift in Sources */,
+				C555FFB2243F158700997166 /* NSEdgeInsets+Extension.swift in Sources */,
 				C555FF9E243EBABF00997166 /* IMFriendshipManager.swift in Sources */,
 				C5FB4075243DD51000C09814 /* FileMessageCell.swift in Sources */,
 				C555FF90243EAE5000997166 /* IMMessage.swift in Sources */,
