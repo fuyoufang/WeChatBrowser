@@ -133,7 +133,7 @@ class UIMessageCellData: CommonCellData {
      *  包括消息边距、气泡内边距、头像边距、头像大小等 UI 布局。
      *  详细信息请参考 Section\Chat\CellLayout\TUIMessageCellLayout.h
      */
-    //    let cellLayout: TUIMessageCellLayout?
+    var cellLayout: TUIMessageCellLayout?
     
     /**
      *  内容大小

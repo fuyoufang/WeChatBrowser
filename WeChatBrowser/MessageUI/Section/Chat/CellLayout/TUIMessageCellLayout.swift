@@ -30,7 +30,6 @@ import Foundation
  *  当您想对 TUIKit 中的界面布局作出调整时，您可以对此布局中的对应属性进行修改。
  */
 
-
 class TUIMessageCellLayout {
     /**
      * 消息边距

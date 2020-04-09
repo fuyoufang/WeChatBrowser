@@ -30,6 +30,10 @@
 		C555FFAD243F0B6700997166 /* TUIOutgoingTextCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFAC243F0B6700997166 /* TUIOutgoingTextCellLayout.swift */; };
 		C555FFAF243F0B8C00997166 /* TUISystemMessageCellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFAE243F0B8C00997166 /* TUISystemMessageCellLayout.swift */; };
 		C555FFB2243F158700997166 /* NSEdgeInsets+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFB1243F158700997166 /* NSEdgeInsets+Extension.swift */; };
+		C555FFB4243F1DD600997166 /* TUIBubbleMessageCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFB3243F1DD600997166 /* TUIBubbleMessageCellData.swift */; };
+		C555FFB6243F21EE00997166 /* TUITextMessageCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFB5243F21EE00997166 /* TUITextMessageCellData.swift */; };
+		C555FFB9243F26FB00997166 /* TUIKitConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFB8243F26FB00997166 /* TUIKitConfig.swift */; };
+		C555FFBB243F280B00997166 /* TUIFaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFBA243F280B00997166 /* TUIFaceView.swift */; };
 		C5FB3DA2243DBB1E00C09814 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB3DA1243DBB1E00C09814 /* AppDelegate.swift */; };
 		C5FB3DA4243DBB1E00C09814 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB3DA3243DBB1E00C09814 /* ViewController.swift */; };
 		C5FB3DA6243DBB2100C09814 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5FB3DA5243DBB2100C09814 /* Assets.xcassets */; };
@@ -68,9 +72,9 @@
 		C5FB408D243DD57200C09814 /* VoiceMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB408C243DD57200C09814 /* VoiceMessageCell.swift */; };
 		C5FB408E243DD57200C09814 /* VoiceMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB408C243DD57200C09814 /* VoiceMessageCell.swift */; };
 		C5FB408F243DD57200C09814 /* VoiceMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB408C243DD57200C09814 /* VoiceMessageCell.swift */; };
-		C5FB4091243DD72C00C09814 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB4090243DD72C00C09814 /* MessageCell.swift */; };
-		C5FB4092243DD72C00C09814 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB4090243DD72C00C09814 /* MessageCell.swift */; };
-		C5FB4093243DD72C00C09814 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB4090243DD72C00C09814 /* MessageCell.swift */; };
+		C5FB4091243DD72C00C09814 /* UIMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB4090243DD72C00C09814 /* UIMessageCell.swift */; };
+		C5FB4092243DD72C00C09814 /* UIMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB4090243DD72C00C09814 /* UIMessageCell.swift */; };
+		C5FB4093243DD72C00C09814 /* UIMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB4090243DD72C00C09814 /* UIMessageCell.swift */; };
 		C5FB4098243DD7EC00C09814 /* CommonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB4097243DD7EC00C09814 /* CommonCell.swift */; };
 		C5FB4099243DD7EC00C09814 /* CommonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB4097243DD7EC00C09814 /* CommonCell.swift */; };
 		C5FB409A243DD7EC00C09814 /* CommonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB4097243DD7EC00C09814 /* CommonCell.swift */; };
@@ -121,6 +125,10 @@
 		C555FFAC243F0B6700997166 /* TUIOutgoingTextCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIOutgoingTextCellLayout.swift; sourceTree = "<group>"; };
 		C555FFAE243F0B8C00997166 /* TUISystemMessageCellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUISystemMessageCellLayout.swift; sourceTree = "<group>"; };
 		C555FFB1243F158700997166 /* NSEdgeInsets+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSEdgeInsets+Extension.swift"; sourceTree = "<group>"; };
+		C555FFB3243F1DD600997166 /* TUIBubbleMessageCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIBubbleMessageCellData.swift; sourceTree = "<group>"; };
+		C555FFB5243F21EE00997166 /* TUITextMessageCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUITextMessageCellData.swift; sourceTree = "<group>"; };
+		C555FFB8243F26FB00997166 /* TUIKitConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIKitConfig.swift; sourceTree = "<group>"; };
+		C555FFBA243F280B00997166 /* TUIFaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIFaceView.swift; sourceTree = "<group>"; };
 		C5FB3D9E243DBB1E00C09814 /* WeChatBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeChatBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5FB3DA1243DBB1E00C09814 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5FB3DA3243DBB1E00C09814 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -148,7 +156,7 @@
 		C5FB4084243DD54B00C09814 /* TextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageCell.swift; sourceTree = "<group>"; };
 		C5FB4088243DD55F00C09814 /* VideoMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessageCell.swift; sourceTree = "<group>"; };
 		C5FB408C243DD57200C09814 /* VoiceMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceMessageCell.swift; sourceTree = "<group>"; };
-		C5FB4090243DD72C00C09814 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		C5FB4090243DD72C00C09814 /* UIMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIMessageCell.swift; sourceTree = "<group>"; };
 		C5FB4097243DD7EC00C09814 /* CommonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonCell.swift; sourceTree = "<group>"; };
 		E06F07085F72FE9F570CBF31 /* Pods_WeChatBrowser_WeChatBrowserUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WeChatBrowser_WeChatBrowserUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD30A26F1EF509F456312519 /* Pods-WeChatBrowser-WeChatBrowserUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatBrowser-WeChatBrowserUITests.debug.xcconfig"; path = "Target Support Files/Pods-WeChatBrowser-WeChatBrowserUITests/Pods-WeChatBrowser-WeChatBrowserUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -226,6 +234,8 @@
 			isa = PBXGroup;
 			children = (
 				C555FF8C243EAB2100997166 /* UIMessageCellData.swift */,
+				C555FFB3243F1DD600997166 /* TUIBubbleMessageCellData.swift */,
+				C555FFB5243F21EE00997166 /* TUITextMessageCellData.swift */,
 			);
 			path = CellData;
 			sourceTree = "<group>";
@@ -266,6 +276,14 @@
 				C555FFB1243F158700997166 /* NSEdgeInsets+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		C555FFB7243F26EC00997166 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				C555FFB8243F26FB00997166 /* TUIKitConfig.swift */,
+			);
+			path = Global;
 			sourceTree = "<group>";
 		};
 		C5FB3D95243DBB1E00C09814 = {
@@ -348,6 +366,7 @@
 		C5FB4068243DD31400C09814 /* MessageUI */ = {
 			isa = PBXGroup;
 			children = (
+				C555FFB7243F26EC00997166 /* Global */,
 				C5FB4069243DD4AF00C09814 /* Section */,
 			);
 			path = MessageUI;
@@ -367,8 +386,9 @@
 			children = (
 				C555FFA7243F0AE200997166 /* CellLayout */,
 				C555FF8B243EAAFF00997166 /* CellData */,
-				C5FB4090243DD72C00C09814 /* MessageCell.swift */,
+				C5FB4090243DD72C00C09814 /* UIMessageCell.swift */,
 				C5FB406B243DD4BD00C09814 /* Cell */,
+				C555FFBA243F280B00997166 /* TUIFaceView.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -647,15 +667,18 @@
 				C555FF9A243EBA9100997166 /* IMErrorCode.swift in Sources */,
 				C555FFA0243EBAE000997166 /* IMGroupManager.swift in Sources */,
 				C5FB4089243DD55F00C09814 /* VideoMessageCell.swift in Sources */,
+				C555FFBB243F280B00997166 /* TUIFaceView.swift in Sources */,
 				C555FF98243EBA7800997166 /* IMConversation+MsgExt.swift in Sources */,
 				C555FFA9243F0B0200997166 /* TUIIncommingTextCellLayout.swift in Sources */,
 				C5FB4085243DD54B00C09814 /* TextMessageCell.swift in Sources */,
 				C555FF8A243EA7A000997166 /* CommonCellData.swift in Sources */,
+				C555FFB4243F1DD600997166 /* TUIBubbleMessageCellData.swift in Sources */,
 				C5FB4098243DD7EC00C09814 /* CommonCell.swift in Sources */,
 				C5FB4071243DD4FC00C09814 /* FaceMessageCell.swift in Sources */,
 				C5FB4081243DD53D00C09814 /* SystemMessageCell.swift in Sources */,
 				C555FF96243EBA6200997166 /* IMConversation.swift in Sources */,
 				C555FFAF243F0B8C00997166 /* TUISystemMessageCellLayout.swift in Sources */,
+				C555FFB6243F21EE00997166 /* TUITextMessageCellData.swift in Sources */,
 				C555FF94243EBA4C00997166 /* IMCallback.swift in Sources */,
 				C555FFA6243F08FB00997166 /* NSView+Layout.swift in Sources */,
 				C5FB3DD8243DC44600C09814 /* UserMessageViewController.swift in Sources */,
@@ -670,6 +693,7 @@
 				C5FB4079243DD52000C09814 /* ImageMessageCell.swift in Sources */,
 				C555FF92243EB9D700997166 /* IMComm.swift in Sources */,
 				C555FFB2243F158700997166 /* NSEdgeInsets+Extension.swift in Sources */,
+				C555FFB9243F26FB00997166 /* TUIKitConfig.swift in Sources */,
 				C555FF9E243EBABF00997166 /* IMFriendshipManager.swift in Sources */,
 				C5FB4075243DD51000C09814 /* FileMessageCell.swift in Sources */,
 				C555FF90243EAE5000997166 /* IMMessage.swift in Sources */,
@@ -678,7 +702,7 @@
 				C555FF8D243EAB2100997166 /* UIMessageCellData.swift in Sources */,
 				C555FFA4243EBB0A00997166 /* IMManager+MsgExt.swift in Sources */,
 				C5FB408D243DD57200C09814 /* VoiceMessageCell.swift in Sources */,
-				C5FB4091243DD72C00C09814 /* MessageCell.swift in Sources */,
+				C5FB4091243DD72C00C09814 /* UIMessageCell.swift in Sources */,
 				C5FB3DD2243DBE6A00C09814 /* UsersMessageState.swift in Sources */,
 				C5FB3DA2243DBB1E00C09814 /* AppDelegate.swift in Sources */,
 				C5FB407D243DD53100C09814 /* JoinGroupMessageCell.swift in Sources */,
@@ -689,7 +713,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5FB4092243DD72C00C09814 /* MessageCell.swift in Sources */,
+				C5FB4092243DD72C00C09814 /* UIMessageCell.swift in Sources */,
 				C5FB408A243DD55F00C09814 /* VideoMessageCell.swift in Sources */,
 				C5FB4072243DD4FC00C09814 /* FaceMessageCell.swift in Sources */,
 				C5FB4076243DD51000C09814 /* FileMessageCell.swift in Sources */,
@@ -708,7 +732,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5FB4093243DD72C00C09814 /* MessageCell.swift in Sources */,
+				C5FB4093243DD72C00C09814 /* UIMessageCell.swift in Sources */,
 				C5FB408B243DD55F00C09814 /* VideoMessageCell.swift in Sources */,
 				C5FB4073243DD4FC00C09814 /* FaceMessageCell.swift in Sources */,
 				C5FB4077243DD51000C09814 /* FileMessageCell.swift in Sources */,
