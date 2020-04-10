@@ -32,7 +32,7 @@ extension TIMConversation {
  *  @return 0：本次操作成功；1：本次操作失败
  */
 
-    func getMessageForward(count: Int, last: IMMessage?, succ: TIMGetMsgSucc, fail: TIMFail) -> Bool {
+    func getMessageForward(count: Int, last: TIMMessage?, succ: TIMGetMsgSucc, fail: TIMFail) -> Bool {
         fatalError()
     }
 /**

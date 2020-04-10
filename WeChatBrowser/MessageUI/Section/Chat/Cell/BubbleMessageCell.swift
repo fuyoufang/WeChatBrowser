@@ -45,7 +45,7 @@ class BubbleMessageCell: UIMessageCell {
      *
      *  @param data 填充数据需要的数据源
      */
-    override func fill(withData data: CommonCellData) {
+    override func fill(withData data: TCommonCellData) {
         super.fill(withData: data)
         guard let bubbleData = data as? TUIBubbleMessageCellData else {
             return

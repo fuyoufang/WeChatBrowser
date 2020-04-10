@@ -11,7 +11,7 @@ import Then
 class UIMessageCell: CommonCell {
 
     // MARK: properties
-    var messageData: UIMessageCellData?
+    var messageData: TUIMessageCellData?
 
     
     // MARK: UI
@@ -70,9 +70,9 @@ class UIMessageCell: CommonCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func fill(withData data: CommonCellData) {
+    override func fill(withData data: TCommonCellData) {
         super.fill(withData: data)
-        guard let messageData = data as? UIMessageCellData else {
+        guard let messageData = data as? TUIMessageCellData else {
             return
         }
         self.messageData = messageData

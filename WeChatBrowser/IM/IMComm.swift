@@ -797,7 +797,7 @@ enum TIM_PROFILE_SYSTEM_TYPE: Int {
  *  @param msgs 消息列表
  */
 //typedef void (^TIMGetMsgSucc)(NSArray * msgs);
-typealias TIMGetMsgSucc = () -> [IMMessage]
+typealias TIMGetMsgSucc = () -> [TIMMessage]
 
 /**
  *  一般操作成功回调
@@ -1042,7 +1042,7 @@ var introduction: String?
 var faceURL: String?
 
 ///最后一条消息
-var lastMsg: IMMessage?
+var lastMsg: TIMMessage?
 
 ///在线成员数量
  var onlineMemberNum: UInt32 = 0

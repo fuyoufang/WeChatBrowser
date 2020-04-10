@@ -6,7 +6,7 @@
 //  Copyright © 2020 fuyoufang. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 class TUIKitConfig {
     /**
@@ -24,11 +24,11 @@ class TUIKitConfig {
 //    /**
 //     *  默认头像图片
 //     */
-//    @property (nonatomic, strong) UIImage *defaultAvatarImage;
+    let defaultAvatarImage: NSImage = NSImage(named: "default_head")!
 //    /**
 //     *  默认群组头像图片
 //     */
-//    @property (nonatomic, strong) UIImage *defaultGroupAvatarImage;
+    let defaultGroupAvatarImage: NSImage = NSImage(named: "default_head")!
 //
 //    + (TUIKitConfig *)defaultConfig;
 

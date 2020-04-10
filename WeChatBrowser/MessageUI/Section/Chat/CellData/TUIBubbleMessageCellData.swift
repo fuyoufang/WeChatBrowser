@@ -25,7 +25,7 @@ import Cocoa
  *  数据源帮助实现了 MVVM 架构，使数据与 UI 进一步解耦，同时使 UI 层更加细化、可定制化。
  *  TUIFileMessageCellData 和 TUIVoiceMessageCellData 均继承于本类，实现了气泡消息的 UI 视觉。
  */
-class TUIBubbleMessageCellData: UIMessageCellData {
+class TUIBubbleMessageCellData: TUIMessageCellData {
 
 /**
  *  气泡顶部 以便确定气泡位置

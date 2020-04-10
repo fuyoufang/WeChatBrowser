@@ -21,7 +21,7 @@ import Foundation
 /**
  IMMessage 由多个 TIMElem 组成，每个 TIMElem 可以是文本和图片，也就是说每一条消息可包含多个文本和多张图片。详情请参考官网文档 [消息收发](https://cloud.tencent.com/document/product/269/9150)
  */
-class IMMessage {
+class TIMMessage {
     
 /**
  *  1.1 增加 Elem

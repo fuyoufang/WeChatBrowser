@@ -36,7 +36,7 @@ enum MsgDirection {
  *  同时信息数据单元整合并调用了 IM SDK，能够通过 SDK 提供的接口实现消息的业务逻辑。
  *  数据源帮助实现了 MVVM 架构，使数据与 UI 进一步解耦，同时使 UI 层更加细化、可定制化。
  */
-class UIMessageCellData: CommonCellData {
+class TUIMessageCellData: TCommonCellData {
     
     /**
      *  信息发送者 ID
@@ -90,7 +90,7 @@ class UIMessageCellData: CommonCellData {
      *  IM SDK 提供的消息对象。内含各种获取消息信息的成员函数，包括获取优先级、获取元素索引、获取离线消息配置信息等。
      *  详细信息请参考 TXIMSDK_iOS\Frameworks\ImSDK.framework\Headers\IMMessage.h
      */
-    var innerMessage: IMMessage?
+    var innerMessage: TIMMessage?
     
     /**
      *  昵称字体

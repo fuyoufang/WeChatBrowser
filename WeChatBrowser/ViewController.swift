@@ -11,7 +11,13 @@ import SnapKit
 
 class ViewController: NSViewController {
 
-    let usersMessageViewController = UsersMessageViewController()
+    let usersMessageViewController = UsersMessageViewController(windowController: MainWindowController())
+    
+    override func loadView() {
+        view = NSView()
+        view.wantsLayer = true
+        view.layer?.backgroundColor = .white
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +34,7 @@ class ViewController: NSViewController {
     func setupSubviews() {
         addChild(usersMessageViewController)
         view.addSubview(usersMessageViewController.view)
+        
         usersMessageViewController.view
             .snp.makeConstraints {
             $0.edges.equalToSuperview()

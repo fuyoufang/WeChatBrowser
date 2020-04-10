@@ -9,7 +9,7 @@
 import Cocoa
 
 class CommonCell: NSTableCellView {
-    var data: CommonCellData?
+    var data: TCommonCellData?
     
     // MARK: initialize
     override init(frame frameRect: NSRect) {
@@ -22,7 +22,7 @@ class CommonCell: NSTableCellView {
     }
     
     // MARK:
-    func fill(withData data: CommonCellData) {
+    func fill(withData data: TCommonCellData) {
         self.data = data
     }
 }

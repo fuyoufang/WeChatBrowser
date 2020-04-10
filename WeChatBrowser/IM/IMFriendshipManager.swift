@@ -60,7 +60,7 @@ class TIMFriendshipManager {
  *
  *  @return 返回缓存的资料，未找到返回nil
  */
-    func queryUserProfile(identifier: String) -> TIMUserProfile? {
+    func queryUserProfile(_ identifier: String) -> TIMUserProfile? {
         fatalError()
     }
 

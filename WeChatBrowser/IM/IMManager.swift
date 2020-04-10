@@ -41,14 +41,19 @@ class TIMManager {
 
 /// @name 初始化相关接口
 /// @{
-
 /**
  *  1.1 获取管理器实例 TIMManager
  *
  *  @return 管理器实例
  */
+    
+    private static let manager = TIMManager()
+    private init() {
+        
+    }
+    
     static func sharedInstance() -> TIMManager {
-        fatalError()
+        return manager
     }
 
 

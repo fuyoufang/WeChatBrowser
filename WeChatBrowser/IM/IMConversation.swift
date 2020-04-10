@@ -50,7 +50,7 @@ class TIMConversation {
  *
  *  @return 0：本次操作成功；1：本次操作失败
  */
-    func getMessage(count: Int, last: IMMessage, succ: TIMGetMsgSucc, fail: TIMFail) -> Int {
+    func getMessage(count: Int, last: TIMMessage, succ: TIMGetMsgSucc, fail: TIMFail) -> Int {
         fatalError()
     }
 /**
@@ -66,7 +66,7 @@ class TIMConversation {
  *
  *  @return 0：本次操作成功；1：本次操作失败
  */
-    func getLocalMessage(count: Int, last: IMMessage, succ: TIMGetMsgSucc, fail: TIMFail) -> Bool {
+    func getLocalMessage(count: Int, last: TIMMessage, succ: TIMGetMsgSucc, fail: TIMFail) -> Bool {
         fatalError()
     }
 
@@ -77,7 +77,7 @@ class TIMConversation {
  *
  *  @return 最后一条消息
  */
-    func getLastMsg() -> IMMessage {
+    func getLastMsg() -> TIMMessage? {
         fatalError()
     }
 
@@ -108,7 +108,7 @@ class TIMConversation {
  *
  *  @return 会话人
  */
-    func getReceiver() -> Void {
+    func getReceiver() -> String {
         fatalError()
     }
 
