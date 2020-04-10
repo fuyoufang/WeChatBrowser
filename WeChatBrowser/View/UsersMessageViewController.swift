@@ -8,20 +8,21 @@
 
 import Cocoa
 
-//
 final class UsersMessageViewController: NSSplitViewController {
 
+    var userListViewController: UserListViewController
     var conversationListController: ConversationListController
     var conversationMessageController: ConversationMessageController
     var isResizingSplitView = false
     var windowController: MainWindowController
     var setupDone = false
 
-    init(windowController: MainWindowController) {
+    init(windowController: MainWindowController, imManager: TIMManager) {
         self.windowController = windowController
-        conversationListController = ConversationListController()
+        conversationListController = ConversationListController(imManager: imManager)
         conversationMessageController = ConversationMessageController()
-
+        userListViewController = UserListViewController()
+        
         super.init(nibName: nil, bundle: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(syncSplitView(notification:)), name: .sideBarSizeSyncNotification, object: nil)
     }
@@ -35,16 +36,34 @@ final class UsersMessageViewController: NSSplitViewController {
 
         view.wantsLayer = true
 
-        let listItem = NSSplitViewItem(sidebarWithViewController: conversationListController)
-        listItem.canCollapse = false
-        let detailItem = NSSplitViewItem(viewController: conversationMessageController)
+        let userListItem = NSSplitViewItem(sidebarWithViewController: userListViewController)
+        userListItem.canCollapse = false
+        userListItem.minimumThickness = 100
+        userListItem.maximumThickness = 100
+        let conversationListItem = NSSplitViewItem(sidebarWithViewController: conversationListController)
+        conversationListItem.canCollapse = false
+        conversationListItem.minimumThickness = 200
+        conversationListItem.maximumThickness = 200
+        
+        let conversationMessageItem = NSSplitViewItem(viewController: conversationMessageController)
 
-        addSplitViewItem(listItem)
-        addSplitViewItem(detailItem)
+        addSplitViewItem(userListItem)
+        addSplitViewItem(conversationListItem)
+        addSplitViewItem(conversationMessageItem)
 
-        conversationListController.view.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        conversationMessageController.view.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        conversationMessageController.view.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        userListViewController.view
+            .setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        userListViewController.view
+            .setContentHuggingPriority(.defaultLow, for: .horizontal)
+        userListViewController.view
+            .setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        
+        conversationListController.view
+            .setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        conversationMessageController.view
+            .setContentHuggingPriority(.defaultLow, for: .horizontal)
+        conversationMessageController.view
+            .setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
     }
 
     override func viewWillAppear() {
@@ -93,102 +112,3 @@ final class UsersMessageViewController: NSSplitViewController {
 extension Notification.Name {
     public static let sideBarSizeSyncNotification = NSNotification.Name("WWDCSplitViewSizeSyncNotification")
 }
-
-
-//class UsersMessageViewController: NSViewController {
-//
-//    let userconversationListController = UserconversationListController()
-//    let userMessageViewController = UserMessageViewController()
-//
-//    let conversationTableColumn = NSTableColumn().then {
-//        $0.width = 100
-//        $0.minWidth = 100
-//        $0.maxWidth = 100
-//    }
-//    let messageTableColumn = NSTableColumn()
-//
-//    let tableView = NSTableView()
-//
-//    // MARK: life circle
-//
-//    override func loadView() {
-//        view = NSView()
-//    }
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        setupSubviews()
-//    }
-//
-//    func setupSubviews() {
-//        view.addSubview(tableView)
-//        tableView.snp.makeConstraints {
-//            $0.edges.equalToSuperview()
-//        }
-//        tableView.addTableColumn(conversationTableColumn)
-//        tableView.addTableColumn(messageTableColumn)
-//        tableView.delegate = self
-//        tableView.dataSource = self
-//
-//    }
-//
-//}
-//
-//extension UsersMessageViewController: NSTableViewDelegate {
-//
-//    fileprivate enum CellIdentifiers {
-//        static let NameCell = "NameCellID"
-//        static let DateCell = "DateCellID"
-//        static let SizeCell = "SizeCellID"
-//    }
-//
-//    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-//
-//        var text: String = ""
-//        var cellIdentifier: String = ""
-//
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateStyle = .long
-//        dateFormatter.timeStyle = .long
-//
-//        // 1
-//
-//
-//        // 2
-//        if tableColumn == tableView.tableColumns[0] {
-//            //         image = item.icon
-//            text = "0"
-//            cellIdentifier = CellIdentifiers.NameCell
-//        } else if tableColumn == tableView.tableColumns[1] {
-//            text = "1"
-//            cellIdentifier = CellIdentifiers.DateCell
-//        }
-//
-//        // 3
-//        if let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: cellIdentifier), owner: nil) as? NSTableCellView {
-//            cell.textField?.stringValue = text
-//            return cell
-//        }
-//        return nil
-//    }
-//
-//    //    func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
-//    //
-//    //    }
-//    //
-//    //    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-//    //
-//    //    }
-//
-//    //    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-//    //        return 80
-//    //    }
-//}
-//
-//extension UsersMessageViewController: NSTableViewDataSource {
-//    func numberOfRows(in tableView: NSTableView) -> Int {
-//        return 2
-//    }
-//}
-//

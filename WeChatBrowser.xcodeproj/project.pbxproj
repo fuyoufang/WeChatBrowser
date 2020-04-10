@@ -39,6 +39,9 @@
 		C5505B3A2440715000B8F0AC /* MessageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5505B322440715000B8F0AC /* MessageManager.swift */; };
 		C5505B3B2440715000B8F0AC /* MessageTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5505B342440715000B8F0AC /* MessageTool.swift */; };
 		C5505B3C2440715000B8F0AC /* MessageURLTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5505B352440715000B8F0AC /* MessageURLTool.swift */; };
+		C5505B412440745400B8F0AC /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5505B402440745400B8F0AC /* UserListViewController.swift */; };
+		C5505B43244074D300B8F0AC /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5505B42244074D300B8F0AC /* TableViewController.swift */; };
+		C5505B462440796400B8F0AC /* IMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5505B452440796400B8F0AC /* IMUser.swift */; };
 		C555FF88243EA66800997166 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FF87243EA66800997166 /* Label.swift */; };
 		C555FF8A243EA7A000997166 /* TCommonCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FF89243EA7A000997166 /* TCommonCellData.swift */; };
 		C555FF8D243EAB2100997166 /* UIMessageCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FF8C243EAB2100997166 /* UIMessageCellData.swift */; };
@@ -71,7 +74,6 @@
 		C5FB3DCF243DBDE000C09814 /* UsersMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB3DCE243DBDE000C09814 /* UsersMessageViewController.swift */; };
 		C5FB3DD2243DBE6A00C09814 /* UsersMessageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB3DD1243DBE6A00C09814 /* UsersMessageState.swift */; };
 		C5FB3DD6243DC21000C09814 /* UserListTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB3DD5243DC21000C09814 /* UserListTableCellView.swift */; };
-		C5FB3DD8243DC44600C09814 /* UserMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB3DD7243DC44600C09814 /* UserMessageViewController.swift */; };
 		C5FB406D243DD4DA00C09814 /* BubbleMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB406C243DD4DA00C09814 /* BubbleMessageCell.swift */; };
 		C5FB406E243DD4DA00C09814 /* BubbleMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB406C243DD4DA00C09814 /* BubbleMessageCell.swift */; };
 		C5FB406F243DD4DA00C09814 /* BubbleMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB406C243DD4DA00C09814 /* BubbleMessageCell.swift */; };
@@ -161,6 +163,9 @@
 		C5505B322440715000B8F0AC /* MessageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageManager.swift; sourceTree = "<group>"; };
 		C5505B342440715000B8F0AC /* MessageTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTool.swift; sourceTree = "<group>"; };
 		C5505B352440715000B8F0AC /* MessageURLTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageURLTool.swift; sourceTree = "<group>"; };
+		C5505B402440745400B8F0AC /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
+		C5505B42244074D300B8F0AC /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		C5505B452440796400B8F0AC /* IMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMUser.swift; sourceTree = "<group>"; };
 		C555FF87243EA66800997166 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		C555FF89243EA7A000997166 /* TCommonCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TCommonCellData.swift; sourceTree = "<group>"; };
 		C555FF8C243EAB2100997166 /* UIMessageCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIMessageCellData.swift; sourceTree = "<group>"; };
@@ -200,7 +205,6 @@
 		C5FB3DCE243DBDE000C09814 /* UsersMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersMessageViewController.swift; sourceTree = "<group>"; };
 		C5FB3DD1243DBE6A00C09814 /* UsersMessageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersMessageState.swift; sourceTree = "<group>"; };
 		C5FB3DD5243DC21000C09814 /* UserListTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListTableCellView.swift; sourceTree = "<group>"; };
-		C5FB3DD7243DC44600C09814 /* UserMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMessageViewController.swift; sourceTree = "<group>"; };
 		C5FB406C243DD4DA00C09814 /* BubbleMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleMessageCell.swift; sourceTree = "<group>"; };
 		C5FB4070243DD4FC00C09814 /* FaceMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceMessageCell.swift; sourceTree = "<group>"; };
 		C5FB4074243DD51000C09814 /* FileMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMessageCell.swift; sourceTree = "<group>"; };
@@ -278,7 +282,9 @@
 		C5505AFD24401D1800B8F0AC /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				C5505B022440204900B8F0AC /* TableView */,
 				C5505AFE24401D1D00B8F0AC /* MainWindowController.swift */,
+				C5505B42244074D300B8F0AC /* TableViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -353,7 +359,7 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
-		C5505B28244070B100B8F0AC /* Data */ = {
+		C5505B28244070B100B8F0AC /* WeChatData */ = {
 			isa = PBXGroup;
 			children = (
 				C5505B302440715000B8F0AC /* Manager */,
@@ -361,7 +367,7 @@
 				C5505B2C2440715000B8F0AC /* User */,
 				C5505B292440714600B8F0AC /* Extension */,
 			);
-			path = Data;
+			path = WeChatData;
 			sourceTree = "<group>";
 		};
 		C5505B292440714600B8F0AC /* Extension */ = {
@@ -400,6 +406,33 @@
 			path = Tool;
 			sourceTree = "<group>";
 		};
+		C5505B3D2440735F00B8F0AC /* ConversationList */ = {
+			isa = PBXGroup;
+			children = (
+				C5505AF824401BD500B8F0AC /* ConversationListController.swift */,
+				C5505B052440211100B8F0AC /* ConversationListView.swift */,
+				C5505AF02440011B00B8F0AC /* ConversationCellView.swift */,
+			);
+			path = ConversationList;
+			sourceTree = "<group>";
+		};
+		C5505B3E2440737D00B8F0AC /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				C5505B0024401E2E00B8F0AC /* ConversationMessageController.swift */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
+		C5505B3F244073DD00B8F0AC /* LoginUser */ = {
+			isa = PBXGroup;
+			children = (
+				C5FB3DD5243DC21000C09814 /* UserListTableCellView.swift */,
+				C5505B402440745400B8F0AC /* UserListViewController.swift */,
+			);
+			path = LoginUser;
+			sourceTree = "<group>";
+		};
 		C555FF84243EA65300997166 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -430,6 +463,7 @@
 		C555FF8E243EAE3800997166 /* IM */ = {
 			isa = PBXGroup;
 			children = (
+				C555FFA1243EBAFA00997166 /* IMManager.swift */,
 				C555FF8F243EAE5000997166 /* IMMessage.swift */,
 				C555FF91243EB9D700997166 /* IMComm.swift */,
 				C555FF93243EBA4C00997166 /* IMCallback.swift */,
@@ -439,8 +473,8 @@
 				C555FF9B243EBAA200997166 /* IMFriendshipDefine.swift */,
 				C555FF9D243EBABF00997166 /* IMFriendshipManager.swift */,
 				C555FF9F243EBAE000997166 /* IMGroupManager.swift */,
-				C555FFA1243EBAFA00997166 /* IMManager.swift */,
 				C555FFA3243EBB0A00997166 /* IMManager+MsgExt.swift */,
+				C5505B452440796400B8F0AC /* IMUser.swift */,
 			);
 			path = IM;
 			sourceTree = "<group>";
@@ -498,7 +532,7 @@
 		C5FB3DA0243DBB1E00C09814 /* WeChatBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				C5505B28244070B100B8F0AC /* Data */,
+				C5505B28244070B100B8F0AC /* WeChatData */,
 				C5505AFA24401CBD00B8F0AC /* Extension */,
 				C555FF8E243EAE3800997166 /* IM */,
 				C555FF84243EA65300997166 /* Common */,
@@ -537,15 +571,11 @@
 		C5FB3DCD243DBDC000C09814 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C5505B022440204900B8F0AC /* TableView */,
+				C5505B3F244073DD00B8F0AC /* LoginUser */,
+				C5505B3E2440737D00B8F0AC /* Message */,
+				C5505B3D2440735F00B8F0AC /* ConversationList */,
 				C5505AFD24401D1800B8F0AC /* Base */,
 				C5FB3DCE243DBDE000C09814 /* UsersMessageViewController.swift */,
-				C5FB3DD5243DC21000C09814 /* UserListTableCellView.swift */,
-				C5FB3DD7243DC44600C09814 /* UserMessageViewController.swift */,
-				C5505AF02440011B00B8F0AC /* ConversationCellView.swift */,
-				C5505B052440211100B8F0AC /* ConversationListView.swift */,
-				C5505AF824401BD500B8F0AC /* ConversationListController.swift */,
-				C5505B0024401E2E00B8F0AC /* ConversationMessageController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -891,15 +921,17 @@
 				C5505B122440498B00B8F0AC /* MessageUI.swift in Sources */,
 				C555FFA6243F08FB00997166 /* NSView+Layout.swift in Sources */,
 				C5505AF724400EF600B8F0AC /* main.swift in Sources */,
-				C5FB3DD8243DC44600C09814 /* UserMessageViewController.swift in Sources */,
 				C5505B27244064DF00B8F0AC /* TUIUserProfileDataProviderService.swift in Sources */,
+				C5505B462440796400B8F0AC /* IMUser.swift in Sources */,
 				C555FFAD243F0B6700997166 /* TUIOutgoingTextCellLayout.swift in Sources */,
 				C5505B102440485600B8F0AC /* TUIConversationCellData.swift in Sources */,
 				C5505B042440205800B8F0AC /* TableView.swift in Sources */,
 				C5505B382440715000B8F0AC /* SqliteMaster.swift in Sources */,
 				C555FF9C243EBAA200997166 /* IMFriendshipDefine.swift in Sources */,
+				C5505B43244074D300B8F0AC /* TableViewController.swift in Sources */,
 				C555FFAB243F0B4300997166 /* TUIMessageCellLayout.swift in Sources */,
 				C5505B0A2440248E00B8F0AC /* AppCoordinator.swift in Sources */,
+				C5505B412440745400B8F0AC /* UserListViewController.swift in Sources */,
 				C5FB3DA4243DBB1E00C09814 /* ViewController.swift in Sources */,
 				C5505AF924401BD500B8F0AC /* ConversationListController.swift in Sources */,
 				C555FFA2243EBAFA00997166 /* IMManager.swift in Sources */,

@@ -61,12 +61,12 @@ enum TIMConversationType: Int {
      *  C2C 类型
      */
     case C2C              = 1
-
+    
     /**
      *  群聊 类型
      */
     case GROUP            = 2
-
+    
     /**
      *  系统消息
      */
@@ -195,12 +195,12 @@ enum TIMLoginStatus: Int {
      *  已登录
      */
     case LOGINED             = 1
-
+    
     /**
      *  登录中
      */
     case LOGINING            = 2
-
+    
     /**
      *  无登录
      */
@@ -279,12 +279,12 @@ enum TIMGroupAddOpt: Int {
      *  禁止加群
      */
     case FORBID                    = 0
-
+    
     /**
      *  需要管理员审批
      */
     case AUTH                      = 1
-
+    
     /**
      *  任何人可以加入
      */
@@ -473,17 +473,17 @@ enum TIMGroupMemberRole: Int {
      *  未定义（没有获取该字段）
      */
     case UNDEFINED              = 0
-
+    
     /**
      *  群成员
      */
     case ROLE_MEMBER              = 200
-
+    
     /**
      *  群管理员
      */
     case ROLE_ADMIN               = 300
-
+    
     /**
      *  群主
      */
@@ -606,7 +606,7 @@ enum TIMGroupMemberFilter: Int {
  * 群成员获取资料标志
  */
 enum TIMGetGroupMemInfoFlag: Int {
-
+    
     /**
      * 入群时间
      */
@@ -637,17 +637,17 @@ enum TIMGroupMemberStatus: Int {
      *  操作失败
      */
     case FAIL              = 0
-
+    
     /**
      *  操作成功
      */
     case SUCC              = 1
-
+    
     /**
      *  无效操作，加群时已经是群成员，移除群组时不在群内
      */
     case INVALID           = 2
-
+    
     /**
      *  等待处理，邀请入群时等待对方处理
      */
@@ -708,12 +708,12 @@ enum TIMFriendAllowType: Int {
      *  同意任何用户加好友
      */
     case ALLOW_ANY                    = 0
-
+    
     /**
      *  需要验证
      */
     case NEED_CONFIRM                 = 1
-
+    
     /**
      *  拒绝任何人加好友
      */
@@ -736,7 +736,7 @@ enum TIMGender: Int {
      *  女性
      */
     case FEMALE       = 2
-
+    
 }
 
 /**
@@ -922,272 +922,272 @@ typealias TIMGroupSearchSucc = (_ totalNum: UInt64, _ groups: [TIMGroupMemberInf
 
 /// 实现 NSCoding 协议
 class TIMCodingModel {
-
-///读取实例变量，并把这些数据写到 coder 中去，序列化数据
-//- (void)encodeWithCoder:(NSCoder *)encoder;
-
-///从 coder 中读取数据，保存到相应的变量中，即反序列化数据
-//- (id)initWithCoder:(NSCoder *)decoder;
-
+    
+    ///读取实例变量，并把这些数据写到 coder 中去，序列化数据
+    //- (void)encodeWithCoder:(NSCoder *)encoder;
+    
+    ///从 coder 中读取数据，保存到相应的变量中，即反序列化数据
+    //- (id)initWithCoder:(NSCoder *)decoder;
+    
 }
 
 
 /// 设置用户配置信息
 class TIMUserConfig {
-
-///禁用本地存储（AVChatRoom,BChatRoom 消息数量很大，出于程序性能的考虑，默认不存本地）
- var disableStorage: Bool?
-
-///默认情况下，出于性能考虑，当用户在终端 A 收到未读消息后，Server 默认会删除未读消息，但如果用户切换到终端 B 后，IM SDK 无法再同步到未读消息，未读计数也不会增加，如果需要在终端 B 下也有未读，请设置 disableAutoReport 为 YES，这个时候 Server 不会再主动删除未读消息。注意一旦这这样设置，开发者需要主动调用 TIMConversation.h -> setReadMessage ，否则未读消息会一直存在 Server，IM SDK 每次登录或则断网重连都会再次同步到未读消息，详情请参考官方文档 [自动已读上报](https://cloud.tencent.com/document/product/269/9151)。
- var disableAutoReport: Bool?
-
-///已读回执是自己发出去的消息，对方设置为已读后，自己能收到已读的回调，只针对单聊（C2C）会话生效，默认是关闭的，如果需要开启，请设置 enableReadReceipt 为 YES，收到消息的用户需要显式调用 TIMConversation.h -> setReadMessage，发消息的用户才能通过 IMMessageReceiptListener 监听到消息的已读回执。
- var enableReadReceipt: Bool?
-
-///设置默认拉取的群组资料,如果想要拉取自定义字段，要通过 [IM 控制台](https://console.cloud.tencent.com/avc) -> 功能配置 -> 群维度自定义字段配置对应的 "自定义字段" 和用户操作权限，控制台配置之后 5 分钟后才会生效。
-var groupInfoOpt: TIMGroupInfoOption?
-
-///设置默认拉取的群成员资料,如果想要拉取自定义字段，要通过 [IM 控制台](https://console.cloud.tencent.com/avc) -> 功能配置 -> 群成员维度自定义字段配置对应的 "自定义字段" 和用户操作权限，控制台配置之后 5 分钟后才会生效。
-var groupMemberInfoOpt: TIMGroupMemberInfoOption?
-
-///关系链参数
-var friendProfileOpt: TIMFriendProfileOption?
-
+    
+    ///禁用本地存储（AVChatRoom,BChatRoom 消息数量很大，出于程序性能的考虑，默认不存本地）
+    var disableStorage: Bool?
+    
+    ///默认情况下，出于性能考虑，当用户在终端 A 收到未读消息后，Server 默认会删除未读消息，但如果用户切换到终端 B 后，IM SDK 无法再同步到未读消息，未读计数也不会增加，如果需要在终端 B 下也有未读，请设置 disableAutoReport 为 YES，这个时候 Server 不会再主动删除未读消息。注意一旦这这样设置，开发者需要主动调用 TIMConversation.h -> setReadMessage ，否则未读消息会一直存在 Server，IM SDK 每次登录或则断网重连都会再次同步到未读消息，详情请参考官方文档 [自动已读上报](https://cloud.tencent.com/document/product/269/9151)。
+    var disableAutoReport: Bool?
+    
+    ///已读回执是自己发出去的消息，对方设置为已读后，自己能收到已读的回调，只针对单聊（C2C）会话生效，默认是关闭的，如果需要开启，请设置 enableReadReceipt 为 YES，收到消息的用户需要显式调用 TIMConversation.h -> setReadMessage，发消息的用户才能通过 IMMessageReceiptListener 监听到消息的已读回执。
+    var enableReadReceipt: Bool?
+    
+    ///设置默认拉取的群组资料,如果想要拉取自定义字段，要通过 [IM 控制台](https://console.cloud.tencent.com/avc) -> 功能配置 -> 群维度自定义字段配置对应的 "自定义字段" 和用户操作权限，控制台配置之后 5 分钟后才会生效。
+    var groupInfoOpt: TIMGroupInfoOption?
+    
+    ///设置默认拉取的群成员资料,如果想要拉取自定义字段，要通过 [IM 控制台](https://console.cloud.tencent.com/avc) -> 功能配置 -> 群成员维度自定义字段配置对应的 "自定义字段" 和用户操作权限，控制台配置之后 5 分钟后才会生效。
+    var groupMemberInfoOpt: TIMGroupMemberInfoOption?
+    
+    ///关系链参数
+    var friendProfileOpt: TIMFriendProfileOption?
+    
 }
 
 /// 消息定位
 class IMMessageLocator {
-
-///所属会话的 id
-var sessId: String?
-
-///所属会话的类型
- var sessType:TIMConversationType?
-
-///消息序列号
- var seq: UInt64?
-
-///消息随机码
- var rand: UInt64?
-
-///消息时间戳
- var time:time_t?
-
-///是否本人消息
- var isSelf: Bool?
-
-///是否来自撤销通知
- var isFromRevokeNotify: Bool?
-
+    
+    ///所属会话的 id
+    var sessId: String?
+    
+    ///所属会话的类型
+    var sessType:TIMConversationType?
+    
+    ///消息序列号
+    var seq: UInt64?
+    
+    ///消息随机码
+    var rand: UInt64?
+    
+    ///消息时间戳
+    var time:time_t?
+    
+    ///是否本人消息
+    var isSelf: Bool?
+    
+    ///是否来自撤销通知
+    var isFromRevokeNotify: Bool?
+    
 }
 
 
 /// 群组内的本人信息
 class TIMGroupSelfInfo {
-
-///加入群组时间
- var joinTime: UInt32?
-
-///群组中的角色
- var role:TIMGroupMemberRole?
-
-///群组消息接收选项
- var recvOpt:TIMGroupReceiveMessageOpt?
-
-///群组中的未读消息数
- var unReadMessageNum: UInt32?
-
+    
+    ///加入群组时间
+    var joinTime: UInt32?
+    
+    ///群组中的角色
+    var role:TIMGroupMemberRole?
+    
+    ///群组消息接收选项
+    var recvOpt:TIMGroupReceiveMessageOpt?
+    
+    ///群组中的未读消息数
+    var unReadMessageNum: UInt32?
+    
 }
 
 /// 群资料信息
 class TIMGroupInfo: TIMCodingModel {
-
-///群组 Id
-var group: String?
-
-///群名
-var groupName: String?
-
-///群创建人/管理员
-var owner: String?
-
-///群类型：Private,Public,ChatRoom
-var groupType: String?
-
-///群创建时间
- var createTime: UInt32?
-
-///最近一次群资料修改时间
- var lastInfoTime: UInt32?
-
-///最近一次发消息时间
- var lastMsgTime: UInt32?
-
-///最大成员数
- var maxMemberNum: UInt32?
-
-///群成员数量
- var memberNum: UInt32?
-
-///入群类型
- var addOpt: TIMGroupAddOpt?
-
-///群公告
-var notification: String?
-
-///群简介
-var introduction: String?
-
-///群头像
-var faceURL: String?
-
-///最后一条消息
-var lastMsg: TIMMessage?
-
-///在线成员数量
- var onlineMemberNum: UInt32 = 0
-
-///群组是否被搜索类型
- var isSearchable: TIMGroupSearchableType?
-
-///群组成员可见类型
- var isMemberVisible: TIMGroupMemberVisibleType?
-
-///是否全员禁言
- var allShutup: Bool?
-
-///群组中的本人信息
-var selfInfo: TIMGroupSelfInfo?
-
-///自定义字段集合,key 是 NSString* 类型,value 是 Data* 类型
+    
+    ///群组 Id
+    var group: String?
+    
+    ///群名
+    var groupName: String?
+    
+    ///群创建人/管理员
+    var owner: String?
+    
+    ///群类型：Private,Public,ChatRoom
+    var groupType: String?
+    
+    ///群创建时间
+    var createTime: UInt32?
+    
+    ///最近一次群资料修改时间
+    var lastInfoTime: UInt32?
+    
+    ///最近一次发消息时间
+    var lastMsgTime: UInt32?
+    
+    ///最大成员数
+    var maxMemberNum: UInt32?
+    
+    ///群成员数量
+    var memberNum: UInt32?
+    
+    ///入群类型
+    var addOpt: TIMGroupAddOpt?
+    
+    ///群公告
+    var notification: String?
+    
+    ///群简介
+    var introduction: String?
+    
+    ///群头像
+    var faceURL: String?
+    
+    ///最后一条消息
+    var lastMsg: TIMMessage?
+    
+    ///在线成员数量
+    var onlineMemberNum: UInt32 = 0
+    
+    ///群组是否被搜索类型
+    var isSearchable: TIMGroupSearchableType?
+    
+    ///群组成员可见类型
+    var isMemberVisible: TIMGroupMemberVisibleType?
+    
+    ///是否全员禁言
+    var allShutup: Bool?
+    
+    ///群组中的本人信息
+    var selfInfo: TIMGroupSelfInfo?
+    
+    ///自定义字段集合,key 是 NSString* 类型,value 是 Data* 类型
     var customInfo: [String : Data]?
-
+    
 }
 
 /// 获取群组信息结果
 class TIMGroupInfoResult: TIMGroupInfo {
-
-/// 结果 0：成功；非0：失败
- var resultCode: Int?
-
-/// 结果信息
-var resultInfo: String?
+    
+    /// 结果 0：成功；非0：失败
+    var resultCode: Int?
+    
+    /// 结果信息
+    var resultInfo: String?
 }
 
 /// 获取某个群组资料
 class TIMGroupInfoOption {
-
-///需要获取的群组信息标志（TIMGetGroupBaseInfoFlag）,默认为0xffffff
- var groupFlags: UInt64?
-
+    
+    ///需要获取的群组信息标志（TIMGetGroupBaseInfoFlag）,默认为0xffffff
+    var groupFlags: UInt64?
+    
 }
 
 /// 需要某个群成员资料
 class TIMGroupMemberInfoOption {
-
-///需要获取的群成员标志（TIMGetGroupMemInfoFlag）,默认为0xffffff
- var memberFlags: UInt64?
-
+    
+    ///需要获取的群成员标志（TIMGetGroupMemInfoFlag）,默认为0xffffff
+    var memberFlags: UInt64?
+    
 }
 
 /// 群成员资料
 class TIMGroupMemberInfo: TIMCodingModel {
-
-///成员
-var member: String?
-
-///群名片
-var nameCard: String?
-
-///加入群组时间
- var joinTime:time_t?
-
-///成员类型
- var role:TIMGroupMemberRole?
-
-///禁言结束时间（时间戳）
- var silentUntil: UInt32?
-
-///自定义字段集合,key 是 NSString*类型,value 是 Data*类型
+    
+    ///成员
+    var member: String?
+    
+    ///群名片
+    var nameCard: String?
+    
+    ///加入群组时间
+    var joinTime:time_t?
+    
+    ///成员类型
+    var role:TIMGroupMemberRole?
+    
+    ///禁言结束时间（时间戳）
+    var silentUntil: UInt32?
+    
+    ///自定义字段集合,key 是 NSString*类型,value 是 Data*类型
     var customInfo: [String : Data]?
-
-///如果是自己，可以获取自己的群接收选项
- var receiveMessageOpt: TIMGroupReceiveMessageOpt?
-
+    
+    ///如果是自己，可以获取自己的群接收选项
+    var receiveMessageOpt: TIMGroupReceiveMessageOpt?
+    
 }
 
 ///资料与关系链
 class TIMFriendProfileOption {
-
-///关系链最大缓存时间(默认缓存一天；获取资料和关系链超过缓存时间，将自动向服务器发起请求)
+    
+    ///关系链最大缓存时间(默认缓存一天；获取资料和关系链超过缓存时间，将自动向服务器发起请求)
     var expiredSeconds: Int = 0
-
+    
 }
 
 ///用户资料
 class TIMUserProfile: TIMCodingModel {
-
-/**
- *  用户 identifier
- */
-var identifier: String?
-
-/**
- *  用户昵称
- */
-var nickname: String?
-
-/**
- *  好友验证方式
- */
- var allowType: TIMFriendAllowType?
-
-/**
- * 用户头像
- */
-var faceURL: String?
-
-/**
- *  用户签名
- */
-var selfSignature: Data?
-
-/**
- *  用户性别
- */
+    
+    /**
+     *  用户 identifier
+     */
+    var identifier: String?
+    
+    /**
+     *  用户昵称
+     */
+    var nickname: String?
+    
+    /**
+     *  好友验证方式
+     */
+    var allowType: TIMFriendAllowType?
+    
+    /**
+     * 用户头像
+     */
+    var faceURL: String?
+    
+    /**
+     *  用户签名
+     */
+    var selfSignature: Data?
+    
+    /**
+     *  用户性别
+     */
     var gender: TIMGender = .UNKNOWN
-
-/**
- *  用户生日
- */
- var birthday: UInt32 = 0
-
-/**
- *  用户区域
- */
-var location: Data?
-
-/**
- *  用户语言
- */
- var language: UInt32?
-
-/**
- *  等级
- */
- var level: UInt32?
-
-/**
- *  角色
- */
- var role: UInt32?
-
-/**
- *  自定义字段集合,key是NSString类型,value是Data类型或者NSNumber类型
- *  key值按照后台配置的字符串传入,不包括 TIMProfileTypeKey_Custom_Prefix 前缀
- */
+    
+    /**
+     *  用户生日
+     */
+    var birthday: UInt32 = 0
+    
+    /**
+     *  用户区域
+     */
+    var location: Data?
+    
+    /**
+     *  用户语言
+     */
+    var language: UInt32?
+    
+    /**
+     *  等级
+     */
+    var level: UInt32?
+    
+    /**
+     *  角色
+     */
+    var role: UInt32?
+    
+    /**
+     *  自定义字段集合,key是NSString类型,value是Data类型或者NSNumber类型
+     *  key值按照后台配置的字符串传入,不包括 TIMProfileTypeKey_Custom_Prefix 前缀
+     */
     var customInfo: [String : Data]?
-
+    
 }
 
 typealias ProfileCallBack = (_ profile: TIMUserProfile) -> Void
@@ -1196,275 +1196,275 @@ typealias ProfileCallBack = (_ profile: TIMUserProfile) -> Void
  *  好友
  */
 class TIMFriend: TIMCodingModel {
-
-/**
- *  好友identifier
- */
-var identifier: String?
-
-/**
- *  好友备注（最大96字节，获取自己资料时，该字段为空）
- */
-var remark: String?
-
-/**
- *  分组名称 NSString* 列表
- */
-var groups: [String]?
-
-/**
- *  申请时的添加理由
- */
-var addWording: String?
-
-/**
- *  申请时的添加来源
- */
-var addSource: String?
-
-/**
- * 添加时间
- */
- var addTime: UInt64?
-
-/**
- *  自定义字段集合,key是NSString类型,value是Data类型或者NSNumber类型
- *  key值按照后台配置的字符串传入,不包括 TIMFriendTypeKey_Custom_Prefix 前缀
- */
+    
+    /**
+     *  好友identifier
+     */
+    var identifier: String?
+    
+    /**
+     *  好友备注（最大96字节，获取自己资料时，该字段为空）
+     */
+    var remark: String?
+    
+    /**
+     *  分组名称 NSString* 列表
+     */
+    var groups: [String]?
+    
+    /**
+     *  申请时的添加理由
+     */
+    var addWording: String?
+    
+    /**
+     *  申请时的添加来源
+     */
+    var addSource: String?
+    
+    /**
+     * 添加时间
+     */
+    var addTime: UInt64?
+    
+    /**
+     *  自定义字段集合,key是NSString类型,value是Data类型或者NSNumber类型
+     *  key值按照后台配置的字符串传入,不包括 TIMFriendTypeKey_Custom_Prefix 前缀
+     */
     var customInfo: [String : Data]?
-
-/**
- * 好友资料
- */
-var profile: TIMUserProfile?
-
+    
+    /**
+     * 好友资料
+     */
+    var profile: TIMUserProfile?
+    
 }
 
 /**
  *  创建群参数
  */
 class TIMCreateGroupInfo: TIMCodingModel {
-
-/**
- *  群组Id,nil则使用系统默认Id
- */
-var group: String?
-
-/**
- *  群名
- */
-var groupName: String?
-
-/**
- *  群类型：Private,Public,ChatRoom,AVChatRoom,BChatRoom
- */
-var groupType: String?
-
-/**
- *  是否设置入群选项，Private类型群组请设置为false
- */
-var setAddOpt: Bool?
-
-/**
- *  入群选项
- */
- var addOpt: TIMGroupAddOpt?
-
-/**
- *  最大成员数，填0则系统使用默认值
- */
-
- var maxMemberNum: UInt32?
-
-/**
- *  群公告
- */
-var notification: String?
-
-/**
- *  群简介
- */
-var introduction: String?
-
-/**
- *  群头像
- */
-var faceURL: String?
-
-/**
- *  自定义字段集合,key是NSString*类型,value是Data*类型
- */
-var customInfo: [String : Data]?
-
-/**
- *  创建成员（TIMCreateGroupMemberInfo*）列表
- */
-var membersInfo: [TIMCreateGroupMemberInfo]?
-
+    
+    /**
+     *  群组Id,nil则使用系统默认Id
+     */
+    var group: String?
+    
+    /**
+     *  群名
+     */
+    var groupName: String?
+    
+    /**
+     *  群类型：Private,Public,ChatRoom,AVChatRoom,BChatRoom
+     */
+    var groupType: String?
+    
+    /**
+     *  是否设置入群选项，Private类型群组请设置为false
+     */
+    var setAddOpt: Bool?
+    
+    /**
+     *  入群选项
+     */
+    var addOpt: TIMGroupAddOpt?
+    
+    /**
+     *  最大成员数，填0则系统使用默认值
+     */
+    
+    var maxMemberNum: UInt32?
+    
+    /**
+     *  群公告
+     */
+    var notification: String?
+    
+    /**
+     *  群简介
+     */
+    var introduction: String?
+    
+    /**
+     *  群头像
+     */
+    var faceURL: String?
+    
+    /**
+     *  自定义字段集合,key是NSString*类型,value是Data*类型
+     */
+    var customInfo: [String : Data]?
+    
+    /**
+     *  创建成员（TIMCreateGroupMemberInfo*）列表
+     */
+    var membersInfo: [TIMCreateGroupMemberInfo]?
+    
 }
 
 /**
  * 未决请求选项
  */
 class TIMGroupPendencyOption: TIMCodingModel {
-
-/**
- *  拉取的起始时间 0：拉取最新的
- */
- var timestamp: UInt64?
-
-/**
- *  每页的数量，最大值为 10，设置超过 10，也最多只能拉回 10 条未决
- */
- var numPerPage: UInt32?
+    
+    /**
+     *  拉取的起始时间 0：拉取最新的
+     */
+    var timestamp: UInt64?
+    
+    /**
+     *  每页的数量，最大值为 10，设置超过 10，也最多只能拉回 10 条未决
+     */
+    var numPerPage: UInt32?
 }
 
 /**
  *  未决请求元信息
  */
 class TIMGroupPendencyMeta: TIMCodingModel {
-
-/**
- *  下一次拉取的起始时间戳
- */
- var nextStartTime: UInt64?
-
-/**
- *  已读时间戳大小
- */
- var readTimeSeq: UInt64?
-
-/**
- *  未决未读数
- */
- var unReadCnt: UInt32?
-
+    
+    /**
+     *  下一次拉取的起始时间戳
+     */
+    var nextStartTime: UInt64?
+    
+    /**
+     *  已读时间戳大小
+     */
+    var readTimeSeq: UInt64?
+    
+    /**
+     *  未决未读数
+     */
+    var unReadCnt: UInt32?
+    
 }
 
 /**
  *  创建群组时的成员信息
  */
 class TIMCreateGroupMemberInfo: TIMCodingModel {
-
-/**
- *  被操作成员
- */
-var member: String?
-
-/**
- *  成员类型
- */
- var role:TIMGroupMemberRole?
-
-/**
- *  自定义字段集合,key是NSString*类型,value是Data*类型
- */
+    
+    /**
+     *  被操作成员
+     */
+    var member: String?
+    
+    /**
+     *  成员类型
+     */
+    var role:TIMGroupMemberRole?
+    
+    /**
+     *  自定义字段集合,key是NSString*类型,value是Data*类型
+     */
     var customInfo: [String : Data]?
-
+    
 }
 
 /**
  *  成员操作返回值
  */
 class TIMGroupMemberResult {
-
-/**
- *  被操作成员
- */
-var member: String?
-/**
- *  返回状态
- */
- var status: TIMGroupMemberStatus?
-
+    
+    /**
+     *  被操作成员
+     */
+    var member: String?
+    /**
+     *  返回状态
+     */
+    var status: TIMGroupMemberStatus?
+    
 }
 
 /**
  *  未决申请
  */
 class TIMGroupPendencyItem: TIMCodingModel {
-
-/**
- *  相关群组id
- */
-var groupId: String?
-
-/**
- *  请求者id，请求加群:请求者，邀请加群:邀请人
- */
-var fromUser: String?
-
-/**
- *  判决者id，请求加群:0，邀请加群:被邀请人
- */
-var toUser: String?
-
-/**
- *  未决添加时间
- */
- var addTime: UInt64?
-
-/**
- *  未决请求类型
- */
- var getType:TIMGroupPendencyGetType?
-
-/**
- *  已决标志
- */
- var handleStatus:TIMGroupPendencyHandleStatus?
-
-/**
- *  已决结果
- */
- var handleResult:TIMGroupPendencyHandleResult?
-
-/**
- *  申请或邀请附加信息
- */
-var requestMsg: String?
-
-/**
- *  审批信息：同意或拒绝信息
- */
-var handledMsg: String?
-
-/**
- *  用户自己的id
- */
-var selfIdentifier: String?
-
+    
+    /**
+     *  相关群组id
+     */
+    var groupId: String?
+    
+    /**
+     *  请求者id，请求加群:请求者，邀请加群:邀请人
+     */
+    var fromUser: String?
+    
+    /**
+     *  判决者id，请求加群:0，邀请加群:被邀请人
+     */
+    var toUser: String?
+    
+    /**
+     *  未决添加时间
+     */
+    var addTime: UInt64?
+    
+    /**
+     *  未决请求类型
+     */
+    var getType:TIMGroupPendencyGetType?
+    
+    /**
+     *  已决标志
+     */
+    var handleStatus:TIMGroupPendencyHandleStatus?
+    
+    /**
+     *  已决结果
+     */
+    var handleResult:TIMGroupPendencyHandleResult?
+    
+    /**
+     *  申请或邀请附加信息
+     */
+    var requestMsg: String?
+    
+    /**
+     *  审批信息：同意或拒绝信息
+     */
+    var handledMsg: String?
+    
+    /**
+     *  用户自己的id
+     */
+    var selfIdentifier: String?
+    
 }
 
 /**
  *  关系链变更详细信息
  */
 class TIMSNSChangeInfo {
-
-/**
- *  用户 identifier
- */
-var identifier: String?
-
-/**
- *  用户昵称
- */
-var nickname: String?
-
-/**
- *  申请添加时有效，添加理由
- */
-var wording: String?
-
-/**
- *  申请时填写，添加来源
- */
-var source: String?
-
-
-/**
- *  备注 type=SNS_PROFILE_CHANGE 有效
- */
-var remark: String?
-
+    
+    /**
+     *  用户 identifier
+     */
+    var identifier: String?
+    
+    /**
+     *  用户昵称
+     */
+    var nickname: String?
+    
+    /**
+     *  申请添加时有效，添加理由
+     */
+    var wording: String?
+    
+    /**
+     *  申请时填写，添加来源
+     */
+    var source: String?
+    
+    
+    /**
+     *  备注 type=SNS_PROFILE_CHANGE 有效
+     */
+    var remark: String?
+    
 }

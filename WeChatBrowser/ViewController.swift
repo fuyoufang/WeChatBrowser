@@ -11,8 +11,6 @@ import SnapKit
 
 class ViewController: NSViewController {
 
-    let usersMessageViewController = UsersMessageViewController(windowController: MainWindowController())
-    
     override func loadView() {
         view = NSView()
         view.wantsLayer = true
@@ -21,7 +19,9 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupSubviews()
+        let imManager = TIMManager(filePath: "")
+        let usersMessageViewController = UsersMessageViewController(windowController: MainWindowController(), imManager: imManager)
+        setupSubviews(usersMessageViewController)
     }
 
     override var representedObject: Any? {
@@ -31,7 +31,7 @@ class ViewController: NSViewController {
     }
     
     // MARK: setup UI
-    func setupSubviews() {
+    func setupSubviews(_ usersMessageViewController: UsersMessageViewController) {
         addChild(usersMessageViewController)
         view.addSubview(usersMessageViewController.view)
         

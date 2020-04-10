@@ -29,9 +29,11 @@ class TConversationListViewModel {
      * 过滤器
      */
     var listFilter: ConversationListFilterBlock?
-
-    init() {
-        loadConversation()
+    private let imManager: TIMManager
+    
+    init(imManager: TIMManager) {
+        self.imManager = imManager
+        //loadConversation()
     }
 
     func cellDataOf(convId: String) -> TUIConversationCellData? {
@@ -46,8 +48,9 @@ class TConversationListViewModel {
     /**
     * 加载会话数据
     */
+    
     func loadConversation() {
-        let convs = TIMManager.sharedInstance().getConversationList()
+        let convs = imManager.getConversationList()
         update(conversation: convs)
     }
 
