@@ -7,32 +7,23 @@
 //
 
 import Cocoa
+import RxCocoa
+import RxSwift
 
-class SessionViewModel {
-    
-}
-
-class ConversationListController: TableViewController, NSMenuItemValidation {
+class ConversationListController: TableViewController {
     
     // MARK: Properies
-    private let imManager: TIMManager
-    
-    var viewModel: TConversationListViewModel
-    
-    func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
-        return true
+    var userManager: TIMUserManager? {
+        didSet {
+            refreshViewModel()
+        }
     }
+    var selectedConversation = BehaviorRelay<TIMConversation?>(value: nil)
+
+    var viewModel: TConversationListViewModel?
+
     
-    
-    init(imManager: TIMManager) {
-        self.imManager = imManager
-        self.viewModel = {
-            let model = TConversationListViewModel(imManager: imManager)
-            model.listFilter = { data -> Bool in
-                return data.convType != .SYSTEM
-            }
-            return model
-        }()
+    init() {
         super.init(nibName: nil, bundle: nil)
         
         identifier = NSUserInterfaceItemIdentifier(rawValue: "videosList")
@@ -53,7 +44,25 @@ class ConversationListController: TableViewController, NSMenuItemValidation {
     override func viewDidAppear() {
         super.viewDidAppear()
         
-        view.window?.makeFirstResponder(tableView)
+//        view.window?.makeFirstResponder(tableView)
+    }
+    
+    func refreshViewModel() {
+        defer {
+            tableView.reloadData()
+        }
+        guard let userManager = userManager else {
+            self.viewModel = nil
+            return
+        }
+        
+        self.viewModel = {
+            let model = TConversationListViewModel(manager: userManager)
+            model.listFilter = { data -> Bool in
+                return data.convType != .SYSTEM
+            }
+            return model
+        }()
     }
     
 }
@@ -69,17 +78,16 @@ extension ConversationListController: NSTableViewDataSource, NSTableViewDelegate
     
     private struct Constants {
         static let sessionCellIdentifier = "sessionCell"
-        static let titleCellIdentifier = "titleCell"
         static let rowIdentifier = "row"
     }
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return viewModel.dataList.count
+        return viewModel?.dataList.count ?? 0
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let model = SessionViewModel()
-        return cellForSessionViewModel(model)
+        let cellData = viewModel?.dataList[row]
+        return cellForSessionView(cellData: cellData)
     }
     
     func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
@@ -93,13 +101,14 @@ extension ConversationListController: NSTableViewDataSource, NSTableViewDelegate
         return rowView
     }
     
-    private func cellForSessionViewModel(_ viewModel: SessionViewModel) -> ConversationListView? {
+    private func cellForSessionView(cellData: TUIConversationCellData?) -> ConversationListView? {
         var cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: Constants.sessionCellIdentifier), owner: tableView) as? ConversationListView
         
         if cell == nil {
             cell = ConversationListView(frame: .zero)
             cell?.identifier = NSUserInterfaceItemIdentifier(rawValue: Constants.sessionCellIdentifier)
         }
+        cell?.cellData = cellData
         
         return cell
     }

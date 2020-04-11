@@ -7,9 +7,10 @@
 //
 
 import Cocoa
+import RxSwift
 
 final class UsersMessageViewController: NSSplitViewController {
-
+    private let disposeBag = DisposeBag()
     var userListViewController: UserListViewController
     var conversationListController: ConversationListController
     var conversationMessageController: ConversationMessageController
@@ -19,9 +20,9 @@ final class UsersMessageViewController: NSSplitViewController {
 
     init(windowController: MainWindowController, imManager: TIMManager) {
         self.windowController = windowController
-        conversationListController = ConversationListController(imManager: imManager)
+        userListViewController = UserListViewController(imManager: imManager)
+        conversationListController = ConversationListController()
         conversationMessageController = ConversationMessageController()
-        userListViewController = UserListViewController()
         
         super.init(nibName: nil, bundle: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(syncSplitView(notification:)), name: .sideBarSizeSyncNotification, object: nil)
@@ -40,6 +41,7 @@ final class UsersMessageViewController: NSSplitViewController {
         userListItem.canCollapse = false
         userListItem.minimumThickness = 100
         userListItem.maximumThickness = 100
+        
         let conversationListItem = NSSplitViewItem(sidebarWithViewController: conversationListController)
         conversationListItem.canCollapse = false
         conversationListItem.minimumThickness = 200
@@ -64,6 +66,8 @@ final class UsersMessageViewController: NSSplitViewController {
             .setContentHuggingPriority(.defaultLow, for: .horizontal)
         conversationMessageController.view
             .setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        
+        setupBind()
     }
 
     override func viewWillAppear() {
@@ -77,6 +81,31 @@ final class UsersMessageViewController: NSSplitViewController {
         }
     }
 
+    var selectedUserManager: Observable<TIMUserManager?> {
+        return userListViewController.selectedUserManager.asObservable()
+    }
+
+    var selectedUserManagerValue: TIMUserManager? {
+        return userListViewController.selectedUserManager.value
+    }
+    
+    func setupBind() {
+        bind(user: selectedUserManager, to: conversationListController)
+    }
+    
+    func bind(user: Observable<TIMUserManager?>, to conversationList: ConversationListController) {
+
+        user.subscribeOn(MainScheduler.instance)
+            .subscribe(onNext: { userManager in
+            NSAnimationContext.runAnimationGroup({ context in
+                context.duration = 0.35
+
+                conversationList.userManager = userManager
+            })
+
+        }).disposed(by: disposeBag)
+    }
+    
     @objc private func syncSplitView(notification: Notification) {
         guard let notificationSourceSplitView = notification.object as? NSSplitView else {
             return

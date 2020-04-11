@@ -19,7 +19,8 @@ protocol TUIUserProfileDataProviderServiceProtocol: TCServiceProtocol {
      *
      *  @return 返回的用户昵称。好友默认返回备注，当好友未设置备注或者为陌生人时返回用户 ID。
      */
-    func getName(profile: TIMUserProfile) -> String?
+//    func getName(profile: TIMUserProfile) -> String?
+    func getName(friendshipManager: TIMFriendshipManager, profile: TIMUserProfile) -> String?
     /**
      *  获取用户的性别。
      *

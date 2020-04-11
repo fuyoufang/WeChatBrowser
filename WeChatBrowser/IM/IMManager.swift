@@ -47,6 +47,7 @@ class TIMManager {
      *  @return 管理器实例
      */
     private let weChatManager: MessageManager
+    
     private let filePath: String
     init(filePath: String) {
         self.filePath = filePath
@@ -54,44 +55,25 @@ class TIMManager {
     }
     
     // MARK: 登录用户
-    func getUserList() -> [TIMConversation] {
-        fatalError()
-    }
-    // MARK: 三，会话管理器
-    /////////////////////////////////////////////////////////////////////////////////
-    //
-    //                      （三）会话管理器
-    //
-    /////////////////////////////////////////////////////////////////////////////////
-    /// @name 会话管理器
-    /// @{
-    
-    /**
-     *  3.1 获取会话列表
-     *
-     *  一个会话对应一个聊天窗口，比如跟一个好友的 1v1 聊天，或者一个聊天群，都是一个会话。
-     *
-     *  @return 会话列表
-     */
-    func getConversationList() -> [TIMConversation] {
-        fatalError()
+    private var _userManagerList: [TIMUserManager]?
+    var userManagerList: [TIMUserManager] {
+        get {
+            if _userManagerList == nil {
+                _userManagerList = getUserManagerList()
+            }
+            return _userManagerList!
+        }
     }
     
-    /**
-     *  3.2 获取单个会话
-     *
-     *  TIMConversation 负责会话相关操作，包含发送消息、获取会话消息缓存、获取未读计数等。
-     *
-     *  @param type 详情请参考 TIMComm.h 里面的 TIMConversationType 定义
-     *  @param conversationId 会话 ID
-     单聊类型（C2C）   ：为对方 userID；
-     群组类型（GROUP） ：为群组 groupId；
-     系统类型（SYSTEM）：为 @""
-     *
-     *  @return 会话对象，详情请参考 TIMConversation.h 里面的 TIMConversation 定义
-     */
-    func getConversation(type: TIMConversationType, conversationId: String) -> TIMConversation? {
-        fatalError()
+    private func getUserManagerList() -> [TIMUserManager] {
+        let fileNames = weChatManager.userDataFileNames
+        return fileNames.compactMap { (fileName) -> TIMUserManager? in
+            guard let userData = weChatManager.getData(userNameMD5: fileName) else {
+                return nil
+            }
+            return TIMUserManager(userData: userData, user: IMUser(userNameMD5: fileName))
+        }
     }
+    
 }
 

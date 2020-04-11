@@ -17,7 +17,7 @@ extension TIMMessage {
 
     var expr: TUIMessageDataProviderServiceProtocol {
         get {
-            return TCServiceManager.shareInstance().getMessageDataProviderService()
+            return TCServiceManager.shareInstance().messageDataProviderService
         }
     }
 

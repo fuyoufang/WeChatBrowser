@@ -19,7 +19,10 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let imManager = TIMManager(filePath: "")
+        
+        let textFilePath = "/Users/fuyoufang/Downloads/WeChatApp/8DFF768D-9664-4368-8646-C280DA647D91"
+        let imManager = TIMManager(filePath: textFilePath)
+        
         let usersMessageViewController = UsersMessageViewController(windowController: MainWindowController(), imManager: imManager)
         setupSubviews(usersMessageViewController)
     }

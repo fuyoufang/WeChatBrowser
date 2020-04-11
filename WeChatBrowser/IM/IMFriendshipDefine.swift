@@ -52,107 +52,107 @@ enum TIMFriendStatus: Int {
      *  操作成功
      */
     case FRIEND_STATUS_SUCC                              = 0
-
+    
     /**
      *  请求参数错误，请根据错误描述检查请求是否正确
      */
     case FRIEND_PARAM_INVALID                                = 30001
-
+    
     /**
      *  请求参数错误，SdkAppid 不匹配。
      */
     case FRIEND_SDK_APPID_INVALID                            = 30002
-
+    
     /**
      *  请求的用户帐号不存在
      */
     case FRIEND_ID_INVALID                                   = 30003
-
+    
     /**
      *  请求需要 App 管理员权限
      */
     case FRIEND_NEED_ADMIN_PERMISSON                         = 30004
-
+    
     /**
      *  关系链字段中包含敏感词
      */
     case FRIEND_DIRTY_WORD                                   = 30005
-
+    
     /**
      *  服务器内部错误，请重试
      */
     case FRIEND_SERVER_ERROR                                 = 30006
-
+    
     /**
      *  网络超时，请稍后重试
      */
     case FRIEND_TIMEOUT                                      = 30007
-
+    
     /**
      *  并发写导致写冲突，建议使用批量方式
      */
     case FRIEND_WRITE_ERROR                                  = 30008
-
+    
     /**
      *  后台禁止该用户发起加好友请求
      */
     case ADD_FRIEND_FORBIDEN                                 = 30009
-
+    
     /**
      *  自己的好友数已达系统上限
      */
     case ADD_FRIEND_STATUS_SELF_FRIEND_FULL                  = 30010
-
+    
     /**
      * 分组已达系统上限
      */
     case UPDATE_FRIEND_GROUP_STATUS_MAX_GROUPS_EXCEED        = 30011
-
+    
     /**
      * 未决数已达系统上限。
      */
     case PENDENCY_STATUS_FULL                                = 30012
-
+    
     /**
      * 黑名单数已达系统上限
      */
     case ADD_BLACKLIST_STATUS_FULL                           = 30013
-
+    
     /**
      *  对方的好友数已达系统上限
      */
     case ADD_FRIEND_STATUS_THEIR_FRIEND_FULL                 = 30014
-
+    
     /**
      *  被加好友在自己的黑名单中
      */
     case ADD_FRIEND_STATUS_IN_SELF_BLACK_LIST                = 30515
-
+    
     /**
      *  被加好友设置为禁止加好友
      */
     case ADD_FRIEND_STATUS_FRIEND_SIDE_FORBID_ADD            = 30516
-
+    
     /**
      *  已被被添加好友设置为黑名单
      */
     case ADD_FRIEND_STATUS_IN_OTHER_SIDE_BLACK_LIST          = 30525
-
+    
     /**
      *  等待好友审核同意
      */
     case ADD_FRIEND_STATUS_PENDING                           = 30539
-
+    
     /**
      *  添加好友请求被安全策略打击，请勿频繁发起添加好友请求
      */
     case ADD_FRIEND_STATUS_SENSITIVE                         = 30540
-
+    
     /**
      *  对方没有申请过好友
      */
     case RESPONSE_FRIEND_STATUS_NO_REQ                       = 30614
-
+    
     /**
      *  删除好友请求被安全策略打击，请勿频繁发起删除好友请求
      */
@@ -164,7 +164,7 @@ enum TIMDelFriendType: Int {
      *  删除单向好友
      */
     case FRIEND_DEL_SINGLE               = 1
-
+    
     /**
      *  删除双向好友
      */
@@ -176,12 +176,12 @@ enum TIMPendencyType: Int {
      *  别人发给我的
      */
     case PENDENCY_COME_IN                    = 1
-
+    
     /**
      *  我发给别人的
      */
     case PENDENCY_SEND_OUT                   = 2
-
+    
     /**
      * 别人发给我的 和 我发给别人的。仅拉取时有效
      */
@@ -196,17 +196,17 @@ enum TIMFutureFriendType: Int {
      *  收到的未决请求
      */
     case PENDENCY_IN_TYPE              = 0x1
-
+    
     /**
      *  发出去的未决请求
      */
     case PENDENCY_OUT_TYPE             = 0x2
-
+    
     /**
      *  推荐好友
      */
     case RECOMMEND_TYPE                = 0x4
-
+    
     /**
      *  已决好友
      */
@@ -221,7 +221,7 @@ enum TIMPageDirectionType: Int {
      *  向上翻页
      */
     case UP_TYPE            = 1
-
+    
     /**
      *  向下翻页
      */
@@ -269,12 +269,12 @@ enum TIMFriendResponseType: Int {
      *  同意加好友（建立单向好友）
      */
     case AGREE                       = 0
-
+    
     /**
      *  同意加好友并加对方为好友（建立双向好友）
      */
     case AGREE_AND_ADD               = 1
-
+    
     /**
      *  拒绝对方好友请求
      */
@@ -301,154 +301,154 @@ enum TIMFriendAddType: Int {
  *  加好友请求
  */
 class TIMFriendRequest: TIMCodingModel {
-
-/**
- *  用户identifier（必填）
- */
-
-var identifier: String?
-
-/**
- *  备注（备注最大96字节）
- */
-var remark: String?
-
-/**
- *  请求说明（最大120字节）
- */
-var addWording: String?
-
-/**
- *  添加来源
- *  来源需要添加“AddSource_Type_”前缀
- */
-var addSource: String?
-
-/**
- *  分组
- */
-var group: String?
-
     
-/**
- *  加好友方式 (可选)
- */
+    /**
+     *  用户identifier（必填）
+     */
+    
+    var identifier: String?
+    
+    /**
+     *  备注（备注最大96字节）
+     */
+    var remark: String?
+    
+    /**
+     *  请求说明（最大120字节）
+     */
+    var addWording: String?
+    
+    /**
+     *  添加来源
+     *  来源需要添加“AddSource_Type_”前缀
+     */
+    var addSource: String?
+    
+    /**
+     *  分组
+     */
+    var group: String?
+    
+    
+    /**
+     *  加好友方式 (可选)
+     */
     var addType: TIMFriendAddType?
-
+    
 }
 
 /**
  * 未决请求
  */
 class TIMFriendPendencyItem: TIMCodingModel {
-
-/**
- * 用户标识
- */
-var identifier: String?
-/**
- * 增加时间
- */
     
- var addTime: UInt64 = 0
-/**
- * 来源
- */
-var addSource: String?
-/**
- * 加好友附言
- */
-var addWording: String?
-
-/**
- * 加好友昵称
- */
-var nickname: String?
-
-/**
- * 未决请求类型
- */
- var type: TIMPendencyType?
-
+    /**
+     * 用户标识
+     */
+    var identifier: String?
+    /**
+     * 增加时间
+     */
+    
+    var addTime: UInt64 = 0
+    /**
+     * 来源
+     */
+    var addSource: String?
+    /**
+     * 加好友附言
+     */
+    var addWording: String?
+    
+    /**
+     * 加好友昵称
+     */
+    var nickname: String?
+    
+    /**
+     * 未决请求类型
+     */
+    var type: TIMPendencyType?
+    
 }
 
 /**
  * 未决推送
  */
 class TIMFriendPendencyInfo: TIMCodingModel {
-/**
- * 用户标识
- */
-var identifier: String?
-/**
- * 来源
- */
-var addSource: String?
-/**
- * 加好友附言
- */
-var addWording: String?
-
-/**
- * 加好友昵称
- */
-var nickname: String?
+    /**
+     * 用户标识
+     */
+    var identifier: String?
+    /**
+     * 来源
+     */
+    var addSource: String?
+    /**
+     * 加好友附言
+     */
+    var addWording: String?
+    
+    /**
+     * 加好友昵称
+     */
+    var nickname: String?
 }
 
 /**
  * 未决请求信息
  */
 class TIMFriendPendencyRequest: TIMCodingModel {
-
-/**
- * 序列号，未决列表序列号
- *    建议客户端保存seq和未决列表，请求时填入server返回的seq
- *    如果seq是server最新的，则不返回数据
- */
- var seq: UInt64?
-
-/**
- * 翻页时间戳，只用来翻页，server返回0时表示没有更多数据，第一次请求填0
- *    特别注意的是，如果server返回的seq跟填入的seq不同，翻页过程中，需要使用客户端原始seq请求，直到数据请求完毕，才能更新本地seq
- */
- var timestamp: UInt64?
-
-/**
- * 每页的数量，即本次请求最多返回多个数据，最大不超过 100，设置太大一次请求回包的时间会过长。默认值100
- * 注意：后台最多只保存100条未决
- */
- var numPerPage: UInt64 = 0
-
-/**
- * 未决请求拉取类型
- */
- var type: TIMPendencyType?
-
+    
+    /**
+     * 序列号，未决列表序列号
+     *    建议客户端保存seq和未决列表，请求时填入server返回的seq
+     *    如果seq是server最新的，则不返回数据
+     */
+    var seq: UInt64?
+    
+    /**
+     * 翻页时间戳，只用来翻页，server返回0时表示没有更多数据，第一次请求填0
+     *    特别注意的是，如果server返回的seq跟填入的seq不同，翻页过程中，需要使用客户端原始seq请求，直到数据请求完毕，才能更新本地seq
+     */
+    var timestamp: UInt64?
+    
+    /**
+     * 每页的数量，即本次请求最多返回多个数据，最大不超过 100，设置太大一次请求回包的时间会过长。默认值100
+     * 注意：后台最多只保存100条未决
+     */
+    var numPerPage: UInt64 = 0
+    
+    /**
+     * 未决请求拉取类型
+     */
+    var type: TIMPendencyType?
+    
 }
 
 /**
  * 未决返回信息
  */
 class TIMFriendPendencyResponse: TIMCodingModel {
-
-/**
- * 本次请求的未决列表序列号
- */
- var seq: UInt64?
-
-/**
- * 本次请求的翻页时间戳
- */
- var timestamp: UInt64?
-
-/**
- * 未决请求未读数量
- */
- var unreadCnt: UInt64?
-
-/**
- * 未决数据
- */
+    
+    /**
+     * 本次请求的未决列表序列号
+     */
+    var seq: UInt64?
+    
+    /**
+     * 本次请求的翻页时间戳
+     */
+    var timestamp: UInt64?
+    
+    /**
+     * 未决请求未读数量
+     */
+    var unreadCnt: UInt64?
+    
+    /**
+     * 未决数据
+     */
     var pendencies: [TIMFriendPendencyItem]?
 }
 
@@ -456,101 +456,101 @@ class TIMFriendPendencyResponse: TIMCodingModel {
  *  好友分组信息
  */
 class TIMFriendGroup: TIMCodingModel {
-/**
- *  好友分组名称
- */
-var name: String?
-
-/**
- *  分组成员数量
- */
- var userCnt: UInt64 = 0
-
-/**
- *  分组成员identifier列表
- */
-var friends: [String]?
-
+    /**
+     *  好友分组名称
+     */
+    var name: String?
+    
+    /**
+     *  分组成员数量
+     */
+    var userCnt: UInt64 = 0
+    
+    /**
+     *  分组成员identifier列表
+     */
+    var friends: [String]?
+    
 }
 
 /**
  *  好友关系检查
  */
 struct TIMFriendCheckInfo {
-/**
- *  检查用户的id列表（NSString*）
- */
-var users: [String]?
-
-/**
- *  检查类型
- */
- var checkType: TIMFriendCheckType
-
+    /**
+     *  检查用户的id列表（NSString*）
+     */
+    var users: [String]?
+    
+    /**
+     *  检查类型
+     */
+    var checkType: TIMFriendCheckType
+    
 }
 
 struct TIMCheckFriendResult {
-/**
- *  用户id
- */
+    /**
+     *  用户id
+     */
     var identifier: String?
-
-/**
- * 返回码
- */
+    
+    /**
+     * 返回码
+     */
     var result_code: Int?
-
-/**
- * 返回信息
- */
+    
+    /**
+     * 返回信息
+     */
     var result_info: String?
-
-/**
- *  检查结果
- */
- var resultType: TIMFriendRelationType
-
+    
+    /**
+     *  检查结果
+     */
+    var resultType: TIMFriendRelationType
+    
 }
 
 class TIMFriendResult {
-
-/**
- *  用户Id
- */
+    
+    /**
+     *  用户Id
+     */
     var identifier: String?
-
-/**
- * 返回码
- */
+    
+    /**
+     * 返回码
+     */
     var result_code: Int?
-
-/**
- * 返回信息
- */
+    
+    /**
+     * 返回信息
+     */
     var result_info: String?
-
+    
 }
 
 /**
  * 响应好友请求
  */
 class TIMFriendResponse {
-
-/**
- *  响应类型
- */
- var responseType: TIMFriendResponseType?
-
-/**
- *  用户identifier
- */
-var identifier: String?
-
-/**
- *  备注好友（可选，如果要加对方为好友）。备注最大96字节
- */
-var remark: String?
-
+    
+    /**
+     *  响应类型
+     */
+    var responseType: TIMFriendResponseType?
+    
+    /**
+     *  用户identifier
+     */
+    var identifier: String?
+    
+    /**
+     *  备注好友（可选，如果要加对方为好友）。备注最大96字节
+     */
+    var remark: String?
+    
 }
 
 
@@ -558,10 +558,10 @@ var remark: String?
  *  好友分组信息扩展
  */
 class TIMFriendGroupWithProfiles: TIMFriendGroup {
-/**
- *  好友资料（*）列表
- */
-var profiles: [TIMUserProfile]?
+    /**
+     *  好友资料（*）列表
+     */
+    var profiles: [TIMUserProfile]?
 }
 
 // 用户资料KEY

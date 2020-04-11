@@ -67,8 +67,9 @@ extension FriendDBChatRoom: CustomDebugStringConvertible {
 }
 
 class FriendDB: TableCodable {
+    
     var userName: String? // 微信号ID，如果以 @chatroom 结尾的，就是群
-    var type: Int? = 0
+    var type: Int = 0
     var openIMAppid: String?
     var imgStatus: Int? = 0
     var extFlag: Int? = 0
@@ -109,6 +110,16 @@ class FriendDB: TableCodable {
         
         
         return nil
+    }
+    
+    var _isGroup: Bool? = nil
+    var isGroup: Bool {
+        get {
+            if _isGroup == nil {
+                _isGroup = (userName ?? "").hasSuffix("@chatroom")
+            }
+            return _isGroup!
+        }
     }
     
     private var _remarks: [String]?

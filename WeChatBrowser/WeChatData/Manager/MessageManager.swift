@@ -44,13 +44,18 @@ class MessageManager {
         return userDataFileNames
     }
     
-    public func getFirstUserData() -> UserDataManager? {
-        guard let userDataFileName = userDataFileNames.first else {
+    public func getData(userNameMD5: String) -> UserDataManager? {
+        guard userDataFileNames.contains(userNameMD5) else {
             return nil
         }
-        currentUserDataManager = UserDataManager(filePath: "\(documentsPath)/\(userDataFileName)")
-        
-        return currentUserDataManager
+        return UserDataManager(filePath: "\(documentsPath)/\(userNameMD5)")
+    }
+    
+    public func getData(user: IMUser) -> UserDataManager? {
+        guard let userNameMD5 = user.userNameMD5 else {
+            return nil
+        }
+        return getData(userNameMD5: userNameMD5)
     }
     
 }

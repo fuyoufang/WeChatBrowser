@@ -42,13 +42,10 @@ class TCServiceManager {
     
     let lock = NSRecursiveLock()
     
-    func getMessageDataProviderService() ->  TUIMessageDataProviderServiceProtocol {
-        fatalError()
-    }
+    let messageDataProviderService = TUIMessageDataProviderService.service
     
-    func getUserProfileDataProviderService() ->  TUIUserProfileDataProviderServiceProtocol {
-        fatalError()
-    }
+    let userProfileDataProviderService = TUIUserProfileDataProviderService.service
+    
     
     
 

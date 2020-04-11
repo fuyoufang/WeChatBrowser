@@ -29,11 +29,11 @@ class TConversationListViewModel {
      * 过滤器
      */
     var listFilter: ConversationListFilterBlock?
-    private let imManager: TIMManager
+    private let manager: TIMUserManager
     
-    init(imManager: TIMManager) {
-        self.imManager = imManager
-        //loadConversation()
+    init(manager: TIMUserManager) {
+        self.manager = manager
+        loadConversation()
     }
 
     func cellDataOf(convId: String) -> TUIConversationCellData? {
@@ -48,9 +48,8 @@ class TConversationListViewModel {
     /**
     * 加载会话数据
     */
-    
     func loadConversation() {
-        let convs = imManager.getConversationList()
+        let convs = manager.getConversationList()
         update(conversation: convs)
     }
 
@@ -58,7 +57,7 @@ class TConversationListViewModel {
         var dataList = self.dataList
         for conv in convs {
             let data = TUIConversationCellData()
-            let convId = conv.getReceiver()
+            let convId = conv.receiver
             data.convId = convId
             data.convType = conv.getType()
             data.subTitle = getLastDisplayString(conv)
@@ -76,8 +75,8 @@ class TConversationListViewModel {
             }
 
             if data.convType == .C2C {
-                if let user: TIMUserProfile = TIMFriendshipManager.sharedInstance().queryUserProfile(convId) {
-                    data.title = user.showName()
+                if let user: TIMUserProfile = manager.friendshipManager.queryUserProfile(convId) {
+                    data.title = user.showName(friendshipManager: manager.friendshipManager)
                     if let faceURL = user.faceURL {
                         data.avatarUrl = URL(string: faceURL)
                     }
@@ -89,7 +88,7 @@ class TConversationListViewModel {
                 data.avatarImage = DefaultGroupAvatarImage;
                 data.title = conv.getGroupName()
 
-                if let groupInfo: TIMGroupInfo = TIMGroupManager.sharedInstance().queryGroupInfo(groupId: convId) {
+                if let groupInfo: TIMGroupInfo = manager.groupManager.queryGroupInfo(groupId: convId) {
                     if let faceURL = groupInfo.faceURL {
                         data.avatarUrl = URL(string: faceURL)
                     }

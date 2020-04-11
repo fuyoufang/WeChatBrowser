@@ -60,9 +60,9 @@ class TableViewController: NSViewController {
         scrollView.frame = view.bounds
         tableView.frame = view.bounds
         
-        scrollView.widthAnchor
-            .constraint(greaterThanOrEqualToConstant: 320)
-            .isActive = true
+//        scrollView.widthAnchor
+//            .constraint(greaterThanOrEqualToConstant: 320)
+//            .isActive = true
         
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints {

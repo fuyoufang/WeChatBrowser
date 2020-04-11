@@ -10,14 +10,15 @@ import Cocoa
 
 final class TUIUserProfileDataProviderService: TUIUserProfileDataProviderServiceProtocol {
     
-    static let shareInstance = TUIUserProfileDataProviderService()
-        
-    private init() { }
+    static let service = TUIUserProfileDataProviderService()
     
-    func getName(profile: TIMUserProfile) -> String? {
+    private init() {
+    }
+    
+    func getName(friendshipManager: TIMFriendshipManager, profile: TIMUserProfile) -> String? {
         
         if let identifier = profile.identifier,
-            let fd: TIMFriend = TIMFriendshipManager.sharedInstance().queryFriend(identifier: identifier),
+            let fd: TIMFriend = friendshipManager.queryFriend(identifier: identifier),
             let remark = fd.remark,
             !remark.isEmpty  {
             return remark

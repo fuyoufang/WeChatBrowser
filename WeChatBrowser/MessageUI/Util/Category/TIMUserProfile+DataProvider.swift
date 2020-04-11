@@ -13,12 +13,12 @@ extension TIMUserProfile {
         get {
            return TCServiceManager
             .shareInstance()
-            .getUserProfileDataProviderService()
+            .userProfileDataProviderService
         }
     }
     
-    func showName() -> String? {
-        return expr.getName(profile: self)
+    func showName(friendshipManager: TIMFriendshipManager) -> String? {
+        return expr.getName(friendshipManager: friendshipManager, profile: self)
     }
     
     func showGender() -> String? {
@@ -52,8 +52,6 @@ extension TIMUserProfile {
     //}
     
     func avatarView() -> NSImageView? {
-        
-        let expr: TUIUserProfileDataProviderServiceProtocol = TCServiceManager.shareInstance().getUserProfileDataProviderService()
         return expr.getAvatarView(profile: self)
     }
     

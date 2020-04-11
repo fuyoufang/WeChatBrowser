@@ -11,7 +11,7 @@ import WCDBSwift
 
 let FriendTable = "Friend"
 let SqliteMasterTable = "sqlite_master"
-
+let ChatTableNamePrefix = "Chat_"
 class UserDataManager {
     public var chatTableNames: [String]? {
         get {
@@ -21,31 +21,49 @@ class UserDataManager {
             return _chatTableNames
         }
     }
-    
-    public var friendsDB: [FriendDB]? {
+    private var _friendDBs: [FriendDB]?
+    public var friendsDBs: [FriendDB] {
         get {
             if _friendDBs == nil {
                 _friendDBs = getFriendsFromDB()
             }
-            return _friendDBs
+            return _friendDBs!
         }
     }
     
     private var filePath: String // 数据路径
     private let contactDBFilePath: String
-    private var _friendDBs: [FriendDB]?
+    
     private var _chatTableNames: [String]?
-    private let contactDatabase: Database
-    private var chatMessageDatabase: Database
+    let contactDatabase: Database
+    let chatMessageDatabase: Database
     
     init(filePath: String) {
         self.filePath = filePath
         self.contactDBFilePath = "\(filePath)/DB/WCDB_Contact.sqlite"
         self.contactDatabase = Database(withPath: self.contactDBFilePath)
         self.chatMessageDatabase = Database(withPath: "\(filePath)/DB/MM.sqlite")
+        
+        // TODO: 应该设置为只读（暂时先把文件的权限设置为可读、可写了）
+//        self.contactDatabase.setConfig(named: "journal_mode", with: { (handle) in
+//            try handle.exec(StatementPragma().pragma(.journalMode, to: "WAL"))
+//        }, orderBy: 0)
+//        
+//        self.chatMessageDatabase.setConfig(named: "journal_mode", with: { (handle) in
+//            try handle.exec(StatementPragma().pragma(.journalMode, to: "WAL"))
+//        }, orderBy: 0)
+        
+        
+        if !self.contactDatabase.canOpen {
+            fatalError()
+        }
+        
+        if !self.chatMessageDatabase.canOpen {
+            fatalError()
+        }
     }
     
-    func getFriendsFromDB() -> [FriendDB]? {
+    private func getFriendsFromDB() -> [FriendDB] {
         
         do {
             let friendDBs: [FriendDB] = try self.contactDatabase.getObjects(fromTable: FriendTable)
@@ -53,7 +71,7 @@ class UserDataManager {
         } catch let e {
             debugPrint(e)
         }
-        return nil
+        return []
     }
     
     func getChatTableNames() -> [String] {
@@ -65,7 +83,7 @@ class UserDataManager {
                 guard let name = sqliteMaster.name else {
                     continue
                 }
-                guard name.hasPrefix("Chat_") else {
+                guard name.hasPrefix(ChatTableNamePrefix) else {
                     continue
                 }
                 chatTableNames.append(name)
@@ -81,7 +99,7 @@ class UserDataManager {
             return []
         }
         
-        let chatTableName = "Chat_\(userName.MD5())"
+        let chatTableName = "\(ChatTableNamePrefix)\(userName.MD5())"
         let index = chatTableNames.firstIndex(where: { (item) -> Bool in
             return item == chatTableName
         })
@@ -103,4 +121,5 @@ class UserDataManager {
         }
         return []
     }
+    
 }

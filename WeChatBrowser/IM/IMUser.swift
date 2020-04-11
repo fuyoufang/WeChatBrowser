@@ -8,6 +8,7 @@
 
 import Foundation
 
-class IMUser {
+struct IMUser {
     var userName: String? // 微信号ID
+    var userNameMD5: String? // 微信号ID 的 md5 值
 }

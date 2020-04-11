@@ -36,7 +36,7 @@ enum MessageDBType: Int {
 }
 
 class MessageDB: TableCodable {
-    var CreateTime: Int? = 0
+    var CreateTime: UInt32? = 0
     var Des: Int? // 表示我是否为消息的接收方。
     var ImgStatus: Int? = 0
     var MesLocalID: Int?
@@ -85,7 +85,7 @@ class MessageDB: TableCodable {
     
     func setup(message: BaseMessage) {
         message.createTime = self.CreateTime
-        message.createTime = self.Des
+        message.des = self.Des
         message.imgStatus = self.ImgStatus
         message.mesLocalID = self.MesLocalID
         if self.Type == MessageDBType.text.rawValue {
@@ -102,7 +102,7 @@ class MessageDB: TableCodable {
 
 // MARK: Message
 class BaseMessage {
-    var createTime: Int? = 0
+    var createTime: UInt32? = 0
     var des: Int?
     var imgStatus: Int? = 0
     var mesLocalID: Int?

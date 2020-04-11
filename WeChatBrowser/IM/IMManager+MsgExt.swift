@@ -26,16 +26,6 @@ extension TIMManager {
     }
 
 
-/**
- *  获取好友管理器
- *
- *  此函数待废弃，请直接使用 TIMFriendshipManager 的 sharedInstance 函数
- *
- *  @return 好友管理器，详情请参考 TIMFriendshipManager.h 中的 TIMFriendshipManager 定义
- */
-    func friendshipManager() -> TIMFriendshipManager? {
-        fatalError()
-    }
 
 /**
  *  获取会话数量
