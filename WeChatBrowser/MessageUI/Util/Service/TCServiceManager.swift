@@ -46,9 +46,7 @@ class TCServiceManager {
     
     let userProfileDataProviderService = TUIUserProfileDataProviderService.service
     
-    
-    
-
+    let conversationDataProviderService = TUIConversationDataProviderService()
 //
 //    - (void)registerService:(Protocol *)service implClass:(Class)implClass
 //    {

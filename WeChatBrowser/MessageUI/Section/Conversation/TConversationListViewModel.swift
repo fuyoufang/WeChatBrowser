@@ -49,7 +49,7 @@ class TConversationListViewModel {
     * 加载会话数据
     */
     func loadConversation() {
-        let convs = manager.getConversationList()
+        let convs = manager.conversationList
         update(conversation: convs)
     }
 
@@ -211,6 +211,6 @@ class TConversationListViewModel {
             return nil
         }
         
-        return msg.timestamp()
+        return msg.timestamp
     }
 }

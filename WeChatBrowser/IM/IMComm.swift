@@ -797,7 +797,7 @@ enum TIM_PROFILE_SYSTEM_TYPE: Int {
  *  @param msgs 消息列表
  */
 //typedef void (^TIMGetMsgSucc)(NSArray * msgs);
-typealias TIMGetMsgSucc = () -> [TIMMessage]
+typealias TIMGetMsgSucc = (_ msgs: [TIMMessage]) -> Void
 
 /**
  *  一般操作成功回调
@@ -1280,8 +1280,6 @@ class TIMFriend: TIMCodingModel {
         
         if friendDB.userName == "wxid_4tcp97a6cmfm22" {
             debugPrint("wxid_4tcp97a6cmfm22")
-            let r = TIMFriend.getHeadImage(dbContactHeadImage: friendDB.dbContactHeadImage)
-            debugPrint(r)
         }
         // "(\0\u{08}\0\u{10}\0 \0"
 //        friendDB.dbContactLocal: Data?

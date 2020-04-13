@@ -70,6 +70,15 @@
 		C555FFB9243F26FB00997166 /* TUIKitConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFB8243F26FB00997166 /* TUIKitConfig.swift */; };
 		C555FFBB243F280B00997166 /* TUIFaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFBA243F280B00997166 /* TUIFaceView.swift */; };
 		C5CAE63A244410CA00EA0ACB /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAE639244410CA00EA0ACB /* Date.swift */; };
+		C5CAE63C2444565C00EA0ACB /* TUISystemMessageCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAE63B2444565C00EA0ACB /* TUISystemMessageCellData.swift */; };
+		C5CAE63E24445D7200EA0ACB /* TUIFaceMessageCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAE63D24445D7200EA0ACB /* TUIFaceMessageCellData.swift */; };
+		C5CAE64024445D8200EA0ACB /* TUIImageMessageCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAE63F24445D8200EA0ACB /* TUIImageMessageCellData.swift */; };
+		C5CAE64224445DA100EA0ACB /* TUIVideoMessageCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAE64124445DA100EA0ACB /* TUIVideoMessageCellData.swift */; };
+		C5CAE64424445DAD00EA0ACB /* TUIVoiceMessageCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAE64324445DAD00EA0ACB /* TUIVoiceMessageCellData.swift */; };
+		C5CAE64624445DBB00EA0ACB /* TUIFileMessageCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAE64524445DBB00EA0ACB /* TUIFileMessageCellData.swift */; };
+		C5CAE64824445DCA00EA0ACB /* TUIJoinGroupMessageCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAE64724445DCA00EA0ACB /* TUIJoinGroupMessageCellData.swift */; };
+		C5CAE64A244464A800EA0ACB /* TUIConversationDataProviderServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAE649244464A800EA0ACB /* TUIConversationDataProviderServiceProtocol.swift */; };
+		C5CAE64C2444654500EA0ACB /* TUIConversationDataProviderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAE64B2444654500EA0ACB /* TUIConversationDataProviderService.swift */; };
 		C5FB3DA2243DBB1E00C09814 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB3DA1243DBB1E00C09814 /* AppDelegate.swift */; };
 		C5FB3DA4243DBB1E00C09814 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB3DA3243DBB1E00C09814 /* ViewController.swift */; };
 		C5FB3DA6243DBB2100C09814 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5FB3DA5243DBB2100C09814 /* Assets.xcassets */; };
@@ -198,6 +207,15 @@
 		C555FFB8243F26FB00997166 /* TUIKitConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIKitConfig.swift; sourceTree = "<group>"; };
 		C555FFBA243F280B00997166 /* TUIFaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIFaceView.swift; sourceTree = "<group>"; };
 		C5CAE639244410CA00EA0ACB /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		C5CAE63B2444565C00EA0ACB /* TUISystemMessageCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUISystemMessageCellData.swift; sourceTree = "<group>"; };
+		C5CAE63D24445D7200EA0ACB /* TUIFaceMessageCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIFaceMessageCellData.swift; sourceTree = "<group>"; };
+		C5CAE63F24445D8200EA0ACB /* TUIImageMessageCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIImageMessageCellData.swift; sourceTree = "<group>"; };
+		C5CAE64124445DA100EA0ACB /* TUIVideoMessageCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIVideoMessageCellData.swift; sourceTree = "<group>"; };
+		C5CAE64324445DAD00EA0ACB /* TUIVoiceMessageCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIVoiceMessageCellData.swift; sourceTree = "<group>"; };
+		C5CAE64524445DBB00EA0ACB /* TUIFileMessageCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIFileMessageCellData.swift; sourceTree = "<group>"; };
+		C5CAE64724445DCA00EA0ACB /* TUIJoinGroupMessageCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIJoinGroupMessageCellData.swift; sourceTree = "<group>"; };
+		C5CAE649244464A800EA0ACB /* TUIConversationDataProviderServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIConversationDataProviderServiceProtocol.swift; sourceTree = "<group>"; };
+		C5CAE64B2444654500EA0ACB /* TUIConversationDataProviderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIConversationDataProviderService.swift; sourceTree = "<group>"; };
 		C5FB3D9E243DBB1E00C09814 /* WeChatBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeChatBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5FB3DA1243DBB1E00C09814 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5FB3DA3243DBB1E00C09814 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -357,6 +375,7 @@
 			children = (
 				C5505B1D2440553400B8F0AC /* TUIUserProfileDataProviderServiceProtocol.swift */,
 				C5505B21244057B100B8F0AC /* TUIMessageDataProviderServiceProtocol.swift */,
+				C5CAE649244464A800EA0ACB /* TUIConversationDataProviderServiceProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -366,6 +385,7 @@
 			children = (
 				C5505B26244064DF00B8F0AC /* TUIUserProfileDataProviderService.swift */,
 				C5535A4E2441C0F9005B4A23 /* TUIMessageDataProviderService.swift */,
+				C5CAE64B2444654500EA0ACB /* TUIConversationDataProviderService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -467,6 +487,13 @@
 				C555FF8C243EAB2100997166 /* UIMessageCellData.swift */,
 				C555FFB3243F1DD600997166 /* TUIBubbleMessageCellData.swift */,
 				C555FFB5243F21EE00997166 /* TUITextMessageCellData.swift */,
+				C5CAE63B2444565C00EA0ACB /* TUISystemMessageCellData.swift */,
+				C5CAE63D24445D7200EA0ACB /* TUIFaceMessageCellData.swift */,
+				C5CAE63F24445D8200EA0ACB /* TUIImageMessageCellData.swift */,
+				C5CAE64124445DA100EA0ACB /* TUIVideoMessageCellData.swift */,
+				C5CAE64324445DAD00EA0ACB /* TUIVoiceMessageCellData.swift */,
+				C5CAE64524445DBB00EA0ACB /* TUIFileMessageCellData.swift */,
+				C5CAE64724445DCA00EA0ACB /* TUIJoinGroupMessageCellData.swift */,
 			);
 			path = CellData;
 			sourceTree = "<group>";
@@ -912,9 +939,11 @@
 				C555FFBB243F280B00997166 /* TUIFaceView.swift in Sources */,
 				C5505B1924404D2000B8F0AC /* TCServiceManager.swift in Sources */,
 				C555FF98243EBA7800997166 /* IMConversation+MsgExt.swift in Sources */,
+				C5CAE64024445D8200EA0ACB /* TUIImageMessageCellData.swift in Sources */,
 				C555FFA9243F0B0200997166 /* TUIIncommingTextCellLayout.swift in Sources */,
 				C5FB4085243DD54B00C09814 /* TextMessageCell.swift in Sources */,
 				C555FF8A243EA7A000997166 /* TCommonCellData.swift in Sources */,
+				C5CAE63C2444565C00EA0ACB /* TUISystemMessageCellData.swift in Sources */,
 				C5505B08244022D400B8F0AC /* TableRowView.swift in Sources */,
 				C555FFB4243F1DD600997166 /* TUIBubbleMessageCellData.swift in Sources */,
 				C5505B3A2440715000B8F0AC /* MessageManager.swift in Sources */,
@@ -928,6 +957,7 @@
 				C555FFAF243F0B8C00997166 /* TUISystemMessageCellLayout.swift in Sources */,
 				C555FFB6243F21EE00997166 /* TUITextMessageCellData.swift in Sources */,
 				C555FF94243EBA4C00997166 /* IMCallback.swift in Sources */,
+				C5CAE64C2444654500EA0ACB /* TUIConversationDataProviderService.swift in Sources */,
 				C5505AF12440011B00B8F0AC /* ConversationCellView.swift in Sources */,
 				C5505B0D2440477600B8F0AC /* TConversationListViewModel.swift in Sources */,
 				C5505B372440715000B8F0AC /* Message.swift in Sources */,
@@ -944,13 +974,17 @@
 				C5CAE63A244410CA00EA0ACB /* Date.swift in Sources */,
 				C5505B43244074D300B8F0AC /* TableViewController.swift in Sources */,
 				C5535A4F2441C0F9005B4A23 /* TUIMessageDataProviderService.swift in Sources */,
+				C5CAE64A244464A800EA0ACB /* TUIConversationDataProviderServiceProtocol.swift in Sources */,
 				C555FFAB243F0B4300997166 /* TUIMessageCellLayout.swift in Sources */,
 				C5505B0A2440248E00B8F0AC /* AppCoordinator.swift in Sources */,
+				C5CAE63E24445D7200EA0ACB /* TUIFaceMessageCellData.swift in Sources */,
 				C5505B412440745400B8F0AC /* UserListViewController.swift in Sources */,
 				C5FB3DA4243DBB1E00C09814 /* ViewController.swift in Sources */,
 				C5505AF924401BD500B8F0AC /* ConversationListController.swift in Sources */,
+				C5CAE64624445DBB00EA0ACB /* TUIFileMessageCellData.swift in Sources */,
 				C555FFA2243EBAFA00997166 /* IMManager.swift in Sources */,
 				C5505B3C2440715000B8F0AC /* MessageURLTool.swift in Sources */,
+				C5CAE64224445DA100EA0ACB /* TUIVideoMessageCellData.swift in Sources */,
 				C5FB406D243DD4DA00C09814 /* BubbleMessageCell.swift in Sources */,
 				C555FF88243EA66800997166 /* Label.swift in Sources */,
 				C5FB4079243DD52000C09814 /* ImageMessageCell.swift in Sources */,
@@ -972,6 +1006,7 @@
 				C5FB3DCF243DBDE000C09814 /* UsersMessageViewController.swift in Sources */,
 				C555FF8D243EAB2100997166 /* UIMessageCellData.swift in Sources */,
 				C5505B2424405CF500B8F0AC /* TUIKit.swift in Sources */,
+				C5CAE64824445DCA00EA0ACB /* TUIJoinGroupMessageCellData.swift in Sources */,
 				C555FFA4243EBB0A00997166 /* IMManager+MsgExt.swift in Sources */,
 				C5FB408D243DD57200C09814 /* VoiceMessageCell.swift in Sources */,
 				C5505B202440558800B8F0AC /* TCServiceProtocol.swift in Sources */,
@@ -979,6 +1014,7 @@
 				C5FB3DD2243DBE6A00C09814 /* UsersMessageState.swift in Sources */,
 				C5FB3DA2243DBB1E00C09814 /* AppDelegate.swift in Sources */,
 				C5FB407D243DD53100C09814 /* JoinGroupMessageCell.swift in Sources */,
+				C5CAE64424445DAD00EA0ACB /* TUIVoiceMessageCellData.swift in Sources */,
 				C5505B1624404C9200B8F0AC /* TIMMessage+DataProvider.swift in Sources */,
 				C5505B362440715000B8F0AC /* Friend.swift in Sources */,
 				C5535A4D24416609005B4A23 /* TIMUserManager.swift in Sources */,

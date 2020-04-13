@@ -403,49 +403,49 @@ class TUIMessageDataProviderService: TUIMessageDataProviderServiceProtocol {
     //        }
     //        return nil;
     //    }
-    //
-    //    - (TUISystemMessageCellData *) getRevokeCellData:(TIMMessage *)message{
-    //
-    //        TUISystemMessageCellData *revoke = [[TUISystemMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
-    //
-    //        //此处若根据 message.Status 返回撤回字符串的话，会在 messageController 的 onRevoke 回调时发生错误，因为回调函数为异步，执行至此处时 status 还未更改，导致返回错误结果。若强行等待/同步可能造成更大问题。
-    //        //所以此处将 getDisplayString 中的处理逻辑复制到此处。在今后更改撤回消息的逻辑时，注意要在此处和 getDisplayString 中同步更改。
-    //        //TODO 在今后发现更好的解决方案时，进一步在此优化。
-    //        //revoke.content = [self getDisplayString:message];
-    //        if ([[message getConversation] getType] == TIM_GROUP) {
-    //            //对于群组消息的名称显示，优先显示群名片，昵称优先级其次，用户ID优先级最低。
-    //            NSString *userString = [message getSenderGroupMemberProfile].nameCard;;
-    //            if(userString == nil || userString.length == 0){
-    //                TIMUserProfile *userProfile = [[TIMFriendshipManager sharedInstance] queryUserProfile:message.sender];
-    //                if (userProfile) {
-    //                    userString = userProfile.showName;
-    //                } else {
-    //                    userString = message.sender;
-    //                }
-    //            }
-    //            TUIJoinGroupMessageCellData *joinGroupData = [[TUIJoinGroupMessageCellData alloc] initWithDirection:MsgDirectionIncoming];
-    //            joinGroupData.content = [NSString stringWithFormat:@"\"%@\"撤回了一条消息", userString];
-    //            [joinGroupData.userName addObject:userString];
-    //            [joinGroupData.userID addObject:message.sender];
-    //            if(joinGroupData.userName.count && joinGroupData.userName.count == joinGroupData.userID.count){
-    //                return joinGroupData;
-    //            }
-    //        }
-    //
-    //
-    //
-    //        if(message.isSelf){
-    //            revoke.content = @"你撤回了一条消息";
-    //        }
-    //        else if ([[message getConversation] getType] == TIM_C2C){
-    //            revoke.content = @"对方撤回了一条消息";
-    //        }
-    //
-    //        revoke.innerMessage = message;
-    //
-    //        return revoke;
-    //
-    //    }
+    func getRevokeCellData(message: TIMMessage) -> TUISystemMessageCellData {
+        fatalError()    
+        //        TUISystemMessageCellData *revoke = [[TUISystemMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
+        //
+        //        //此处若根据 message.Status 返回撤回字符串的话，会在 messageController 的 onRevoke 回调时发生错误，因为回调函数为异步，执行至此处时 status 还未更改，导致返回错误结果。若强行等待/同步可能造成更大问题。
+        //        //所以此处将 getDisplayString 中的处理逻辑复制到此处。在今后更改撤回消息的逻辑时，注意要在此处和 getDisplayString 中同步更改。
+        //        //TODO 在今后发现更好的解决方案时，进一步在此优化。
+        //        //revoke.content = [self getDisplayString:message];
+        //        if ([[message getConversation] getType] == TIM_GROUP) {
+        //            //对于群组消息的名称显示，优先显示群名片，昵称优先级其次，用户ID优先级最低。
+        //            NSString *userString = [message getSenderGroupMemberProfile].nameCard;;
+        //            if(userString == nil || userString.length == 0){
+        //                TIMUserProfile *userProfile = [[TIMFriendshipManager sharedInstance] queryUserProfile:message.sender];
+        //                if (userProfile) {
+        //                    userString = userProfile.showName;
+        //                } else {
+        //                    userString = message.sender;
+        //                }
+        //            }
+        //            TUIJoinGroupMessageCellData *joinGroupData = [[TUIJoinGroupMessageCellData alloc] initWithDirection:MsgDirectionIncoming];
+        //            joinGroupData.content = [NSString stringWithFormat:@"\"%@\"撤回了一条消息", userString];
+        //            [joinGroupData.userName addObject:userString];
+        //            [joinGroupData.userID addObject:message.sender];
+        //            if(joinGroupData.userName.count && joinGroupData.userName.count == joinGroupData.userID.count){
+        //                return joinGroupData;
+        //            }
+        //        }
+        //
+        //
+        //
+        //        if(message.isSelf){
+        //            revoke.content = @"你撤回了一条消息";
+        //        }
+        //        else if ([[message getConversation] getType] == TIM_C2C){
+        //            revoke.content = @"对方撤回了一条消息";
+        //        }
+        //
+        //        revoke.innerMessage = message;
+        //
+        //        return revoke;
+        //
+    }
+    
     func getOpUser(fromTip tip: TIMGroupTipsElem) -> String? {
         if let nameCard = tip.opGroupMemberInfo?.nameCard, !nameCard.isEmpty {
             return nameCard

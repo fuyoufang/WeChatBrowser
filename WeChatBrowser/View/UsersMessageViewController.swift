@@ -89,8 +89,30 @@ final class UsersMessageViewController: NSSplitViewController {
         return userListViewController.selectedUserManager.value
     }
     
+    var selectedConversation: Observable<TIMConversation?> {
+        return conversationListController.selectedConversation.asObservable()
+    }
+
+    var selectedConversationValue: TIMConversation? {
+        return conversationListController.selectedConversation.value
+    }
+    
     func setupBind() {
         bind(user: selectedUserManager, to: conversationListController)
+        bind(conversation: selectedConversation, to: conversationMessageController)
+    }
+    
+    func bind(conversation: Observable<TIMConversation?>, to conversationMessageController: ConversationMessageController) {
+
+        conversation.subscribeOn(MainScheduler.instance)
+            .subscribe(onNext: { conversation in
+            NSAnimationContext.runAnimationGroup({ context in
+                context.duration = 0.35
+
+                conversationMessageController.conversation = conversation
+            })
+
+        }).disposed(by: disposeBag)
     }
     
     func bind(user: Observable<TIMUserManager?>, to conversationList: ConversationListController) {

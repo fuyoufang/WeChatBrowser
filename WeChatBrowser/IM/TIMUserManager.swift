@@ -47,7 +47,7 @@ class TIMUserManager {
         }
     }
     
-    func getConversationList() -> [TIMConversation] {
+    private func getConversationList() -> [TIMConversation] {
 
         guard let chatTableNames = userData.chatTableNames else {
             return []
@@ -80,6 +80,8 @@ class TIMUserManager {
      *  @return 会话对象，详情请参考 TIMConversation.h 里面的 TIMConversation 定义
      */
     func getConversation(type: TIMConversationType, conversationId: String) -> TIMConversation? {
-        fatalError()
+        return conversationList.first { (conversation) -> Bool in
+            return conversation.getType() == type && conversation.receiver == conversationId
+        }
     }
 }

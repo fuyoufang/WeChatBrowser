@@ -411,7 +411,7 @@ class TIMFriendPendencyRequest: TIMCodingModel {
      * 翻页时间戳，只用来翻页，server返回0时表示没有更多数据，第一次请求填0
      *    特别注意的是，如果server返回的seq跟填入的seq不同，翻页过程中，需要使用客户端原始seq请求，直到数据请求完毕，才能更新本地seq
      */
-    var timestamp: UInt64?
+    var timestamp: UInt64 = 0
     
     /**
      * 每页的数量，即本次请求最多返回多个数据，最大不超过 100，设置太大一次请求回包的时间会过长。默认值100

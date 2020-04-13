@@ -9,16 +9,14 @@
 import Foundation
 
 extension TIMMessage {
-
-//-(id)cellDataFromElem:(TIMElem *)elem{
-//    id<TUIMessageDataProviderServiceProtocol> expr = [[TCServiceManager shareInstance] createService:@protocol(TUIMessageDataProviderServiceProtocol)];
-//    return [expr getCellData:self fromElem:elem];
-//}
-
     var expr: TUIMessageDataProviderServiceProtocol {
         get {
             return TCServiceManager.shareInstance().messageDataProviderService
         }
+    }
+    
+    func cellData(fromElem elem: TIMElem) -> TUIMessageCellData? {
+        return expr.getCellData(message: self, fromElem: elem)
     }
 
     func getDisplayString(friendshipManager: TIMFriendshipManager) -> String? {
@@ -54,9 +52,8 @@ extension TIMMessage {
 //    id<TUIMessageDataProviderServiceProtocol> expr = [[TCServiceManager shareInstance] createService:@protocol(TUIMessageDataProviderServiceProtocol)];
 //    return [expr getFileCellData:self fromElem:elem];
 //}
-//- (TUISystemMessageCellData *) revokeCellData{
-//    id<TUIMessageDataProviderServiceProtocol> expr = [[TCServiceManager shareInstance] createService:@protocol(TUIMessageDataProviderServiceProtocol)];
-//    return [expr getRevokeCellData:self];
-//}
+    func revokeCellData() -> TUISystemMessageCellData {
+        return expr.getRevokeCellData(message: self)
+    }
 
 }

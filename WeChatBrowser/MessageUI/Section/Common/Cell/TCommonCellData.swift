@@ -11,7 +11,7 @@ import Foundation
 class TCommonCellData {
     var reuseId: String?
 
-    func height(ofWidth width: Float) -> Float {
+    func height(ofWidth width: CGFloat) -> CGFloat {
         return 44
     }
 }

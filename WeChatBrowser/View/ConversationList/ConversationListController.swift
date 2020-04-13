@@ -13,6 +13,7 @@ import RxSwift
 class ConversationListController: TableViewController {
     
     // MARK: Properies
+    private let disposeBag = DisposeBag()
     var userManager: TIMUserManager? {
         didSet {
             refreshViewModel()
@@ -26,7 +27,7 @@ class ConversationListController: TableViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         
-        identifier = NSUserInterfaceItemIdentifier(rawValue: "videosList")
+        identifier = NSUserInterfaceItemIdentifier(rawValue: "ConversationListController")
     }
     
     required init?(coder: NSCoder) {
@@ -39,6 +40,19 @@ class ConversationListController: TableViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = Metrics.sessionRowHeight
+        
+        tableView.rx.selectedRow.map { [weak self] index -> TIMConversation? in
+            guard let self = self else { return nil }
+            guard let index = index else { return nil }
+            guard let data = self.viewModel?.dataList[index] else {
+                return nil
+            }
+            guard let convId = data.convId else {
+                return nil
+            }
+            let conversation = self.userManager?.getConversation(type: data.convType, conversationId: convId)
+            return conversation
+        }.bind(to: selectedConversation).disposed(by: disposeBag)
     }
     
     override func viewDidAppear() {
@@ -132,7 +146,6 @@ extension ConversationListController: NSTableViewDataSource, NSTableViewDelegate
     func tableViewSelectionDidChange(_ notification: Notification) {
         
         debugPrint(tableView.selectedRow)
-        
     }
     
 }

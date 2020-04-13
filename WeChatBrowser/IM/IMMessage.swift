@@ -113,8 +113,8 @@ class TIMMessage {
      *
      *  @return 时间戳
      */
-    var _timestamp: Date?
-    func timestamp() -> Date? {
+    private var _timestamp: Date?
+    var timestamp: Date {
         if _timestamp == nil {
             if let createTime = messageDB.CreateTime {
                 _timestamp = Date(timeIntervalSince1970: TimeInterval(createTime))

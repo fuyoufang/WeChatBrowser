@@ -42,5 +42,5 @@ protocol TUIMessageDataProviderServiceProtocol {
 //
 //- (TUISystemMessageCellData *) getSystemCellData:(TIMMessage *)message formElem:(TIMElem *)elem;
 //
-//- (TUISystemMessageCellData *) getRevokeCellData:(TIMMessage *)message;
+    func getRevokeCellData(message: TIMMessage) -> TUISystemMessageCellData
 }

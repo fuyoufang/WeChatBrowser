@@ -90,8 +90,8 @@ class TUIConversationCellData: TCommonCellData {
     var isOnTop: Bool = false
     
     
-    override func height(ofWidth width: Float) -> Float {
-        return Float(TConversationCell_Height)
+    override func height(ofWidth width: CGFloat) -> CGFloat {
+        return TConversationCell_Height
     }
     
     

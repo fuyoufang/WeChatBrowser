@@ -75,7 +75,7 @@ class TIMConversation {
      *
      *  @return 最后一条消息
      */
-    var lastMsg: TIMMessage?
+    private var lastMsg: TIMMessage?
     
     func getLastMsg() -> TIMMessage? {
         if lastMsg == nil {
@@ -84,6 +84,20 @@ class TIMConversation {
             }
         }
         return lastMsg
+    }
+    
+    func getLocalMessage(count: Int, last: TIMMessage?, succ: TIMGetMsgSucc, fail:TIMFail) -> Bool {
+        do {
+            if last != nil {
+//                fatalError()
+            }
+            let msssage: [TIMMessage] = try database.getObjects(fromTable: tableName, limit: count).map { TIMMessage(messageDB: $0)}
+            succ(msssage)
+            
+        } catch let e {
+            debugPrint(e)
+        }
+        return true
     }
     
     // MARK: 五，获取会话信息
