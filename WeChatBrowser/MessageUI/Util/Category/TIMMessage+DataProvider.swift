@@ -21,8 +21,8 @@ extension TIMMessage {
         }
     }
 
-    func getDisplayString() -> String? {
-        return expr.getDisplayString(message: self)
+    func getDisplayString(friendshipManager: TIMFriendshipManager) -> String? {
+        return expr.getDisplayString(friendshipManager: friendshipManager, message: self)
     }
 
 //- (TUITextMessageCellData *) textCellDataFromElem:(TIMTextElem *)elem{

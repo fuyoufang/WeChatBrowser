@@ -7,36 +7,38 @@
 //
 
 import Foundation
+import WCDBSwift
 
 class TIMFriendshipManager {
     
-    var _userProfiles: [TIMUserProfile]?
-    var userProfiles: [TIMUserProfile] {
+    var _friends: [TIMFriend]?
+    var friends: [TIMFriend] {
         get {
-            if _userProfiles == nil {
-                _userProfiles = getUserProfiles()
+            if _friends == nil {
+                _friends = getFriendList()
             }
-            return _userProfiles!
+            return _friends!
         }
     }
     
-    var _friend: [TIMFriend]?
-    var friend: [TIMFriend] {
+    var _friendDBs: [FriendDB]?
+    public var friendDBs: [FriendDB] {
         get {
-            if _friend == nil {
-                _friend = getFriendList()
+            if _friendDBs == nil {
+                _friendDBs = getFriendDBs()
             }
-            return _friend!
+            return _friendDBs!
         }
     }
+    
     /**
      *  获取好友管理器实例
      *
      *  @return 管理器实例
      */
-    let userData: UserDataManager
-    init(userData: UserDataManager) {
-        self.userData = userData
+    let contactDatabase: Database
+    init(contactDatabase: Database) {
+        self.contactDatabase = contactDatabase
     }
     
     /**
@@ -70,13 +72,18 @@ class TIMFriendshipManager {
      *  @return 返回缓存的资料，未找到返回nil
      */
     func queryUserProfile(_ identifier: String) -> TIMUserProfile? {
-        return userProfiles.first { (profile) -> Bool in
-            return profile.identifier == identifier
-        }
+        return friends.first { (friend) -> Bool in
+            return friend.identifier == identifier
+        }?.profile
     }
     
-    
-    func getUserProfiles() -> [TIMUserProfile] {
+    private func getFriendDBs() -> [FriendDB] {
+        do {
+            let friendDBs: [FriendDB] = try self.contactDatabase.getObjects(fromTable: FriendTable)
+            return friendDBs
+        } catch let e {
+            debugPrint(e)
+        }
         return []
     }
     
@@ -89,7 +96,9 @@ class TIMFriendshipManager {
      *  @note 缓存数据来自于上一次调用getFriendList，请确保已调用了获取好友列表方法
      */
     func queryFriend(identifier: String) -> TIMFriend? {
-        fatalError()
+        return friends.first { (item) -> Bool in
+            return item.identifier == identifier
+        }
     }
     
     /**
@@ -99,18 +108,12 @@ class TIMFriendshipManager {
      *  @note 缓存数据来自于上一次调用getFriendList，请确保已调用了获取好友列表方法
      */
     private func getFriendList() -> [TIMFriend] {
-        let friendDBs = userData.friendsDBs
         return friendDBs.compactMap { (friendDB) -> TIMFriend? in
             guard let userName = friendDB.userName, !userName.hasSuffix("@chatroom") else {
                 return nil
             }
             
-            let profile = TIMUserProfile()
-            profile.identifier = userName
-            
-            let friend = TIMFriend()
-            friend.identifier = userName
-            friend.profile = profile
+            let friend = TIMFriend(friendDB: friendDB)
             return friend
         }
     }

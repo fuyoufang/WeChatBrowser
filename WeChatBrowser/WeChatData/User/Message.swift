@@ -45,7 +45,14 @@ class MessageDB: TableCodable {
     var Status: Int? = 0
     var TableVer: Int? = 1
     var `Type`: Int? // Type 表示消息的类型，
-    
+    var type: MessageDBType? {
+        get {
+            guard let typeValue = self.Type else {
+                return nil
+            }
+            return MessageDBType(rawValue: typeValue)
+        }
+    }
     enum CodingKeys: String, CodingTableKey {
         typealias Root = MessageDB
         static let objectRelationalMapping = TableBinding(CodingKeys.self)

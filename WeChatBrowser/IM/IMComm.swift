@@ -1199,14 +1199,19 @@ class TIMFriend: TIMCodingModel {
     
     /**
      *  好友identifier
+     *  微信号ID，如果以 @chatroom 结尾的，就是群
      */
     var identifier: String?
     
     /**
      *  好友备注（最大96字节，获取自己资料时，该字段为空）
      */
-    var remark: String?
-    
+    var remark: String? {
+        get {
+                return remarks?.first
+        }
+    }
+    var remarks: [String]?
     /**
      *  分组名称 NSString* 列表
      */
@@ -1238,69 +1243,232 @@ class TIMFriend: TIMCodingModel {
      */
     var profile: TIMUserProfile?
     
-}
+    init(friendDB: FriendDB) {
+        self.identifier = friendDB.userName
+        
+        
+//        friendDB.type
+//        friendDB.openIMAppid
+//        friendDB.imgStatus
+//        friendDB.extFlag
+        
+        // nil
+//        friendDB.encodeUserName
+        
+        
+//        friendDB.certificationFlag
+        
+        // nil
+//        friendDB.dbContactBrand
+        
+        
+//        friendDB.dbContactChatRoom: Data? // 为群时有值，说明了群里的所有成员
+        
+        if friendDB.userName == "qq_fuyoufang" {
+            debugPrint("qq_fuyoufang")
+        }
+        
+        remarks = TIMFriend.getRemarkData(dbContactRemark: friendDB.dbContactRemark)
+        
+        
+        
+        if remarks?.first?.hasPrefix("花爷") ?? false {
+            debugPrint("花爷")
+        }
+        
+        headImage = TIMFriend.getHeadImage(dbContactHeadImage: friendDB.dbContactHeadImage)
+        
+        if friendDB.userName == "wxid_4tcp97a6cmfm22" {
+            debugPrint("wxid_4tcp97a6cmfm22")
+            let r = TIMFriend.getHeadImage(dbContactHeadImage: friendDB.dbContactHeadImage)
+            debugPrint(r)
+        }
+        // "(\0\u{08}\0\u{10}\0 \0"
+//        friendDB.dbContactLocal: Data?
+        
+        
+//        friendDB.dbContactOpenIM: Data?
+        
+        // "\u{08}\0\u{10}\0\"\0"
+//        friendDB.dbContactOther: Data?
+        
+        // "*\0\u{12}\u{02}CN\u{1A}\u{05}Hebei\"\u{07}Baoding\u{08}\0"
+//        friendDB.dbContactProfile: Data?
+        
+        
+        
+//        friendDB.dbContactSocial: Data?
+        
+        let profile = TIMUserProfile()
+        profile.identifier = friendDB.userName
+        profile.faceURL = headImage?.faceURL
+        profile.selfSignature = friendDB.dbContactProfile
+        self.profile = profile
+    }
+    
+//    private var _chatRoom: FriendDBChatRoom?
+//    var chatRoom: FriendDBChatRoom? {
+//        get {
+//            if _chatRoom == nil {
+//                _chatRoom = getChatRoomData()
+//            }
+//            return _chatRoom
+//        }
+//    }
+//
+//    private func getChatRoomData() -> FriendDBChatRoom? {
+//        guard let dbContactChatRoom = self.dbContactChatRoom else {
+//            return nil
+//        }
+//        let chatRoomBytes = dbContactChatRoom.withUnsafeBytes {
+//            [UInt8](UnsafeBufferPointer(start: $0, count: dbContactChatRoom.count))
+//        }
+//
+//        #warning("TODO , 编码方式不对")
+//        guard let result = String(data: dbContactChatRoom, encoding: .utf32) else {
+//            return nil
+//        }
+//
+//
+//        return nil
+//    }
+    
+    var _isGroup: Bool? = nil
+    var isGroup: Bool {
+        get {
+            if _isGroup == nil {
+                _isGroup = (identifier ?? "").hasSuffix("@chatroom")
+            }
+            return _isGroup!
+        }
+    }
+    
+    var headImage: HeadImage?
+    
+    
+    private class func getHeadImage(dbContactHeadImage: Data?) -> HeadImage? {
+        
+        guard let dbContactHeadImage = dbContactHeadImage else {
+            return nil
+        }
+        
+        let remarkBytes = dbContactHeadImage.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: dbContactHeadImage.count))
+        }
+        
+        guard let result = String(data: dbContactHeadImage, encoding: .ascii) else {
+            return nil
+        }
+        /*
+        result 的结构可能为
+         样式1：\u{12}\{01}链接一\u{08}\u{03}\u{1A}\u{01}链接二" 一串数字(不知道什么作用)
+         样式2：\u{12}\{01}链接一\u{08}\u{03}\u{1A}\u{01}链接二"\u{0}
+         样式3：\u{12}\{01}链接一\u{08}\u{03}\u{1A}\u{01}链接二\u{0}
+        */
+        
+        let start = "\u{12}" // 开始
+        let end = "\u{0}" // 结束
+        let separator = String("\u{08}\u{03}\u{1A}")
+        
+        guard let startRange = result.range(of: start) else {
+            return nil
+        }
+        var endIndex = result.endIndex
 
-/**
- *  创建群参数
- */
-class TIMCreateGroupInfo: TIMCodingModel {
+        if let endRange = result.range(of: "\" ") {
+            endIndex = endRange.lowerBound
+        } else if let endRange = result.range(of: end)  {
+            endIndex = endRange.lowerBound
+        }
+        let info = String(result[startRange.upperBound..<endIndex])
+        
+        
+        if let separatorRange = info.range(of: separator) {
+            
+            let url1 = String(info[info.index(after: info.startIndex)..<separatorRange.lowerBound])
+            
+            let url2 = String(info[info.index(after: separatorRange.upperBound)..<info.endIndex])
+            return getHeadImage(texts: [url1, url2])
+        } else {
+            return getHeadImage(texts: [String(info)])
+        }
+    }
     
-    /**
-     *  群组Id,nil则使用系统默认Id
-     */
-    var group: String?
+    private class func getHeadImage(texts: [String]) -> HeadImage {
+        var headImage = HeadImage()
+        for text in texts {
+            guard text.count > 2 else {
+                continue
+            }
+            
+            let first = text[..<text.index(text.startIndex, offsetBy: 1)]
+            let start = text.index(text.startIndex, offsetBy: 1)
+            
+            
+            switch first {
+            case "T":
+                let imageURL = String(text[start...]).replacingOccurrences(of: "\"", with: "")
+                headImage.t = imageURL
+            case "R":
+                let imageURL = String(text[start...]).replacingOccurrences(of: "\"", with: "")
+                headImage.r = imageURL
+            case "S":
+                let imageURL = String(text[start...]).replacingOccurrences(of: "\"", with: "")
+                headImage.s = imageURL
+            case "U":
+                let imageURL = String(text[start...]).replacingOccurrences(of: "\"", with: "")
+                headImage.u = imageURL
+            case "\u{01}":
+                let imageURL = String(text[start...]).replacingOccurrences(of: "\"", with: "")
+                if headImage.t == nil {
+                    headImage.t = imageURL
+                } else {
+                    headImage.r = imageURL
+                }
+            default:
+                if headImage.t == nil {
+                    headImage.t = text.replacingOccurrences(of: "\"", with: "")
+                } else {
+                    headImage.r = text.replacingOccurrences(of: "\"", with: "")
+                }
+            }
+        }
+        return headImage
+    }
     
-    /**
-     *  群名
-     */
-    var groupName: String?
-    
-    /**
-     *  群类型：Private,Public,ChatRoom,AVChatRoom,BChatRoom
-     */
-    var groupType: String?
-    
-    /**
-     *  是否设置入群选项，Private类型群组请设置为false
-     */
-    var setAddOpt: Bool?
-    
-    /**
-     *  入群选项
-     */
-    var addOpt: TIMGroupAddOpt?
-    
-    /**
-     *  最大成员数，填0则系统使用默认值
-     */
-    
-    var maxMemberNum: UInt32?
-    
-    /**
-     *  群公告
-     */
-    var notification: String?
-    
-    /**
-     *  群简介
-     */
-    var introduction: String?
-    
-    /**
-     *  群头像
-     */
-    var faceURL: String?
-    
-    /**
-     *  自定义字段集合,key是NSString*类型,value是Data*类型
-     */
-    var customInfo: [String : Data]?
-    
-    /**
-     *  创建成员（TIMCreateGroupMemberInfo*）列表
-     */
-    var membersInfo: [TIMCreateGroupMemberInfo]?
-    
+    // 解析 dbContactRemark
+    private class func getRemarkData(dbContactRemark: Data?) -> [String]? {
+        guard let dbContactRemark = dbContactRemark else {
+            return nil
+        }
+        
+        let remarkBytes = dbContactRemark.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: dbContactRemark.count))
+        }
+        var remarks = [String]()
+        var len: UInt8 = 0
+        var index: UInt8 = 0
+        while true {
+            index += 1
+            if index > remarkBytes.count {
+                break
+            }
+            len = remarkBytes[Int(index)]
+            index += 1
+            if index + len > remarkBytes.count {
+                break
+            }
+
+            let remark = String(data: dbContactRemark[Int(index)..<Int(index + len)], encoding: .utf8)
+            guard remark != nil else {
+                continue
+            }
+            remarks.append(remark!)
+            
+            index += len
+        }
+        return remarks
+    }
 }
 
 /**

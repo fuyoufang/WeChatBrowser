@@ -69,6 +69,7 @@
 		C555FFB6243F21EE00997166 /* TUITextMessageCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFB5243F21EE00997166 /* TUITextMessageCellData.swift */; };
 		C555FFB9243F26FB00997166 /* TUIKitConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFB8243F26FB00997166 /* TUIKitConfig.swift */; };
 		C555FFBB243F280B00997166 /* TUIFaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFBA243F280B00997166 /* TUIFaceView.swift */; };
+		C5CAE63A244410CA00EA0ACB /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAE639244410CA00EA0ACB /* Date.swift */; };
 		C5FB3DA2243DBB1E00C09814 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB3DA1243DBB1E00C09814 /* AppDelegate.swift */; };
 		C5FB3DA4243DBB1E00C09814 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FB3DA3243DBB1E00C09814 /* ViewController.swift */; };
 		C5FB3DA6243DBB2100C09814 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5FB3DA5243DBB2100C09814 /* Assets.xcassets */; };
@@ -196,6 +197,7 @@
 		C555FFB5243F21EE00997166 /* TUITextMessageCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUITextMessageCellData.swift; sourceTree = "<group>"; };
 		C555FFB8243F26FB00997166 /* TUIKitConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIKitConfig.swift; sourceTree = "<group>"; };
 		C555FFBA243F280B00997166 /* TUIFaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIFaceView.swift; sourceTree = "<group>"; };
+		C5CAE639244410CA00EA0ACB /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		C5FB3D9E243DBB1E00C09814 /* WeChatBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeChatBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5FB3DA1243DBB1E00C09814 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C5FB3DA3243DBB1E00C09814 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				C5505AFB24401CC400B8F0AC /* Colors.swift */,
+				C5CAE639244410CA00EA0ACB /* Date.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -938,6 +941,7 @@
 				C5505B042440205800B8F0AC /* TableView.swift in Sources */,
 				C5505B382440715000B8F0AC /* SqliteMaster.swift in Sources */,
 				C555FF9C243EBAA200997166 /* IMFriendshipDefine.swift in Sources */,
+				C5CAE63A244410CA00EA0ACB /* Date.swift in Sources */,
 				C5505B43244074D300B8F0AC /* TableViewController.swift in Sources */,
 				C5535A4F2441C0F9005B4A23 /* TUIMessageDataProviderService.swift in Sources */,
 				C555FFAB243F0B4300997166 /* TUIMessageCellLayout.swift in Sources */,

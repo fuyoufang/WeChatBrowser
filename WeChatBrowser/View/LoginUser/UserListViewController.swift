@@ -42,6 +42,10 @@ class UserListViewController: TableViewController {
             }
             return user
         }.bind(to: selectedUserManager).disposed(by: disposeBag)
+        
+        if let cell = tableView.accessibilityVisibleCells()?.first as? NSCell {
+            tableView.selectCell(cell)
+        }
     }
     
     override func viewDidAppear() {

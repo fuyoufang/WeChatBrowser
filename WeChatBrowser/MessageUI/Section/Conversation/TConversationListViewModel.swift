@@ -78,7 +78,17 @@ class TConversationListViewModel {
                 if let user: TIMUserProfile = manager.friendshipManager.queryUserProfile(convId) {
                     data.title = user.showName(friendshipManager: manager.friendshipManager)
                     if let faceURL = user.faceURL {
+                        #if DEBUG
+                        if let url = URL(string: faceURL) {
+                            data.avatarUrl = url
+                        } else {
+                            debugPrint(faceURL)
+                        }
+                        
+                        #else
                         data.avatarUrl = URL(string: faceURL)
+                        #endif
+                        
                     }
                 } else {
                     missC2CIds[convId] = data
@@ -95,6 +105,8 @@ class TConversationListViewModel {
                 } else {
                     missGroupIds[convId] = data
                 }
+            } else if conv.getType() == .SYSTEM {
+                debugPrint("")
             }
 
             if let listFilter = self.listFilter {
@@ -190,7 +202,7 @@ class TConversationListViewModel {
         guard let msg: TIMMessage = conv.getLastMsg() else {
             return nil
         }
-        return msg.getDisplayString()
+        return msg.getDisplayString(friendshipManager: manager.friendshipManager)
     }
 
     func getLastDisplayDate(_ conv: TIMConversation) -> Date? {

@@ -22,38 +22,45 @@ import Foundation
  IMMessage 由多个 TIMElem 组成，每个 TIMElem 可以是文本和图片，也就是说每一条消息可包含多个文本和多张图片。详情请参考官网文档 [消息收发](https://cloud.tencent.com/document/product/269/9150)
  */
 class TIMMessage {
-    
-    let messageDB: MessageDB
-    init(messageDB: MessageDB) {
-        self.messageDB = messageDB
-    }
-    
-    /**
-     *  1.2 获取对应索引的 Elem
-     *
-     *  @param index 对应索引
-     *
-     *  @return 返回对应 Elem
-     */
-    func getElem(index: Int) -> TIMElem?  {
-        fatalError()
-    }
-    
     /**
      *  1.3 获取 Elem 数量
      *
      *  @return elem数量
      */
-    func elemCount() -> Int {
-        fatalError()
+    let elems: [TIMElem]
+    
+    let messageDB: MessageDB
+    init(messageDB: MessageDB) {
+        self.messageDB = messageDB
+        
+        var elems = [TIMElem]()
+        if let type = messageDB.type {
+            switch type {
+            case .text:
+                let textElem = TIMTextElem()
+                textElem.text = messageDB.Message
+                elems.append(textElem)
+            case .image:
+                let imageList = [TIMImage]()
+                fatalError()
+                let imageElem = TIMImageElem()
+                imageElem.imageList = imageList
+                elems.append(imageElem)
+            default:
+                break
+            }
+        }
+        self.elems = elems
     }
+    
+    
     
     /**
      *  1.5 消息状态
      *
      *  @return IMMessageStatus 消息状态
      */
-    func status() -> IMMessageStatus {
+    var status: IMMessageStatus {
         return .SEND_SUCC
     }
     
@@ -195,7 +202,9 @@ class TIMMessage {
      *
      *  @return 发送者群内资料，nil 表示没有获取到资料或者不是群消息
      */
-    //- (TIMGroupMemberInfo*)getSenderGroupMemberProfile;
+    func getSenderGroupMemberProfile() -> TIMGroupMemberInfo? {
+        fatalError()
+    }
     
     /**
      *  1.24 设置自定义整数，默认为 0
@@ -869,7 +878,7 @@ class TIMGroupTipsElem: TIMElem {
     /**
      *  群Tips类型
      */
-    var type: TIM_GROUP_TIPS_TYPE?
+    var type: TIM_GROUP_TIPS_TYPE = .INVITE
     
     /**
      *  操作人用户名
@@ -907,11 +916,11 @@ class TIMGroupTipsElem: TIMElem {
     /**
      *  变更成员资料
      */
-    var changedUserInfo: [String : TIMUserProfile]?
+    var changedUserInfo = [String : TIMUserProfile]()
     /**
      *  变更成员群内资料
      */
-    var changedGroupMemberInfo: [String : TIMGroupMemberInfo]?
+    var changedGroupMemberInfo = [String : TIMGroupMemberInfo]()
     
     /**
      *  当前群人数： TIM_GROUP_TIPS_TYPE_INVITE、TIM_GROUP_TIPS_TYPE_QUIT_GRP、

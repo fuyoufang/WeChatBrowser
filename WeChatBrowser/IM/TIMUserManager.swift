@@ -13,11 +13,10 @@ class TIMUserManager {
     let friendshipManager: TIMFriendshipManager
     let groupManager: TIMGroupManager
     let userData: UserDataManager
-    public var friendsDB: [FriendDB]?
-        
+    
     init(userData: UserDataManager, user: IMUser) {
         self.user = user
-        self.friendshipManager = TIMFriendshipManager(userData: userData)
+        self.friendshipManager = TIMFriendshipManager(contactDatabase: userData.contactDatabase)
         self.groupManager = TIMGroupManager()
         self.userData = userData
     }
@@ -53,13 +52,13 @@ class TIMUserManager {
         guard let chatTableNames = userData.chatTableNames else {
             return []
         }
-        let friendsDBs = userData.friendsDBs
+        let friends = friendshipManager.friends
         var conversations = [TIMConversation]()
         for tableName in chatTableNames {
             let md5 = tableName.replacingOccurrences(of: ChatTableNamePrefix, with: "")
-            for friendsDB in friendsDBs {
-                if md5 == friendsDB.userName?.MD5() {
-                    conversations.append(TIMConversation(database: userData.chatMessageDatabase, tableName: tableName, friendsDB: friendsDB,friendshipManager: friendshipManager))
+            for friend in friends {
+                if md5 == friend.identifier?.MD5() {
+                    conversations.append(TIMConversation(database: userData.chatMessageDatabase, tableName: tableName, friend: friend, friendshipManager: friendshipManager))
                     break
                 }
             }

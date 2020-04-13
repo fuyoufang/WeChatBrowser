@@ -13,6 +13,7 @@ let FriendTable = "Friend"
 let SqliteMasterTable = "sqlite_master"
 let ChatTableNamePrefix = "Chat_"
 class UserDataManager {
+    
     public var chatTableNames: [String]? {
         get {
             if _chatTableNames == nil {
@@ -21,19 +22,11 @@ class UserDataManager {
             return _chatTableNames
         }
     }
-    private var _friendDBs: [FriendDB]?
-    public var friendsDBs: [FriendDB] {
-        get {
-            if _friendDBs == nil {
-                _friendDBs = getFriendsFromDB()
-            }
-            return _friendDBs!
-        }
-    }
     
     private var filePath: String // 数据路径
     private let contactDBFilePath: String
     
+    private var _friendDBs: [FriendDB]?
     private var _chatTableNames: [String]?
     let contactDatabase: Database
     let chatMessageDatabase: Database
@@ -63,16 +56,7 @@ class UserDataManager {
         }
     }
     
-    private func getFriendsFromDB() -> [FriendDB] {
-        
-        do {
-            let friendDBs: [FriendDB] = try self.contactDatabase.getObjects(fromTable: FriendTable)
-            return friendDBs
-        } catch let e {
-            debugPrint(e)
-        }
-        return []
-    }
+    
     
     func getChatTableNames() -> [String] {
         var chatTableNames = [String]()

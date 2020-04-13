@@ -25,12 +25,12 @@ class TIMConversation {
     private let database: Database
     private let tableName: String
     private let friendshipManager: TIMFriendshipManager
-    private var friendsDB: FriendDB
+    private var friend: TIMFriend
     // MARK: 初始化
-    init(database: Database, tableName: String, friendsDB: FriendDB, friendshipManager: TIMFriendshipManager) {
+    init(database: Database, tableName: String, friend: TIMFriend, friendshipManager: TIMFriendshipManager) {
         self.database = database
         self.tableName = tableName
-        self.friendsDB = friendsDB
+        self.friend = friend
         self.friendshipManager = friendshipManager
     }
     
@@ -101,7 +101,7 @@ class TIMConversation {
      *  @return 会话类型
      */
     func getType() -> TIMConversationType {
-        friendsDB.isGroup ? .GROUP : .C2C
+        friend.isGroup ? .GROUP : .C2C
     }
     
     /**
@@ -113,14 +113,10 @@ class TIMConversation {
      *
      *  @return 会话人
      */
-    var _receiver: String?
     
     var receiver: String {
         get {
-            if _receiver == nil {
-                _receiver = friendsDB.userName ?? ""
-            }
-            return _receiver!
+            friend.identifier ?? ""
         }
     }
     
@@ -132,10 +128,10 @@ class TIMConversation {
      *  @return 群名称
      */
     func getGroupName() -> String? {
-        guard friendsDB.isGroup else {
+        guard friend.isGroup else {
             return nil
         }
-        return friendsDB.remarks?.first ?? "群名"
+        return friend.remarks?.first ?? "群名"
     }
 }
 

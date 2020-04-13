@@ -47,6 +47,10 @@ struct HeadImage {
     var r: String? // 原图
     var u: String?
     var s: String?
+    
+    var faceURL: String? {
+        return ((r ?? t) ?? u) ?? s
+    }
 }
 
 extension HeadImage: CustomDebugStringConvertible {
@@ -84,162 +88,162 @@ class FriendDB: TableCodable {
     var dbContactProfile: Data?
     var dbContactRemark: Data?
     var dbContactSocial: Data?
-    
-    private var _chatRoom: FriendDBChatRoom?
-    var chatRoom: FriendDBChatRoom? {
-        get {
-            if _chatRoom == nil {
-                _chatRoom = getChatRoomData()
-            }
-            return _chatRoom
-        }
-    }
-    
-    private func getChatRoomData() -> FriendDBChatRoom? {
-        guard let dbContactChatRoom = self.dbContactChatRoom else {
-            return nil
-        }
-        let chatRoomBytes = dbContactChatRoom.withUnsafeBytes {
-            [UInt8](UnsafeBufferPointer(start: $0, count: dbContactChatRoom.count))
-        }
-        
-        #warning("TODO , 编码方式不对")
-        guard let result = String(data: dbContactChatRoom, encoding: .utf32) else {
-            return nil
-        }
-        
-        
-        return nil
-    }
-    
-    var _isGroup: Bool? = nil
-    var isGroup: Bool {
-        get {
-            if _isGroup == nil {
-                _isGroup = (userName ?? "").hasSuffix("@chatroom")
-            }
-            return _isGroup!
-        }
-    }
-    
-    private var _remarks: [String]?
-    var remarks: [String]? {
-        get {
-            if _remarks == nil {
-                _remarks = getRemarkData()
-            }
-            return _remarks
-        }
-    }
-    
-    private var _headImage: HeadImage?
-    var headImage: HeadImage? {
-        get {
-            if _headImage == nil {
-                _headImage = getHeadImage()
-            }
-            return _headImage
-        }
-    }
-    
-    private func getHeadImage() -> HeadImage? {
-        guard let dbContactHeadImage = self.dbContactHeadImage else {
-            return nil
-        }
-        let remarkBytes = dbContactHeadImage.withUnsafeBytes {
-            [UInt8](UnsafeBufferPointer(start: $0, count: dbContactHeadImage.count))
-        }
-        
-        guard let result = String(data: dbContactHeadImage, encoding: .utf8) else {
-            return nil
-        }
-        
-        
-        let start = "\u{12}" // 开始
-        let end = "\u{0}" // 结束
-        let separator = String("\u{08}\u{03}\u{1A}")
-        
-        guard let startRange = result.range(of: start) else {
-            return nil
-        }
-        guard let endRange = result.range(of: end) else {
-            return nil
-        }
-        let info = result[startRange.upperBound..<endRange.lowerBound]
-        
-        if let separatorRange = info.range(of: separator) {
-            let url1 = String(result[info.startIndex..<separatorRange.lowerBound])
-            let url2 = String(result[separatorRange.upperBound..<info.endIndex])
-            return getHeadImage(texts: [url1, url2])
-        } else {
-            return getHeadImage(texts: [String(info)])
-        }
-        
-    }
-    
-    private func getHeadImage(texts: [String]) -> HeadImage {
-        var headImage = HeadImage()
-        for text in texts {
-            guard text.count > 2 else {
-                continue
-            }
-            
-            let first = text[..<text.index(text.startIndex, offsetBy: 1)]
-            let start = text.index(text.startIndex, offsetBy: 1)
-            let imageURL = String(text[start...])
-            
-            switch first {
-            case "T":
-                headImage.t = imageURL
-            case "R":
-                headImage.r = imageURL
-            case "S":
-                headImage.s = imageURL
-            case "U":
-                headImage.u = imageURL
-            default:
-                headImage.s = imageURL
-            }
-            if text.hasPrefix("h") {
-                
-            }
-        }
-        return headImage
-    }
-    
-    // 解析 dbContactRemark
-    private func getRemarkData() -> [String]? {
-        guard let dbContactRemark = self.dbContactRemark else {
-            return nil
-        }
-        
-        let remarkBytes = dbContactRemark.withUnsafeBytes {
-            [UInt8](UnsafeBufferPointer(start: $0, count: dbContactRemark.count))
-        }
-        var remarks = [String]()
-        var len: UInt8 = 0
-        var index: UInt8 = 0
-        while true {
-            index += 1
-            if index > remarkBytes.count {
-                break
-            }
-            len = remarkBytes[Int(index)]
-            index += 1
-            if index + len > remarkBytes.count {
-                break
-            }
-
-            let remark = String(data: dbContactRemark[Int(index)..<Int(index + len)], encoding: .utf8)
-            guard remark != nil else {
-                continue
-            }
-            remarks.append(remark!)
-            
-            index += len
-        }
-        return remarks
-    }
+//
+//    private var _chatRoom: FriendDBChatRoom?
+//    var chatRoom: FriendDBChatRoom? {
+//        get {
+//            if _chatRoom == nil {
+//                _chatRoom = getChatRoomData()
+//            }
+//            return _chatRoom
+//        }
+//    }
+//
+//    private func getChatRoomData() -> FriendDBChatRoom? {
+//        guard let dbContactChatRoom = self.dbContactChatRoom else {
+//            return nil
+//        }
+//        let chatRoomBytes = dbContactChatRoom.withUnsafeBytes {
+//            [UInt8](UnsafeBufferPointer(start: $0, count: dbContactChatRoom.count))
+//        }
+//
+//        #warning("TODO , 编码方式不对")
+//        guard let result = String(data: dbContactChatRoom, encoding: .utf32) else {
+//            return nil
+//        }
+//
+//
+//        return nil
+//    }
+//
+//    var _isGroup: Bool? = nil
+//    var isGroup: Bool {
+//        get {
+//            if _isGroup == nil {
+//                _isGroup = (userName ?? "").hasSuffix("@chatroom")
+//            }
+//            return _isGroup!
+//        }
+//    }
+//
+//    private var _remarks: [String]?
+//    var remarks: [String]? {
+//        get {
+//            if _remarks == nil {
+//                _remarks = getRemarkData()
+//            }
+//            return _remarks
+//        }
+//    }
+//
+//    private var _headImage: HeadImage?
+//    var headImage: HeadImage? {
+//        get {
+//            if _headImage == nil {
+//                _headImage = getHeadImage()
+//            }
+//            return _headImage
+//        }
+//    }
+//
+//    private func getHeadImage() -> HeadImage? {
+//        guard let dbContactHeadImage = self.dbContactHeadImage else {
+//            return nil
+//        }
+//        let remarkBytes = dbContactHeadImage.withUnsafeBytes {
+//            [UInt8](UnsafeBufferPointer(start: $0, count: dbContactHeadImage.count))
+//        }
+//
+//        guard let result = String(data: dbContactHeadImage, encoding: .utf8) else {
+//            return nil
+//        }
+//
+//
+//        let start = "\u{12}" // 开始
+//        let end = "\u{0}" // 结束
+//        let separator = String("\u{08}\u{03}\u{1A}")
+//
+//        guard let startRange = result.range(of: start) else {
+//            return nil
+//        }
+//        guard let endRange = result.range(of: end) else {
+//            return nil
+//        }
+//        let info = result[startRange.upperBound..<endRange.lowerBound]
+//
+//        if let separatorRange = info.range(of: separator) {
+//            let url1 = String(result[info.startIndex..<separatorRange.lowerBound])
+//            let url2 = String(result[separatorRange.upperBound..<info.endIndex])
+//            return getHeadImage(texts: [url1, url2])
+//        } else {
+//            return getHeadImage(texts: [String(info)])
+//        }
+//
+//    }
+//
+//    private func getHeadImage(texts: [String]) -> HeadImage {
+//        var headImage = HeadImage()
+//        for text in texts {
+//            guard text.count > 2 else {
+//                continue
+//            }
+//
+//            let first = text[..<text.index(text.startIndex, offsetBy: 1)]
+//            let start = text.index(text.startIndex, offsetBy: 1)
+//            let imageURL = String(text[start...])
+//
+//            switch first {
+//            case "T":
+//                headImage.t = imageURL
+//            case "R":
+//                headImage.r = imageURL
+//            case "S":
+//                headImage.s = imageURL
+//            case "U":
+//                headImage.u = imageURL
+//            default:
+//                headImage.s = imageURL
+//            }
+//            if text.hasPrefix("h") {
+//
+//            }
+//        }
+//        return headImage
+//    }
+//
+//    // 解析 dbContactRemark
+//    private func getRemarkData() -> [String]? {
+//        guard let dbContactRemark = self.dbContactRemark else {
+//            return nil
+//        }
+//
+//        let remarkBytes = dbContactRemark.withUnsafeBytes {
+//            [UInt8](UnsafeBufferPointer(start: $0, count: dbContactRemark.count))
+//        }
+//        var remarks = [String]()
+//        var len: UInt8 = 0
+//        var index: UInt8 = 0
+//        while true {
+//            index += 1
+//            if index > remarkBytes.count {
+//                break
+//            }
+//            len = remarkBytes[Int(index)]
+//            index += 1
+//            if index + len > remarkBytes.count {
+//                break
+//            }
+//
+//            let remark = String(data: dbContactRemark[Int(index)..<Int(index + len)], encoding: .utf8)
+//            guard remark != nil else {
+//                continue
+//            }
+//            remarks.append(remark!)
+//
+//            index += len
+//        }
+//        return remarks
+//    }
     
     enum CodingKeys: String, CodingTableKey {
         typealias Root = FriendDB
@@ -267,9 +271,6 @@ extension FriendDB: CustomDebugStringConvertible {
     var debugDescription: String {
         return """
         userName:\(userName ?? "")
-        headImage:\(String(describing: headImage))
-        remarks:\(remarks ?? [""])
-        chatRoom:\(String(describing: chatRoom))
         """
     }
 }

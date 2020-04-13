@@ -24,8 +24,8 @@ protocol TUIMessageDataProviderServiceProtocol {
  *
  *  @return 根据 message 信息返回的对应字符串。
  */
-    func getDisplayString(message: TIMMessage) -> String?
-        
+//    func getDisplayString(message: TIMMessage) -> String?
+    func getDisplayString(friendshipManager: TIMFriendshipManager, message: TIMMessage) -> String?
     func getCellData(message: TIMMessage, fromElem elem: TIMElem) -> TUIMessageCellData?
 
     func getTextCellData(message: TIMMessage, fromElem elem: TIMElem) -> TUITextMessageCellData?
