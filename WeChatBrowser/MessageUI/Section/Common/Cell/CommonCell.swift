@@ -14,7 +14,11 @@ class CommonCell: NSTableCellView {
     // MARK: initialize
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
-        layer?.backgroundColor = .white
+        wantsLayer = true
+        layer?.backgroundColor = NSColor(red: 243.0 / 255.0,
+                                         green: 243.0 / 255.0,
+                                         blue: 243.0 / 255.0,
+                                         alpha: 1).cgColor
     }
     
     required init?(coder: NSCoder) {

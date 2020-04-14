@@ -29,11 +29,16 @@ let TConversationCell_Height: CGFloat = 72
 //#define TTextMessageCell_Height_Min (TMessageCell_Head_Size.height + 2 * TMessageCell_Padding)
 //#define TTextMessageCell_Text_PADDING (160)
 //#define TTextMessageCell_Text_Width_Max (Screen_Width - TTextMessageCell_Text_PADDING)
+// TODO: 这个宽度应该根据窗口的宽度进行改变
+let TTextMessageCell_Text_Width_Max: CGFloat = 200
+
 //#define TTextMessageCell_Margin 12
 //
 ////system cell
 //#define TSystemMessageCell_Background_Color RGBA(215, 215, 215, 1.0)
 //#define TSystemMessageCell_Text_Width_Max (Screen_Width * 0.5)
+// TODO: 这个宽度应该根据窗口的宽度进行改变
+let TSystemMessageCell_Text_Width_Max: CGFloat = 200
 //#define TSystemMessageCell_Margin 5
 //
 ////joinGroup cell 继承自 system cell

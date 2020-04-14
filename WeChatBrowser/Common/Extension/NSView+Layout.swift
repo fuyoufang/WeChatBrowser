@@ -45,6 +45,38 @@ extension NSView {
         }
     }
     
+    var centerX: CGFloat {
+        get {
+            return self.center.x
+        }
+        set {
+            var center = self.center
+            center.x = newValue
+            self.center = center
+        }
+    }
+    
+    var centerY: CGFloat {
+        get {
+            return self.center.y
+        }
+        set {
+            var center = self.center
+            center.y = newValue
+            self.center = center
+        }
+    }
+    
+    var center: CGPoint {
+        get {
+            return CGPoint(x: x + width / 2, y: y + height / 2)
+        }
+        set {
+            x = newValue.x - width / 2
+            y = newValue.y - height / 2
+        }
+    }
+    
     var maxX: CGFloat {
         get {
             return x + width

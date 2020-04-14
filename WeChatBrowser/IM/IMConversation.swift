@@ -24,7 +24,7 @@ import WCDBSwift
 class TIMConversation {
     private let database: Database
     private let tableName: String
-    private let friendshipManager: TIMFriendshipManager
+    let friendshipManager: TIMFriendshipManager
     private var friend: TIMFriend
     // MARK: 初始化
     init(database: Database, tableName: String, friend: TIMFriend, friendshipManager: TIMFriendshipManager) {
@@ -80,7 +80,7 @@ class TIMConversation {
     func getLastMsg() -> TIMMessage? {
         if lastMsg == nil {
             if let messageDB = getChatMessageDBs(count: 1, last: nil)?.first {
-                lastMsg = TIMMessage(messageDB: messageDB)
+                lastMsg = TIMMessage(messageDB: messageDB, conversation: self)
             }
         }
         return lastMsg
@@ -91,7 +91,7 @@ class TIMConversation {
             if last != nil {
 //                fatalError()
             }
-            let msssage: [TIMMessage] = try database.getObjects(fromTable: tableName, limit: count).map { TIMMessage(messageDB: $0)}
+            let msssage: [TIMMessage] = try database.getObjects(fromTable: tableName, limit: count).map { TIMMessage(messageDB: $0, conversation: self) }
             succ(msssage)
             
         } catch let e {

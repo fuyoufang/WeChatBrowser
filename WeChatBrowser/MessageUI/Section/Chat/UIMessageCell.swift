@@ -8,6 +8,8 @@
 
 import Cocoa
 import Then
+import Kingfisher
+
 class UIMessageCell: CommonCell {
 
     // MARK: properties
@@ -17,14 +19,14 @@ class UIMessageCell: CommonCell {
     // MARK: UI
     
     // 头像视图
-    private let avatarView = NSImageView().then {
+    let avatarView = NSImageView().then {
         $0.imageAlignment = .alignCenter
         $0.layer?.masksToBounds = true
         $0.layer?.cornerRadius = 4
     }
     
     // 昵称标签
-    private let nameLabel = Label().then {
+    let nameLabel = Label().then {
         $0.font = NSFont.systemFont(ofSize: 13)
         $0.textColor = .gray
     }
@@ -58,12 +60,9 @@ class UIMessageCell: CommonCell {
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
-        layer?.backgroundColor = .clear
-        
         addSubview(avatarView)
         addSubview(nameLabel)
         addSubview(container)
-        
     }
     
     required init?(coder: NSCoder) {
@@ -78,6 +77,7 @@ class UIMessageCell: CommonCell {
         self.messageData = messageData
         
         avatarView.image = messageData.avatarImage
+        avatarView.kf.setImage(with: messageData.avatarUrl)
         nameLabel.stringValue = messageData.name ?? ""
         nameLabel.textColor = messageData.nameColor
         nameLabel.font = messageData.nameFont
@@ -95,9 +95,7 @@ class UIMessageCell: CommonCell {
             nameLabel.isHidden = false
             nameLabel.height = 0
         }
-        guard let cellLayout = messageData.cellLayout else {
-            return
-        }
+        let cellLayout = messageData.cellLayout
 
         if messageData.direction == .incoming {
             avatarView.x = cellLayout.avatarInsets.left
@@ -119,7 +117,7 @@ class UIMessageCell: CommonCell {
         } else {
             avatarView.width = cellLayout.avatarSize.width
             avatarView.height = cellLayout.avatarSize.height
-            avatarView.x = cellLayout.avatarInsets.top
+            avatarView.y = cellLayout.avatarInsets.top
             avatarView.right = cellLayout.avatarInsets.right
             
             nameLabel.x = avatarView.y
@@ -130,7 +128,7 @@ class UIMessageCell: CommonCell {
             container.width = csize.width
             container.height = csize.height
             container.right = cellLayout.messageInsets.right + self.width - avatarView.x
-            container.x = ctop
+            container.y = ctop
             
             nameLabel.right = container.right
         }        

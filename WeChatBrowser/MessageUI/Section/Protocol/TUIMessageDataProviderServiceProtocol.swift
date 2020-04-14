@@ -26,9 +26,9 @@ protocol TUIMessageDataProviderServiceProtocol {
  */
 //    func getDisplayString(message: TIMMessage) -> String?
     func getDisplayString(friendshipManager: TIMFriendshipManager, message: TIMMessage) -> String?
-    func getCellData(message: TIMMessage, fromElem elem: TIMElem) -> TUIMessageCellData?
+    func getCellData(friendshipManager: TIMFriendshipManager?, message: TIMMessage, fromElem elem: TIMElem) -> TUIMessageCellData?
 
-    func getTextCellData(message: TIMMessage, fromElem elem: TIMElem) -> TUITextMessageCellData?
+    func getTextCellData(message: TIMMessage, fromElem elem: TIMTextElem) -> TUITextMessageCellData?
     
 //    func getFaceCellData(message: TIMMessage, fromElem elem: TIMElem) -> TUIFaceMessageCellData?
 //

@@ -104,43 +104,20 @@ class TUIMessageCellData: TCommonCellData {
      */
     var nameColor: NSColor?
     
-    /**
-     *  发送时昵称颜色
-     *  当需要显示昵称，且消息 direction 为 MsgDirectionOutgoing 时使用。
-     */
-    static var outgoingNameColor: NSColor?
-    
-    /**
-     *  发送时昵称字体
-     *  当需要显示昵称，且消息 direction 为 MsgDirectionOutgoing 时使用。
-     */
-    static var outgoingNameFont: NSFont?
-    
-    /**
-     *  接收时昵称颜色
-     *  当需要显示昵称，且消息 direction 为 MsgDirectionIncoming 时使用
-     */
-    static var incommingNameColor: NSColor?
-    
-    /**
-     *  接收时昵称字体
-     *  当需要显示昵称，且消息 direction 为 MsgDirectionIncoming 时使用
-     */
-    static var incommingNameFont: NSFont?
     
     /**
      *  消息单元布局
      *  包括消息边距、气泡内边距、头像边距、头像大小等 UI 布局。
      *  详细信息请参考 Section\Chat\CellLayout\TUIMessageCellLayout.h
      */
-    var cellLayout: TUIMessageCellLayout?
+    var cellLayout: TUIMessageCellLayout
     
     /**
      *  内容大小
      *  返回一个气泡内容的视图大小。
      */
     func contentSize() -> CGSize {
-        fatalError()
+        CGSize.zero
     }
     
     
@@ -153,6 +130,55 @@ class TUIMessageCellData: TCommonCellData {
      */
     
     init(direction: MsgDirection) {
+        self.direction = direction
+        self.status = .`init`
+        self.nameFont = NSFont.systemFont(ofSize: 13)
+        nameColor = NSColor.gray
+        avatarImage = DefaultAvatarImage
         
+        if (direction == .incoming) {
+            cellLayout = TIncommingCellLayout()
+        } else {
+            cellLayout = TOutgoingCellLayout()
+        }
     }
+    
+    override func height(ofWidth width: CGFloat) -> CGFloat {
+        var height: CGFloat = 0
+        if self.showName {
+            height += 20
+        }
+        let containerSize = self.contentSize()
+        height += containerSize.height
+        height += cellLayout.messageInsets.top + cellLayout.messageInsets.bottom
+        if height < 55 {
+            height = 55
+        }
+        return height
+    }
+    
+    /**
+     *  发送时昵称颜色
+     *  当需要显示昵称，且消息 direction 为 MsgDirectionOutgoing 时使用。
+     */
+    static var outgoingNameColor = NSColor.white
+
+    /**
+     *  发送时昵称字体
+     *  当需要显示昵称，且消息 direction 为 MsgDirectionOutgoing 时使用。
+     */
+    static var outgoingNameFont = NSFont.systemFont(ofSize: 15)
+
+    /**
+     *  接收时昵称颜色
+     *  当需要显示昵称，且消息 direction 为 MsgDirectionIncoming 时使用
+     */
+    static var incommingNameColor = NSColor.black
+
+    /**
+     *  接收时昵称字体
+     *  当需要显示昵称，且消息 direction 为 MsgDirectionIncoming 时使用
+     */
+    static var incommingNameFont = NSFont.systemFont(ofSize: 15)
+
 }

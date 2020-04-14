@@ -37,7 +37,7 @@ enum MessageDBType: Int {
 
 class MessageDB: TableCodable {
     var CreateTime: UInt32? = 0
-    var Des: Int? // 表示我是否为消息的接收方。
+    var Des: Int? // 表示我是否为消息的接收方。 0 为自己发送，1为别人发送
     var ImgStatus: Int? = 0
     var MesLocalID: Int?
     var Message: String? // Message 就是消息本身。

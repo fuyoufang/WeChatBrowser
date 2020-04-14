@@ -8,6 +8,16 @@
 
 import Cocoa
 
+//#if CGFLOAT_CEIL
+//
+//#else
+//#if CGFLOAT_IS_DOUBLE
+//    typealias CGFLOAT_CEIL = ceil
+//#else
+//    typealias CGFLOAT_CEIL = ceilf
+//#endif
+//#endif
+
 /******************************************************************************
  *
  *  本文件声明了 TUITextMessageCellData 类。
@@ -46,15 +56,7 @@ class TUITextMessageCellData: TUIBubbleMessageCellData {
      *  文本消息接收到 content 字符串后，需要将字符串中可能存在的字符串表情（比如[微笑]），转为图片表情。
      *  本字符串则负责存储上述过程转换后的结果。
      */
-    var _attributedString: NSAttributedString?
-    var attributedString: NSAttributedString {
-        get {
-            if _attributedString == nil {
-                _attributedString = formatMessage(self.content)
-            }
-            return _attributedString!
-        }
-    }
+    lazy var attributedString: NSAttributedString = formatMessage(self.content)
     
     /**
      *  文本内容尺寸。
@@ -108,24 +110,29 @@ class TUITextMessageCellData: TUIBubbleMessageCellData {
             self.cellLayout = TUIMessageCellLayout.outgoingTextMessageLayout
         }
     }
-    
+
     override func contentSize() -> CGSize {
-        return super.contentSize()
-        //        CGRect rect = [self.attributedString boundingRectWithSize:CGSizeMake(TTextMessageCell_Text_Width_Max, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
-        //        CGSize size = CGSizeMake(CGFLOAT_CEIL(rect.size.width), CGFLOAT_CEIL(rect.size.height));
-        //        self.textSize = size;
-        //        self.textOrigin = CGPointMake(self.cellLayout.bubbleInsets.left, self.cellLayout.bubbleInsets.top+self.bubbleTop);
-        //
-        //        size.height += self.cellLayout.bubbleInsets.top+self.cellLayout.bubbleInsets.bottom;
-        //        size.width += self.cellLayout.bubbleInsets.left+self.cellLayout.bubbleInsets.right;
-        //
-        //        if (self.direction == MsgDirectionIncoming) {
-        //            size.height = MAX(size.height, [TUIBubbleMessageCellData incommingBubble].size.height);
-        //        } else {
-        //            size.height = MAX(size.height, [TUIBubbleMessageCellData outgoingBubble].size.height);
-        //        }
-        //
-        //        return size;
+        
+        let rect: CGRect = attributedString.boundingRect(with: CGSize(width: TTextMessageCell_Text_Width_Max, height: CGFloat.greatestFiniteMagnitude), options: [.usesLineFragmentOrigin, .usesFontLeading])
+        
+        
+        // TODO: 应该要取正的
+        // let size: CGSize = CGSize(width: CGFLOAT_CEIL(rect.size.width), height: CGFLOAT_CEIL(rect.size.height))
+        var size: CGSize = CGSize(width: rect.size.width, height: rect.size.height)
+        
+        self.textSize = size;
+        self.textOrigin = CGPoint(x: cellLayout.bubbleInsets.left, y: cellLayout.bubbleInsets.top + self.bubbleTop)
+        
+        size.height += cellLayout.bubbleInsets.top + cellLayout.bubbleInsets.bottom;
+        size.width += cellLayout.bubbleInsets.left + cellLayout.bubbleInsets.right;
+        
+        if (self.direction == .incoming) {
+            size.height = max(size.height, TUIBubbleMessageCellData.incommingBubble?.size.height ?? 0);
+        } else {
+            size.height = max(size.height, TUIBubbleMessageCellData.outgoingBubble?.size.height ?? 0);
+        }
+        
+        return size;
     }
     
     func formatMessage(_ text: String?) -> NSAttributedString {

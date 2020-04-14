@@ -33,14 +33,16 @@ class ConversationMessageController: TableViewController {
     var noMoreMsg: Bool = false
     var firstLoad: Bool = false
     var conversationDataProviderService: TUIConversationDataProviderServiceProtocol
+    var friendshipManager: TIMFriendshipManager? {
+        return conversation?.friendshipManager
+    }
     
     var conversation: TIMConversation? {
         didSet {
-            noMoreMsg = false
             refreshMessage()
         }
     }
-
+    
     override func viewWillAppear() {
         isInVC = true
         super.viewWillAppear()
@@ -148,7 +150,7 @@ class ConversationMessageController: TableViewController {
             }
             var hasShowElem = false
             for elem in msg.elems {
-                if elem as? TIMSNSSystemElem == nil || elem as? TIMProfileSystemElem == nil {
+                if elem is TIMSNSSystemElem || elem is TIMProfileSystemElem {
                     continue
                 } else if let gt = elem as? TIMGroupTipsElem {
                     if gt.group != conversation?.receiver {
@@ -158,7 +160,7 @@ class ConversationMessageController: TableViewController {
                     if gs.group != conversation?.receiver {
                         continue
                     }
-                } else if msg.getConversation().receiver != conversation?.receiver {
+                } else if msg.conversation.receiver != conversation?.receiver {
                     continue
                 }
                 hasShowElem = true
@@ -181,10 +183,10 @@ class ConversationMessageController: TableViewController {
             }
             
             for elem in msg.elems {
-                if elem as? TIMSNSSystemElem == nil || elem as? TIMProfileSystemElem == nil {
+                if elem is TIMSNSSystemElem || elem is TIMProfileSystemElem {
                     continue
                 }
-                guard let data: TUIMessageCellData = msg.cellData(fromElem: elem) else {
+                guard let data: TUIMessageCellData = msg.cellData(friendshipManager: friendshipManager, fromElem: elem) else {
                     continue
                 }
                 
@@ -326,16 +328,16 @@ class ConversationMessageController: TableViewController {
 //        return msg;
 
     }
+    let MAX_MESSAGE_SEP_DLAY: TimeInterval = (5 * 60)
     
-    func transSystemMsg(fromDate data: Date) -> TUISystemMessageCellData? {
-        fatalError()
-//        if(_msgForDate == nil || fabs([date timeIntervalSinceDate:_msgForDate.timestamp]) > MAX_MESSAGE_SEP_DLAY){
-//            TUISystemMessageCellData *system = [[TUISystemMessageCellData alloc] initWithDirection:MsgDirectionOutgoing];
-//            system.content = [date tk_messageString];
-//            system.reuseId = TSystemMessageCell_ReuseId;
-//            return system;
-//        }
-//        return nil;
+    func transSystemMsg(fromDate date: Date) -> TUISystemMessageCellData? {
+        guard let msgForDate = self.msgForDate, date.timeIntervalSince(msgForDate.timestamp) < MAX_MESSAGE_SEP_DLAY else {
+            let system: TUISystemMessageCellData = TUISystemMessageCellData(direction: .outgoing)
+            system.content = date.tk_messageString()
+            system.reuseId = Constants.TSystemMessageCell_ReuseId
+            return system
+        }
+        return nil
     }
 
 //    - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -626,10 +628,9 @@ class ConversationMessageController: TableViewController {
 //        }
 //    }
 
-
-    
     init() {
         self.conversationDataProviderService = TCServiceManager.shareInstance().conversationDataProviderService
+
         super.init(nibName: nil, bundle: nil)
         
         identifier = NSUserInterfaceItemIdentifier(rawValue: "ConversationListController")
@@ -647,6 +648,15 @@ class ConversationMessageController: TableViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = Metrics.sessionRowHeight
+        
+        tableView.wantsLayer = true
+        let bgColor = NSColor(red: 243.0 / 255.0,
+                              green: 243.0 / 255.0,
+                              blue: 243.0 / 255.0,
+                              alpha: 1).cgColor
+        tableView.layer?.backgroundColor = bgColor
+        scrollView.layer?.backgroundColor = bgColor
+        view.layer?.backgroundColor = bgColor
     }
     
     override func viewDidAppear() {
@@ -654,6 +664,22 @@ class ConversationMessageController: TableViewController {
     }
     
     func refreshMessage() {
+        noMoreMsg = false
+        msgForDate = nil
+        msgForGet = nil
+        menuUIMsg = nil
+        reSendUIMsg = nil
+           
+        isScrollBottom = false
+        isLoadingMsg = false
+        isInVC = false
+        isActive = false
+        noMoreMsg = false
+        firstLoad = false
+        
+        uiMsgs.removeAll()
+        heightCache.removeAll()
+        
         loadMessage()
     }
     
@@ -704,13 +730,12 @@ extension ConversationMessageController: NSTableViewDataSource, NSTableViewDeleg
     }
     
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-        var height: CGFloat = 0
         if heightCache.count > row {
             return heightCache[row]
         }
         let data: TUIMessageCellData = uiMsgs[row]
         let maxWidth: CGFloat = 300
-        height = data.height(ofWidth: maxWidth)
+        let height: CGFloat = data.height(ofWidth: maxWidth)
         heightCache.insert(height, at: row)
         return height
     }
@@ -744,21 +769,21 @@ extension ConversationMessageController: NSTableViewDataSource, NSTableViewDeleg
     
     private func cellForSessionView(data: TUIMessageCellData) -> UIMessageCell? {
         if data.reuseId == nil {
-            if data as? TUITextMessageCellData == nil {
+            if data is TUITextMessageCellData {
                 data.reuseId = Constants.TTextMessageCell_ReuseId
-            } else if data as? TUIFaceMessageCellData == nil {
+            } else if data is TUIFaceMessageCellData {
                 data.reuseId = Constants.TFaceMessageCell_ReuseId
-            } else if data as? TUIImageMessageCellData == nil {
+            } else if data is TUIImageMessageCellData {
                 data.reuseId = Constants.TImageMessageCell_ReuseId
-            } else if data as? TUIVideoMessageCellData == nil {
+            } else if data is TUIVideoMessageCellData {
                 data.reuseId = Constants.TVideoMessageCell_ReuseId
-            } else if data as? TUIVoiceMessageCellData == nil {
+            } else if data is TUIVoiceMessageCellData {
                 data.reuseId = Constants.TVoiceMessageCell_ReuseId
-            } else if data as? TUIFileMessageCellData == nil {
+            } else if data is TUIFileMessageCellData {
                 data.reuseId = Constants.TFileMessageCell_ReuseId
-            } else if data as? TUIJoinGroupMessageCellData == nil {
+            } else if data is TUIJoinGroupMessageCellData {
                 data.reuseId = Constants.TJoinGroupMessageCell_ReuseId
-            } else if data as? TUISystemMessageCellData == nil {
+            } else if data is TUISystemMessageCellData {
                 data.reuseId = Constants.TSystemMessageCell_ReuseId
             } else {
                 return nil

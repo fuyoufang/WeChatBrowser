@@ -47,39 +47,56 @@ class TUIBubbleMessageCellData: TUIMessageCellData {
     var highlightedBubble: NSImage?
 
 
-/**
- *  发送气泡图标（正常）
- *  气泡的发送图标，当气泡消息单元为发送时赋值给 bubble。
- */
-    static var outgoingBubble: NSImage?
+    override init(direction: MsgDirection) {
+        super.init(direction: direction)
+        if direction == .incoming {
+            bubble = TUIBubbleMessageCellData.incommingBubble
+            highlightedBubble = TUIBubbleMessageCellData.incommingHighlightedBubble
+            bubbleTop = TUIBubbleMessageCellData.incommingBubbleTop
+        } else {
+            bubble = TUIBubbleMessageCellData.outgoingBubble
+            highlightedBubble = TUIBubbleMessageCellData.outgoingHighlightedBubble
+            bubbleTop = TUIBubbleMessageCellData.outgoingBubbleTop
+        }
+    }
+    
 
-/**
- *  发送气泡图标（高亮）
- *  气泡的发送图标（高亮），当气泡消息单元为发送时赋值给 highlightedBubble。
- */
-    static var outgoingHighlightedBubble: NSImage?
+    /**
+     *  发送气泡图标（正常）
+     *  气泡的发送图标，当气泡消息单元为发送时赋值给 bubble。
+     */
+    static var outgoingBubble: NSImage? = TUIImageCache.shared.getResourceFromCache(path: "SenderTextNodeBkg")
+    // @"{30,20,22,20}"
+    /**
+     *  发送气泡图标（高亮）
+     *  气泡的发送图标（高亮），当气泡消息单元为发送时赋值给 highlightedBubble。
+     */
+static var outgoingHighlightedBubble: NSImage? = TUIImageCache.shared.getResourceFromCache(path: "SenderTextNodeBkgHL")
+    //    resizableImageWithCapInsets:UIEdgeInsetsFromString(@"{30,20,22,20}")
+    /**
+     *  接收气泡图标（正常）
+     *  气泡的接收图标，当气泡消息单元为接收时赋值给 bubble。
+     */
+     static var incommingBubble: NSImage? = TUIImageCache.shared.getResourceFromCache(path: "ReceiverTextNodeBkg")
+    //            sIncommingBubble = [[[TUIImageCache sharedInstance] getResourceFromCache:TUIKitResource(@"")] resizableImageWithCapInsets:UIEdgeInsetsFromString(@"{30,22,22,22}") resizingMode:UIImageResizingModeStretch];
 
-/**
- *  接收气泡图标（正常）
- *  气泡的接收图标，当气泡消息单元为接收时赋值给 bubble。
- */
-    static var incommingBubble: NSImage?
+    /**
+     *  接收气泡图标（高亮）
+     *  气泡的接收图标，当气泡消息单元为接收时赋值给 highlightedBubble。
+     */
+    static var incommingHighlightedBubble: NSImage? = TUIImageCache.shared.getResourceFromCache(path: "ReceiverTextNodeBkgHL")
+    //[[[ sharedInstance] getResourceFromCache:TUIKitResource(@"")] resizableImageWithCapInsets:UIEdgeInsetsFromString(@"{30,22,22,22}") resizingMode:UIImageResizingModeStretch];
+        
+    /**
+     *  发送气泡顶部
+     *  用于定位发送气泡的顶部，当气泡消息单元为发送时赋值给 bubbleTop。
+     */
+        static var outgoingBubbleTop: CGFloat = -2
 
-/**
- *  接收气泡图标（高亮）
- *  气泡的接收图标，当气泡消息单元为接收时赋值给 highlightedBubble。
- */
-    static var incommingHighlightedBubble: NSImage?
+    /**
+     *  接收气泡顶部
+     *  用于定位接收气泡的顶部，当气泡消息单元为接收时赋值给 bubbleTop。
+     */
+        static var incommingBubbleTop: CGFloat = -2
 
-/**
- *  发送气泡顶部
- *  用于定位发送气泡的顶部，当气泡消息单元为发送时赋值给 bubbleTop。
- */
-    static var outgoingBubbleTop: CGFloat = 0
-
-/**
- *  接收气泡顶部
- *  用于定位接收气泡的顶部，当气泡消息单元为接收时赋值给 bubbleTop。
- */
-    static var incommingBubbleTop: CGFloat = 0
 }

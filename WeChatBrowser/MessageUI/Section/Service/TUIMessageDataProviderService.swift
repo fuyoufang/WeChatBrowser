@@ -6,7 +6,7 @@
 //  Copyright © 2020 fuyoufang. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 class TUIMessageDataProviderService: TUIMessageDataProviderServiceProtocol {
     
@@ -19,17 +19,17 @@ class TUIMessageDataProviderService: TUIMessageDataProviderServiceProtocol {
     func getDisplayString(friendshipManager: TIMFriendshipManager, message: TIMMessage) -> String? {
         var str: String?
         if message.status == .LOCAL_REVOKED {
-            if message.isSelf() {
+            if message.isSelf {
                 str = "你撤回了一条消息"
-            } else if message.getConversation().getType() == .GROUP {
+            } else if message.conversation.getType() == .GROUP {
                 var userString = message.getSenderGroupMemberProfile()?.nameCard
                 if userString == nil || userString?.count == 0 {
-                    if let userProfile = friendshipManager.queryUserProfile(message.sender()) {
+                    if let userProfile = friendshipManager.queryUserProfile(message.sender) {
                         userString = userProfile.showName(friendshipManager: friendshipManager)
                     }
                 }
                 str = "\"\(userString ?? "")\"撤回了一条消息"
-            } else if message.getConversation().getType() == .C2C {
+            } else if message.conversation.getType() == .C2C {
                 str = "对方撤回了一条消息"
             }
         } else {
@@ -151,12 +151,34 @@ class TUIMessageDataProviderService: TUIMessageDataProviderServiceProtocol {
         return str ?? ""
     }
     
-    func getCellData(message: TIMMessage, fromElem elem: TIMElem) -> TUIMessageCellData? {
-        return nil
+    func getCellData(friendshipManager: TIMFriendshipManager?, message: TIMMessage, fromElem elem: TIMElem) -> TUIMessageCellData? {
+        var data: TUIMessageCellData?
+        if let text = elem as? TIMTextElem {
+            data = getTextCellData(message: message, fromElem: text)
+        } else if let face = elem as? TIMFaceElem {
+            data = getFaceCellData(messag: message, forElem: face)
+        } else if let image = elem as? TIMImageElem {
+            data = getImageCellData(message: message, formElem: image)
+        } else if let voice = elem as? TIMSoundElem {
+            data = getVoiceCellData(message: message, formElem: voice)
+        } else if let video = elem as? TIMVideoElem {
+            data = getVideoCellData(message: message, formElem: video)
+        } else if let file = elem as? TIMFileElem {
+            data = getFileCellData(message: message, fromElem: file)
+        } else {
+            data = getSystemCellData(message: message, forElem: elem)
+        }
+        //赋值头像 URL，否则消息单元不回显示对方头像
+        if let faceURL = friendshipManager?.queryUserProfile(message.sender)?.faceURL {
+            data?.avatarUrl = URL(string: faceURL)
+        }
+        return data
     }
     
-    func getTextCellData(message: TIMMessage, fromElem elem: TIMElem) -> TUITextMessageCellData? {
-        return nil
+    func getTextCellData(message: TIMMessage, fromElem elem: TIMTextElem) -> TUITextMessageCellData? {
+        let textData = TUITextMessageCellData(direction: message.isSelf ? .outgoing : .incoming)
+        textData.content = elem.text
+        return textData
     }
     
     static func singleton() -> Bool {
@@ -175,234 +197,198 @@ class TUIMessageDataProviderService: TUIMessageDataProviderServiceProtocol {
     //    }
     //
     
+    
+    func getFaceCellData(messag: TIMMessage, forElem elem: TIMFaceElem) -> TUIFaceMessageCellData? {
+        //
+        //        TIMFaceElem *face = (TIMFaceElem *)elem;
+        //        TUIFaceMessageCellData *faceData = [[TUIFaceMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
+        //        faceData.groupIndex = face.index;
+        //        faceData.faceName = [[NSString alloc] initWithData:face.data encoding:NSUTF8StringEncoding];
+        //        for (TFaceGroup *group in [TUIKit sharedInstance].config.faceGroups) {
+        //            if(group.groupIndex == faceData.groupIndex){
+        //                NSString *path = [group.groupPath stringByAppendingPathComponent:faceData.faceName];
+        //                faceData.path = path;
+        //                break;
+        //            }
+        //        }
+        //        faceData.reuseId = TFaceMessageCell_ReuseId;
+        //
+        //        //如果没有查询到该表情，或者表情在本机无法解析，返回一个文字消息，提示无法解析。
+        //        UIImage *image = [[TUIImageCache sharedInstance] getFaceFromCache:faceData.path];
+        //        if(image == nil){
+        //            TUITextMessageCellData *textData = [[TUITextMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
+        //            textData.content = faceData.faceName;
+        //            return textData;
+        //        }
+        //
+        //
+        //            return faceData;
+        return nil
+    }
     //
-    //    -(TUIMessageCellData *) getCellData:(TIMMessage *)message fromElem:(TIMElem *)elem{
-    //        TUIMessageCellData *data = nil;
-    //        if([elem isKindOfClass:[TIMTextElem class]]){
-    //           data = [self getTextCellData:message fromElem:(TIMTextElem *)elem];
+    func getImageCellData(message: TIMMessage, formElem elem: TIMImageElem) -> TUIImageMessageCellData? {
+        
+        //        TIMImageElem *image = (TIMImageElem *)elem;
+        //        TUIImageMessageCellData *imageData = [[TUIImageMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
+        //        imageData.path = [image.path safePathString];
+        //        imageData.items = [NSMutableArray array];
+        //        for (TIMImage *item in image.imageList) {
+        //            TUIImageItem *itemData = [[TUIImageItem alloc] init];
+        //            itemData.uuid = item.uuid;
+        //            itemData.size = CGSizeMake(item.width, item.height);
+        //            itemData.url = item.url;
+        //            if(item.type == TIM_IMAGE_TYPE_THUMB){
+        //                itemData.type = TImage_Type_Thumb;
+        //            }
+        //            else if(item.type == TIM_IMAGE_TYPE_LARGE){
+        //                itemData.type = TImage_Type_Large;
+        //            }
+        //            else if(item.type == TIM_IMAGE_TYPE_ORIGIN){
+        //                itemData.type = TImage_Type_Origin;
+        //            }
+        //            [imageData.items addObject:itemData];
+        //        }
+        //        return imageData;
+        return nil
+    }
     //
-    //        }else if([elem isKindOfClass:[TIMFaceElem class]]){
+    func getVoiceCellData(message: TIMMessage, formElem elem: TIMSoundElem) -> TUIVoiceMessageCellData? {
+        //        TIMSoundElem *sound = (TIMSoundElem *)elem;
+        //        TUIVoiceMessageCellData *soundData = [[TUIVoiceMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
+        //        soundData.duration = sound.second;
+        //        soundData.length = sound.dataSize;
+        //        soundData.uuid = sound.uuid;
+        //
+        //        return soundData;
+        return nil
+    }
     //
-    //            data = [self getFaceCellData:message fromElem:(TIMFaceElem *)elem];
+    func getVideoCellData(message: TIMMessage, formElem elem: TIMVideoElem) -> TUIVideoMessageCellData? {
+        //        TIMVideoElem *video = (TIMVideoElem *)elem;
+        //        TUIVideoMessageCellData *videoData = [[TUIVideoMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
+        //        videoData.videoPath = [video.videoPath safePathString];
+        //        videoData.snapshotPath = [video.snapshotPath safePathString];
+        //
+        //        videoData.videoItem = [[TUIVideoItem alloc] init];
+        //        videoData.videoItem.uuid = video.video.uuid;
+        //        videoData.videoItem.type = video.video.type;
+        //        videoData.videoItem.length = video.video.size;
+        //        videoData.videoItem.duration = video.video.duration;
+        //
+        //        videoData.snapshotItem = [[TUISnapshotItem alloc] init];
+        //        videoData.snapshotItem.uuid = video.snapshot.uuid;
+        //        videoData.snapshotItem.type = video.snapshot.type;
+        //        videoData.snapshotItem.length = video.snapshot.size;
+        //        videoData.snapshotItem.size = CGSizeMake(video.snapshot.width, video.snapshot.height);
+        //
+        //        return videoData;
+        return nil
+    }
     //
-    //        }else if([elem isKindOfClass:[TIMImageElem class]]){
-    //
-    //            data = [self getImageCellData:message fromElem:(TIMImageElem *)elem];
-    //
-    //        }else if([elem isKindOfClass:[TIMSoundElem class]]){
-    //
-    //            data = [self getVoiceCellData:message fromElem:(TIMSoundElem *)elem];
-    //
-    //        }else if([elem isKindOfClass:[TIMVideoElem class]]){
-    //
-    //            data = [self getVideoCellData:message fromElem:(TIMVideoElem *)elem];
-    //
-    //        }else if([elem isKindOfClass:[TIMFileElem class]]){
-    //
-    //            data = [self getFileCellData:message fromElem:(TIMFileElem *)elem];
-    //
-    //        }else{
-    //            data = [self getSystemCellData:message formElem:elem];
-    //        }
-    //        //赋值头像 URL，否则消息单元不回显示对方头像
-    //        data.avatarUrl = [NSURL URLWithString:[[TIMFriendshipManager sharedInstance] queryUserProfile:message.sender].faceURL];
-    //
-    //        return data;
-    //    }
-    //
-    //    - (TUITextMessageCellData *) getTextCellData:(TIMMessage *)message  fromElem:(TIMTextElem *)elem{
-    //        TIMTextElem *text = (TIMTextElem *)elem;
-    //        TUITextMessageCellData *textData = [[TUITextMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
-    //        textData.content = text.text;
-    //
-    //
-    //        return textData;
-    //    }
-    //
-    //    - (TUIFaceMessageCellData *) getFaceCellData:(TIMMessage *)message  fromElem:(TIMFaceElem *)elem{
-    //
-    //        TIMFaceElem *face = (TIMFaceElem *)elem;
-    //        TUIFaceMessageCellData *faceData = [[TUIFaceMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
-    //        faceData.groupIndex = face.index;
-    //        faceData.faceName = [[NSString alloc] initWithData:face.data encoding:NSUTF8StringEncoding];
-    //        for (TFaceGroup *group in [TUIKit sharedInstance].config.faceGroups) {
-    //            if(group.groupIndex == faceData.groupIndex){
-    //                NSString *path = [group.groupPath stringByAppendingPathComponent:faceData.faceName];
-    //                faceData.path = path;
-    //                break;
-    //            }
-    //        }
-    //        faceData.reuseId = TFaceMessageCell_ReuseId;
-    //
-    //        //如果没有查询到该表情，或者表情在本机无法解析，返回一个文字消息，提示无法解析。
-    //        UIImage *image = [[TUIImageCache sharedInstance] getFaceFromCache:faceData.path];
-    //        if(image == nil){
-    //            TUITextMessageCellData *textData = [[TUITextMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
-    //            textData.content = faceData.faceName;
-    //            return textData;
-    //        }
-    //
-    //
-    //        return faceData;
-    //    }
-    //
-    //    - (TUIImageMessageCellData *) getImageCellData:(TIMMessage *)message fromElem:(TIMImageElem *)elem{
-    //        TIMImageElem *image = (TIMImageElem *)elem;
-    //        TUIImageMessageCellData *imageData = [[TUIImageMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
-    //        imageData.path = [image.path safePathString];
-    //        imageData.items = [NSMutableArray array];
-    //        for (TIMImage *item in image.imageList) {
-    //            TUIImageItem *itemData = [[TUIImageItem alloc] init];
-    //            itemData.uuid = item.uuid;
-    //            itemData.size = CGSizeMake(item.width, item.height);
-    //            itemData.url = item.url;
-    //            if(item.type == TIM_IMAGE_TYPE_THUMB){
-    //                itemData.type = TImage_Type_Thumb;
-    //            }
-    //            else if(item.type == TIM_IMAGE_TYPE_LARGE){
-    //                itemData.type = TImage_Type_Large;
-    //            }
-    //            else if(item.type == TIM_IMAGE_TYPE_ORIGIN){
-    //                itemData.type = TImage_Type_Origin;
-    //            }
-    //            [imageData.items addObject:itemData];
-    //        }
-    //        return imageData;
-    //    }
-    //
-    //    - (TUIVoiceMessageCellData *) getVoiceCellData:(TIMMessage *) message fromElem:(TIMSoundElem *) elem{
-    //        TIMSoundElem *sound = (TIMSoundElem *)elem;
-    //        TUIVoiceMessageCellData *soundData = [[TUIVoiceMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
-    //        soundData.duration = sound.second;
-    //        soundData.length = sound.dataSize;
-    //        soundData.uuid = sound.uuid;
-    //
-    //        return soundData;
-    //    }
-    //
-    //    - (TUIVideoMessageCellData *) getVideoCellData:(TIMMessage *)message fromElem:(TIMVideoElem *) elem{
-    //        TIMVideoElem *video = (TIMVideoElem *)elem;
-    //        TUIVideoMessageCellData *videoData = [[TUIVideoMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
-    //        videoData.videoPath = [video.videoPath safePathString];
-    //        videoData.snapshotPath = [video.snapshotPath safePathString];
-    //
-    //        videoData.videoItem = [[TUIVideoItem alloc] init];
-    //        videoData.videoItem.uuid = video.video.uuid;
-    //        videoData.videoItem.type = video.video.type;
-    //        videoData.videoItem.length = video.video.size;
-    //        videoData.videoItem.duration = video.video.duration;
-    //
-    //        videoData.snapshotItem = [[TUISnapshotItem alloc] init];
-    //        videoData.snapshotItem.uuid = video.snapshot.uuid;
-    //        videoData.snapshotItem.type = video.snapshot.type;
-    //        videoData.snapshotItem.length = video.snapshot.size;
-    //        videoData.snapshotItem.size = CGSizeMake(video.snapshot.width, video.snapshot.height);
-    //
-    //        return videoData;
-    //
-    //    }
-    //
-    //    - (TUIFileMessageCellData *) getFileCellData:(TIMMessage *)message fromElem:(TIMFileElem *)elem{
-    //        TIMFileElem *file = (TIMFileElem *)elem;
-    //        TUIFileMessageCellData *fileData = [[TUIFileMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
-    //        fileData.path = [file.path safePathString];
-    //        fileData.fileName = file.filename;
-    //        fileData.length = file.fileSize;
-    //        fileData.uuid = file.uuid;
-    //
-    //        return fileData;
-    //    }
-    //
-    //    - (TUISystemMessageCellData *) getSystemCellData:(TIMMessage *)message formElem:(TIMElem *)elem{
-    //        if ([elem isKindOfClass:[TIMCustomElem class]]) {
-    //            TIMCustomElem *custom = (TIMCustomElem *)elem;
-    //
-    //            //系统信息中，对创建群、邀请、提出、退群、撤回、修改群信息（公告昵称等）的用户名添加了触摸响应。
-    //            //触摸响应通过 TUIJoinGroupMessageCell（继承自 TUISystemMessageCell）实现。
-    //            //触摸用户名可以跳转到对应的用户信息界面。
-    //
-    //            if (custom.data.bytes) {
-    //                if (strcmp(custom.data.bytes, "group_create") == 0) {
-    //                    TIMUserProfile *userProfile = [[TIMFriendshipManager sharedInstance] queryUserProfile:message.sender];
-    //                    TUIJoinGroupMessageCellData *joinGroupData = [[TUIJoinGroupMessageCellData alloc] initWithDirection:MsgDirectionIncoming];
-    //                    if (userProfile) {
-    //                        [joinGroupData.userName addObject:userProfile.showName];
-    //                        [joinGroupData.userID addObject:userProfile.identifier];
-    //                    }
-    //                    //此信息在刚刚创建群时显示，所以暂时不需要考虑群名片，因为此时群名片必定未设置。
-    //                    joinGroupData.content = [self getDisplayString:message];
-    //                    if(joinGroupData.userName.count && joinGroupData.userName.count == joinGroupData.userID.count){
-    //                        return joinGroupData;
-    //                    }
-    //                }
-    //            }
-    //        } else if ([elem isKindOfClass:[TIMGroupTipsElem class]]){
-    //            //对群信息小灰条特殊处理。
-    //            TIMGroupTipsElem *tip = (TIMGroupTipsElem *)elem;
-    //            NSString *opUser = [self getOpUserFromTip:tip];
-    //            NSMutableArray<NSString *> *userList = [self getUserListFromTip:tip];
-    //            if(tip.type == TIM_GROUP_TIPS_TYPE_INVITE){
-    //                //入群与踢出不同，在入群时，opUser 可能和 user 为同一人。
-    //                TUIJoinGroupMessageCellData *joinGroupData = [[TUIJoinGroupMessageCellData alloc] initWithDirection:MsgDirectionIncoming];
-    //                joinGroupData.content = [self getDisplayString:message];
-    //                [joinGroupData.userName addObject:opUser];
-    //                [joinGroupData.userID addObject:tip.opUser];
-    //                if(userList.count && ![tip.opUser isEqualToString:tip.userList[0]]){//此处加入判定，如果是自主入群，即 opUser和userlist相同 则不再重复添加 userList 信息。
-    //                    [joinGroupData.userName addObjectsFromArray:userList];//多人入群的昵称
-    //                    [joinGroupData.userID addObjectsFromArray:tip.userList];//多人入群的ID，用于跳转到用户界面。
-    //                }
-    //                if(joinGroupData.userName.count && joinGroupData.userName.count == joinGroupData.userID.count){
-    //                return joinGroupData;
-    //                }
-    //
-    //            } else if(tip.type == TIM_GROUP_TIPS_TYPE_KICKED){
-    //                TUIJoinGroupMessageCellData *joinGroupData = [[TUIJoinGroupMessageCellData alloc] initWithDirection:MsgDirectionIncoming];
-    //                joinGroupData.content = [self getDisplayString:message];
-    //                [joinGroupData.userName addObject:opUser];
-    //                [joinGroupData.userID addObject:tip.opUser];
-    //                if(userList.count){
-    //                    [joinGroupData.userName addObjectsFromArray:userList];//多人入群的昵称
-    //                    [joinGroupData.userID addObjectsFromArray:tip.userList];//多人入群的ID，用于跳转到用户界面。
-    //                }
-    //                if(joinGroupData.userName.count && joinGroupData.userName.count == joinGroupData.userID.count){
-    //                    return joinGroupData;
-    //                }
-    //            } else if(tip.type == TIM_GROUP_TIPS_TYPE_INFO_CHANGE){
-    //                TUIJoinGroupMessageCellData *joinGroupData = [[TUIJoinGroupMessageCellData alloc] initWithDirection:MsgDirectionIncoming];
-    //                joinGroupData.content = [self getDisplayString:message];
-    //                [joinGroupData.userName addObject:opUser];
-    //                [joinGroupData.userID addObject:tip.opUser];
-    //                if(joinGroupData.userName.count && joinGroupData.userName.count == joinGroupData.userID.count){
-    //                    return joinGroupData;
-    //                }
-    //            }else if(tip.type == TIM_GROUP_TIPS_TYPE_QUIT_GRP){
-    //                TUIJoinGroupMessageCellData *joinGroupData = [[TUIJoinGroupMessageCellData alloc] initWithDirection:MsgDirectionIncoming];
-    //                joinGroupData.content = [self getDisplayString:message];
-    //                [joinGroupData.userName addObject:opUser];
-    //                [joinGroupData.userID addObject:tip.opUser];
-    //                if(joinGroupData.userName.count && joinGroupData.userName.count == joinGroupData.userID.count){
-    //                    return joinGroupData;
-    //                }
-    //            }
-    //            else{
-    //            //其他群Tips消息正常处理
-    //                TUISystemMessageCellData *sysdata = [[TUISystemMessageCellData alloc] initWithDirection:MsgDirectionIncoming];
-    //                sysdata.content = [self getDisplayString:message];
-    //                if (sysdata.content.length) {
-    //                    return sysdata;
-    //                }
-    //            }
-    //
-    //        }else {
-    //            //其他系统消息正常处理
-    //            TUISystemMessageCellData *sysdata = [[TUISystemMessageCellData alloc] initWithDirection:MsgDirectionIncoming];
-    //            sysdata.content = [self getDisplayString:message];
-    //            if (sysdata.content.length) {
-    //                return sysdata;
-    //            }
-    //        }
-    //        return nil;
-    //    }
+    func getFileCellData(message: TIMMessage, fromElem elem: TIMFileElem) -> TUIFileMessageCellData? {
+        
+        //        TIMFileElem *file = (TIMFileElem *)elem;
+        //        TUIFileMessageCellData *fileData = [[TUIFileMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
+        //        fileData.path = [file.path safePathString];
+        //        fileData.fileName = file.filename;
+        //        fileData.length = file.fileSize;
+        //        fileData.uuid = file.uuid;
+        //
+        //        return fileData;
+        return nil
+    }
+    
+    func getSystemCellData(message: TIMMessage, forElem elem: TIMElem) -> TUISystemMessageCellData? {
+        //        if ([elem isKindOfClass:[ class]]) {
+        //            TIMCustomElem *custom = (TIMCustomElem *)elem;
+        //
+        //            //系统信息中，对创建群、邀请、提出、退群、撤回、修改群信息（公告昵称等）的用户名添加了触摸响应。
+        //            //触摸响应通过 TUIJoinGroupMessageCell（继承自 TUISystemMessageCell）实现。
+        //            //触摸用户名可以跳转到对应的用户信息界面。
+        //
+        //            if (custom.data.bytes) {
+        //                if (strcmp(custom.data.bytes, "group_create") == 0) {
+        //                    TIMUserProfile *userProfile = [[TIMFriendshipManager sharedInstance] queryUserProfile:message.sender];
+        //                    TUIJoinGroupMessageCellData *joinGroupData = [[TUIJoinGroupMessageCellData alloc] initWithDirection:MsgDirectionIncoming];
+        //                    if (userProfile) {
+        //                        [joinGroupData.userName addObject:userProfile.showName];
+        //                        [joinGroupData.userID addObject:userProfile.identifier];
+        //                    }
+        //                    //此信息在刚刚创建群时显示，所以暂时不需要考虑群名片，因为此时群名片必定未设置。
+        //                    joinGroupData.content = [self getDisplayString:message];
+        //                    if(joinGroupData.userName.count && joinGroupData.userName.count == joinGroupData.userID.count){
+        //                        return joinGroupData;
+        //                    }
+        //                }
+        //            }
+        //        } else if ([elem isKindOfClass:[TIMGroupTipsElem class]]){
+        //            //对群信息小灰条特殊处理。
+        //            TIMGroupTipsElem *tip = (TIMGroupTipsElem *)elem;
+        //            NSString *opUser = [self getOpUserFromTip:tip];
+        //            NSMutableArray<NSString *> *userList = [self getUserListFromTip:tip];
+        //            if(tip.type == TIM_GROUP_TIPS_TYPE_INVITE){
+        //                //入群与踢出不同，在入群时，opUser 可能和 user 为同一人。
+        //                TUIJoinGroupMessageCellData *joinGroupData = [[TUIJoinGroupMessageCellData alloc] initWithDirection:MsgDirectionIncoming];
+        //                joinGroupData.content = [self getDisplayString:message];
+        //                [joinGroupData.userName addObject:opUser];
+        //                [joinGroupData.userID addObject:tip.opUser];
+        //                if(userList.count && ![tip.opUser isEqualToString:tip.userList[0]]){//此处加入判定，如果是自主入群，即 opUser和userlist相同 则不再重复添加 userList 信息。
+        //                    [joinGroupData.userName addObjectsFromArray:userList];//多人入群的昵称
+        //                    [joinGroupData.userID addObjectsFromArray:tip.userList];//多人入群的ID，用于跳转到用户界面。
+        //                }
+        //                if(joinGroupData.userName.count && joinGroupData.userName.count == joinGroupData.userID.count){
+        //                return joinGroupData;
+        //                }
+        //
+        //            } else if(tip.type == TIM_GROUP_TIPS_TYPE_KICKED){
+        //                TUIJoinGroupMessageCellData *joinGroupData = [[TUIJoinGroupMessageCellData alloc] initWithDirection:MsgDirectionIncoming];
+        //                joinGroupData.content = [self getDisplayString:message];
+        //                [joinGroupData.userName addObject:opUser];
+        //                [joinGroupData.userID addObject:tip.opUser];
+        //                if(userList.count){
+        //                    [joinGroupData.userName addObjectsFromArray:userList];//多人入群的昵称
+        //                    [joinGroupData.userID addObjectsFromArray:tip.userList];//多人入群的ID，用于跳转到用户界面。
+        //                }
+        //                if(joinGroupData.userName.count && joinGroupData.userName.count == joinGroupData.userID.count){
+        //                    return joinGroupData;
+        //                }
+        //            } else if(tip.type == TIM_GROUP_TIPS_TYPE_INFO_CHANGE){
+        //                TUIJoinGroupMessageCellData *joinGroupData = [[TUIJoinGroupMessageCellData alloc] initWithDirection:MsgDirectionIncoming];
+        //                joinGroupData.content = [self getDisplayString:message];
+        //                [joinGroupData.userName addObject:opUser];
+        //                [joinGroupData.userID addObject:tip.opUser];
+        //                if(joinGroupData.userName.count && joinGroupData.userName.count == joinGroupData.userID.count){
+        //                    return joinGroupData;
+        //                }
+        //            } else if(tip.type == TIM_GROUP_TIPS_TYPE_QUIT_GRP){
+        //                TUIJoinGroupMessageCellData *joinGroupData = [[TUIJoinGroupMessageCellData alloc] initWithDirection:MsgDirectionIncoming];
+        //                joinGroupData.content = [self getDisplayString:message];
+        //                [joinGroupData.userName addObject:opUser];
+        //                [joinGroupData.userID addObject:tip.opUser];
+        //                if(joinGroupData.userName.count && joinGroupData.userName.count == joinGroupData.userID.count){
+        //                    return joinGroupData;
+        //                }
+        //            }
+        //            else{
+        //            //其他群Tips消息正常处理
+        //                TUISystemMessageCellData *sysdata = [[TUISystemMessageCellData alloc] initWithDirection:MsgDirectionIncoming];
+        //                sysdata.content = [self getDisplayString:message];
+        //                if (sysdata.content.length) {
+        //                    return sysdata;
+        //                }
+        //            }
+        //
+        //        }else {
+        //            //其他系统消息正常处理
+        //            TUISystemMessageCellData *sysdata = [[TUISystemMessageCellData alloc] initWithDirection:MsgDirectionIncoming];
+        //            sysdata.content = [self getDisplayString:message];
+        //            if (sysdata.content.length) {
+        //                return sysdata;
+        //            }
+        //        }
+        return nil
+    }
+    
     func getRevokeCellData(message: TIMMessage) -> TUISystemMessageCellData {
         fatalError()    
         //        TUISystemMessageCellData *revoke = [[TUISystemMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];

@@ -23,20 +23,20 @@ class ConversationListView: NSTableCellView {
 
     let titleLabel = Label().then {
         $0.font = NSFont.systemFont(ofSize: 14)
-        $0.textColor = NSColor.white
+        $0.textColor = NSColor.black
         $0.maximumNumberOfLines = 1
     }
     let avatarImageView = NSImageView()
     
     let subTitleLabel = Label().then {
         $0.font = NSFont.systemFont(ofSize: 14)
-        $0.textColor = NSColor.white
+        $0.textColor = NSColor(red: 178.0 / 255.0, green: 178.0 / 255.0, blue: 178.0 / 255.0, alpha: 1)
         $0.maximumNumberOfLines = 1
     }
     
     let timeLabel = Label().then {
         $0.font = NSFont.systemFont(ofSize: 14)
-        $0.textColor = NSColor.white
+        $0.textColor = NSColor(red: 178.0 / 255.0, green: 178.0 / 255.0, blue: 178.0 / 255.0, alpha: 1)
     }
     
     // MARK: Initialize
@@ -44,7 +44,10 @@ class ConversationListView: NSTableCellView {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         wantsLayer = true
-        layer?.backgroundColor = NSColor.orange.cgColor
+        layer?.backgroundColor = NSColor(red: 251.0 / 255.0,
+                                         green: 251.0 / 255.0,
+                                         blue: 251.0 / 255.0,
+                                         alpha: 1).cgColor
         layer?.opacity = 1.0
         layer?.isOpaque = true
         setupSubviews()

@@ -29,20 +29,71 @@ class TIMMessage {
      */
     let elems: [TIMElem]
     
+    /**
+     *  1.16 获取会话
+     *
+     *  @return 该消息所对应会话
+     */
+    
+    let conversation: TIMConversation
+    /**
+     *  1.6 是否发送方
+     *
+     *  @return TRUE：表示是发送消息；FALSE：表示是接收消息
+     */
+    let isSelf: Bool
+    /**
+     *  1.7 获取消息的发送方
+     *
+     *  @return 发送方 identifier
+     */
+    let sender: String
+    
     let messageDB: MessageDB
-    init(messageDB: MessageDB) {
+    init(messageDB: MessageDB, conversation: TIMConversation) {
         self.messageDB = messageDB
+        self.conversation = conversation
+        self.isSelf = (messageDB.Des == 0)
+        
+        var sender: String = ""
+        if conversation.getType() == .C2C {
+            sender = conversation.receiver
+        }
+        
+        guard let message = messageDB.Message else {
+            // TODO: 怎么获取当前用户的id
+            self.sender = sender
+            elems = []
+            return
+        }
+        
+        let messageInfo: String
+        if !isSelf && conversation.getType() == .GROUP {
+            if let index = message.firstIndex(of: ":") {
+                sender = String(message[message.startIndex..<index])
+                let messageInfoStartIndex = message.index(after: index)
+                messageInfo = String(message[messageInfoStartIndex..<message.endIndex])
+            } else {
+                messageInfo = message
+                sender = ""
+            }
+        } else {
+            messageInfo = message
+        }
+        
+        self.sender = sender
         
         var elems = [TIMElem]()
         if let type = messageDB.type {
             switch type {
             case .text:
                 let textElem = TIMTextElem()
-                textElem.text = messageDB.Message
+                textElem.text = messageInfo
                 elems.append(textElem)
             case .image:
+                
                 let imageList = [TIMImage]()
-                fatalError()
+                
                 let imageElem = TIMImageElem()
                 imageElem.imageList = imageList
                 elems.append(imageElem)
@@ -62,24 +113,6 @@ class TIMMessage {
      */
     var status: IMMessageStatus {
         return .SEND_SUCC
-    }
-    
-    /**
-     *  1.6 是否发送方
-     *
-     *  @return TRUE：表示是发送消息；FALSE：表示是接收消息
-     */
-    func isSelf() -> Bool {
-        fatalError()
-    }
-    
-    /**
-     *  1.7 获取消息的发送方
-     *
-     *  @return 发送方 identifier
-     */
-    func sender() -> String {
-        fatalError()
     }
     
     /**
@@ -164,15 +197,6 @@ class TIMMessage {
     //- (Bool)respondsToLocator:(IMMessageLocator*)locator;
     
     
-    /**
-     *  1.16 获取会话
-     *
-     *  @return 该消息所对应会话
-     */
-    
-    func getConversation() -> TIMConversation {
-        fatalError()
-    }
     
     /**
      *  1.17 获取发送者昵称

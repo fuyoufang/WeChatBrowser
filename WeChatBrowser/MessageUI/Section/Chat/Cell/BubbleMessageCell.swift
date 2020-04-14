@@ -22,7 +22,9 @@ class BubbleMessageCell: UIMessageCell {
     /**
      *  气泡图像视图，即消息的气泡图标，在 UI 上作为气泡的背景板包裹消息信息内容。
      */
-    var bubbleView = NSImageView()
+    var bubbleView = NSImageView().then {
+        $0.wantsLayer = true
+    }
 
     // MARK: Initialize
     
@@ -31,7 +33,7 @@ class BubbleMessageCell: UIMessageCell {
         container.addSubview(bubbleView)
         bubbleView.autoresizingMask = [.width, .height]
 //        _bubbleView.mm_fill();
-        
+
     }
     
     required init?(coder: NSCoder) {
@@ -52,8 +54,14 @@ class BubbleMessageCell: UIMessageCell {
         }
         self.bubbleData = bubbleData
         self.bubbleView.image = bubbleData.bubble
-        // self.bubbleView.highlightedImage = bubbleData.highlightedBubble
+        //self.bubbleView.highlightedImage = bubbleData.highlightedBubble
 
+        // TODO: 因为无法将图片拉伸，所有用背景色暂时代替
+        if bubbleData.direction == .incoming {
+            self.bubbleView.layer?.backgroundColor = NSColor.white.cgColor
+        } else {
+            self.bubbleView.layer?.backgroundColor = NSColor(red: 152.0 / 255.0, green: 234.0 / 255.0, blue: 112.0 / 255.0, alpha: 1).cgColor
+        }
     }
     
     override func layout() {
@@ -61,7 +69,7 @@ class BubbleMessageCell: UIMessageCell {
         guard let bubbleData = self.bubbleData else {
             return
         }
-        bubbleView.x = bubbleData.bubbleTop
+        bubbleView.y = bubbleData.bubbleTop
     }
 
 }

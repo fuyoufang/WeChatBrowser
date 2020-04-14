@@ -6,7 +6,7 @@
 //  Copyright © 2020 fuyoufang. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 class TextMessageCell: BubbleMessageCell {
 
@@ -27,7 +27,6 @@ class TextMessageCell: BubbleMessageCell {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         bubbleView.addSubview(content)
-
     }
     
     required init?(coder: NSCoder) {

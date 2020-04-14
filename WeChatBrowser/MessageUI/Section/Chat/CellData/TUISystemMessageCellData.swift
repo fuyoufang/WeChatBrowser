@@ -25,12 +25,37 @@ class TUISystemMessageCellData: TUIMessageCellData {
  *  内容字体
  *  系统消息显示时的 UI 字体。
  */
-    var contentFont: NSFont?
+    let contentFont: NSFont
 
 /**
  *  内容颜色
  *  系统消息显示时的 UI 颜色。
  */
-    var contentColor: NSColor?
+    let contentColor: NSColor?
+
+    override init(direction: MsgDirection) {
+        contentFont = NSFont.systemFont(ofSize: 13)
+        contentColor = NSColor(red: 148.0 / 255.0,
+                               green: 149.0 / 255.0,
+                               blue: 149.0 / 255.0,
+                               alpha: 1.0)
+        super.init(direction: direction)
+        cellLayout = TUIMessageCellLayout.systemMessageLayout
+    }
+    
+    override func contentSize() -> CGSize {
+        guard let content = self.content else {
+            return super.contentSize()
+        }
+        
+        var size = content.textSize(inSize: CGSize(width: TSystemMessageCell_Text_Width_Max, height: CGFloat(MAXFLOAT)), font: self.contentFont)
+        size.height += 10
+        size.width += 16
+        return size
+    }
+    
+    override func height(ofWidth width: CGFloat) -> CGFloat {
+        return self.contentSize().height + 16
+    }
 
 }

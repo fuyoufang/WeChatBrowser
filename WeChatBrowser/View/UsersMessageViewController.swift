@@ -44,8 +44,8 @@ final class UsersMessageViewController: NSSplitViewController {
         
         let conversationListItem = NSSplitViewItem(sidebarWithViewController: conversationListController)
         conversationListItem.canCollapse = false
-        conversationListItem.minimumThickness = 200
-        conversationListItem.maximumThickness = 200
+        conversationListItem.minimumThickness = 260
+        conversationListItem.maximumThickness = 260
         
         let conversationMessageItem = NSSplitViewItem(viewController: conversationMessageController)
 

@@ -15,8 +15,8 @@ extension TIMMessage {
         }
     }
     
-    func cellData(fromElem elem: TIMElem) -> TUIMessageCellData? {
-        return expr.getCellData(message: self, fromElem: elem)
+    func cellData(friendshipManager: TIMFriendshipManager?, fromElem elem: TIMElem) -> TUIMessageCellData? {
+        return expr.getCellData(friendshipManager: friendshipManager, message: self, fromElem: elem)
     }
 
     func getDisplayString(friendshipManager: TIMFriendshipManager) -> String? {
