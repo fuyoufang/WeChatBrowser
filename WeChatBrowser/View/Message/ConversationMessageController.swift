@@ -138,7 +138,6 @@ class ConversationMessageController: TableViewController {
             guard let self = self else { return }
             self.isLoadingMsg = false
         }
-
     }
 
     func transUIMsg(fromIMMsg msgs: [TIMMessage]) -> [TUIMessageCellData] {

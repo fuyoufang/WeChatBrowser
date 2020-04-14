@@ -80,3 +80,21 @@ let TSystemMessageCell_Text_Width_Max: CGFloat = 200
 //#define TVoiceMessageCell_Back_Width_Max (Screen_Width * 0.4)
 //#define TVoiceMessageCell_Back_Width_Min 60
 //#define TVoiceMessageCell_Duration_Size CGSizeMake(33, 33)
+
+
+//path
+//#define TUIKit_DB_Path [NSHomeDirectory() stringByAppendingString:@"/Documents/com_tencent_imsdk_data/"]
+//#define TUIKit_Image_Path [NSHomeDirectory() stringByAppendingString:@"/Documents/com_tencent_imsdk_data/image/"]
+let TUIKit_Image_Path = ""
+//#define TUIKit_Video_Path [NSHomeDirectory() stringByAppendingString:@"/Documents/com_tencent_imsdk_data/video/"]
+//#define TUIKit_Voice_Path [NSHomeDirectory() stringByAppendingString:@"/Documents/com_tencent_imsdk_data/voice/"]
+//#define TUIKit_File_Path  [NSHomeDirectory() stringByAppendingString:@"/Documents/com_tencent_imsdk_data/file/"]
+//
+//
+//// rich
+//#define kDefaultRichCellHeight 50
+//#define kDefaultRichCellMargin 8
+//#define kRichCellDescColor  [UIColor blackColor]
+//#define kRichCellValueColor [UIColor grayColor]
+//#define kRichCellTextFont      [UIFont systemFontOfSize:14]
+

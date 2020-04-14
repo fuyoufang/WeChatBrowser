@@ -372,7 +372,7 @@ class TIMImage {
     /**
      *  图片类型
      */
-    var type: TIM_IMAGE_TYPE?
+    var type: TIM_IMAGE_TYPE = .ORIGIN
     /**
      *  图片大小
      */
