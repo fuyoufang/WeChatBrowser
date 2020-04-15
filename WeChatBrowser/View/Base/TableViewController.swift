@@ -39,7 +39,6 @@ class TableViewController: NSViewController {
         v.focusRingType = .none
         //        v.backgroundColor = .listBackground
         v.wantsLayer = true
-        v.backgroundColor = .red
         v.borderType = .noBorder
         v.documentView = self.tableView
         v.hasVerticalScroller = true

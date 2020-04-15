@@ -101,8 +101,10 @@ extension MessageURLTool: XMLParserDelegate {
     }
     
     // 遇到结束标签时调用
-    func parser(_ parser: XMLParser, didEndElement elementName: String,
-                namespaceURI: String?, qualifiedName qName: String?) {
+    func parser(_ parser: XMLParser,
+                didEndElement elementName: String,
+                namespaceURI: String?,
+                qualifiedName qName: String?) {
         
     }
 }

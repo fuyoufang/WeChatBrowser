@@ -6,7 +6,7 @@
 //  Copyright © 2020 fuyoufang. All rights reserved.
 //
 
-import Foundation
+import Cocoa
 
 let DefaultAvatarImage = TUIKit.sharedInstance().config.defaultAvatarImage
 
@@ -52,7 +52,7 @@ let TSystemMessageCell_Text_Width_Max: CGFloat = 200
 //#define TImageMessageCell_Image_Height_Max TImageMessageCell_Image_Width_Max
 //#define TImageMessageCell_Margin_2 8
 //#define TImageMessageCell_Margin_1 16
-//#define TImageMessageCell_Progress_Color  RGBA(0, 0, 0, 0.5)
+let TImageMessageCell_Progress_Color = NSColor(red: 0, green: 0, blue: 0, alpha: 0.5)
 //
 ////face cell
 //#define TFaceMessageCell_Image_Width_Max (Screen_Width * 0.25)

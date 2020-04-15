@@ -41,7 +41,7 @@ class TUIMessageCellData: TCommonCellData {
     /**
      *  信息发送者 ID
      */
-    var identifier: NSString?
+    var identifier: String?
     
     /**
      *  信息发送者头像 url

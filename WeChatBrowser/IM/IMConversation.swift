@@ -25,13 +25,22 @@ class TIMConversation {
     private let database: Database
     private let tableName: String
     let friendshipManager: TIMFriendshipManager
-    private var friend: TIMFriend
+    let filePath: String // 图片保存地址
+    let friend: TIMFriend
+    private(set) lazy var imageFilePath: String = {
+        return "\(filePath)/Img/\(self.friend.identifier?.MD5() ?? "")"
+    }()
     // MARK: 初始化
-    init(database: Database, tableName: String, friend: TIMFriend, friendshipManager: TIMFriendshipManager) {
+    init(database: Database,
+         tableName: String,
+         filePath: String,
+         friend: TIMFriend,
+         friendshipManager: TIMFriendshipManager) {
         self.database = database
         self.tableName = tableName
         self.friend = friend
         self.friendshipManager = friendshipManager
+        self.filePath = filePath
     }
     
     // MARK: 二，获取消息
@@ -91,7 +100,13 @@ class TIMConversation {
             if last != nil {
 //                fatalError()
             }
-            let msssage: [TIMMessage] = try database.getObjects(fromTable: tableName, limit: count).map { TIMMessage(messageDB: $0, conversation: self) }
+            let orderBy = [MessageDB.CodingKeys.MesLocalID.asOrder(by: .descending)]
+            let msssage: [TIMMessage] =
+                try database
+                    .getObjects(fromTable: tableName,
+                                orderBy: orderBy,
+                                limit: count).map { TIMMessage(messageDB: $0, conversation: self)
+            }
             succ(msssage)
             
         } catch let e {

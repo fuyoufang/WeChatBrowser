@@ -46,4 +46,13 @@ extension String {
         
         return String(format: hash as String)
     }
+    func safePathString() -> String {
+        return self
+//        NSString *homePrefix = [NSHomeDirectory() stringByDeletingLastPathComponent];
+//        if ([self hasPrefix:homePrefix]) {
+//            return [NSHomeDirectory() stringByAppendingString:[self substringFromIndex:[NSHomeDirectory() length]]];
+//        }
+//        return self;
+    }
+    
 }

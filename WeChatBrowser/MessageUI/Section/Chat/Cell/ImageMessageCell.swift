@@ -7,6 +7,9 @@
 //
 
 import Cocoa
+import RxCocoa
+import RxSwift
+
 /******************************************************************************
  *
  *  本文件 声明了 TUIImageMessageCell 类
@@ -26,30 +29,87 @@ import Cocoa
  */
 class ImageMessageCell: UIMessageCell {
 
+    private let disposeBag = DisposeBag()
 /**
  *  缩略图
  *  用于在消息单元内展示的小图，默认优先展示缩略图，省流量。
  */
-//@property (nonatomic, strong) UIImageView *thumb;
-//
-///**
-// *  下载进度标签
-// *  图像的下载进度标签，用于向用户展示当前图片的获取进度，优化交互体验。
-// */
-//@property (nonatomic, strong) UILabel *progress;
-//
-///**
-// *  图像消息单元消息源
-// *  imageData 中存放了图像路径，图像原图、大图、缩略图，以及三种图像对应的下载进度、上传进度等各种图像消息单元所需信息。
-// *  详细信息请参考 Section\Chat\CellData\TUIIamgeMessageCellData.h
-// */
-//@property TUIImageMessageCellData *imageData;
-//
-///**
-// *  填充数据
-// *  根据 data 设置图像消息的数据。
-// *
-// *  @param data 填充数据需要的数据源
-// */
-//- (void)fillWithData:(TUIImageMessageCellData *)data;
+    let thumb = NSImageView().then {
+        $0.wantsLayer = true
+        $0.layer?.cornerRadius = 5.0
+        $0.layer?.masksToBounds = true
+        $0.layer?.backgroundColor = .white
+    }
+    
+/**
+ *  下载进度标签
+ *  图像的下载进度标签，用于向用户展示当前图片的获取进度，优化交互体验。
+ */
+    let progress = Label().then {
+        $0.textColor = .white
+        $0.font = NSFont.systemFont(ofSize: 15)
+        $0.alignment = .center
+        $0.wantsLayer = true
+        $0.layer?.cornerRadius = 5.0
+        $0.isHidden = true
+        $0.backgroundColor = TImageMessageCell_Progress_Color
+        $0.layer?.masksToBounds = true
+    }
+
+/**
+ *  图像消息单元消息源
+ *  imageData 中存放了图像路径，图像原图、大图、缩略图，以及三种图像对应的下载进度、上传进度等各种图像消息单元所需信息。
+ *  详细信息请参考 Section\Chat\CellData\TUIIamgeMessageCellData.h
+ */
+    var imageData: TUIImageMessageCellData?
+    
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        container.addSubview(thumb)
+        thumb.bounds = container.frame
+        thumb.autoresizingMask = [.width, .height]
+        container.addSubview(progress)
+        progress.bounds = container.frame
+        progress.autoresizingMask = [.width, .height]
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    /**
+     *  填充数据
+     *  根据 data 设置图像消息的数据。
+     *
+     *  @param data 填充数据需要的数据源
+     */
+    override func fill(withData data: TCommonCellData) {
+        super.fill(withData: data)
+        guard let imageData = data as? TUIImageMessageCellData else {
+            return
+        }
+        self.imageData = imageData
+        thumb.image = nil
+        if imageData.thumbImage.value == nil {
+            imageData.downloadImage(type: .thumb)
+        }
+        
+        imageData.thumbImage
+            .subscribe(onNext: { [weak self] (image) in
+                guard image != nil else {
+                    return
+                }
+                self?.thumb.image = image
+            })
+            .disposed(by: disposeBag)
+
+        if imageData.direction == .incoming {
+            imageData.thumbProgress
+                .subscribe(onNext: { [weak self] (progress) in
+                    self?.progress.stringValue = "\(progress)%"
+                    self?.progress.isHidden = (progress >= 100 || progress == 0)
+                })
+                .disposed(by: disposeBag)
+        } 
+    }
 }

@@ -7,6 +7,8 @@
 //
 
 import Cocoa
+import RxSwift
+import RxCocoa
 
 /**
  *  图像类别枚举
@@ -50,6 +52,7 @@ class TUIImageItem {
      *  TImage_Type_Origin：原图
      */
     var type: TUIImageType = .thumb
+    var path: String?
 }
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -69,25 +72,17 @@ class TUIImageMessageCellData: TUIMessageCellData {
     /**
      *  图像缩略图
      */
-    var thumbImage = NSImage()
-    
+    var thumbImage = BehaviorRelay<NSImage?>(value: nil)
+
     /**
      *  图像原图
      */
-    let originImage = NSImage()
-    
+    var originImage = BehaviorRelay<NSImage?>(value: nil)
+
     /**
      *  图像大图
      */
-    let largeImage = NSImage()
-    
-    /**
-     *  图像路径
-     *
-     *  @note path 由程序默认维护，您可以通过引入 THeader.h 并引用 TUIKit_Image_Path 来直接获取Demo存储路径
-     *  @note 如果您有进一步的个性化需求，也可使用其他路径
-     */
-    var path: NSString = ""
+    var largeImage = BehaviorRelay<NSImage?>(value: nil)
     
     /**
      *  图像长度（大小）
@@ -105,25 +100,19 @@ class TUIImageMessageCellData: TUIMessageCellData {
     /**
      *  缩略图加载进度
      */
-    var thumbProgress: UInt = 0
-    
+    var thumbProgress = BehaviorRelay<UInt>(value: 0)
+
     /**
      *  原图加载进度
      */
-    var originProgress: UInt = 0
-    
+    var originProgress = BehaviorRelay<UInt>(value: 0)
+
     /**
      *  大图加载进度
      */
-    var largeProgress: UInt = 0
-    
-    /**
-     *  上传（发送）进度
-     */
-    var uploadProgress: UInt = 100
-    
+    var largeProgress = BehaviorRelay<UInt>(value: 0)
+
     private var isDownloading: Bool = false
-    
     
     /**
      *  获取图像路径
@@ -134,35 +123,21 @@ class TUIImageMessageCellData: TUIMessageCellData {
      *
      *  @return 返回路径的字符串形式。
      */
-    
-    func getImagePath(type: TUIImageType, isExist: inout Bool) -> String? {
-        var path: String?
+    func getImagePath(type: TUIImageType) -> String? {
+        
+        //查看本地是否存在
+        guard let tImageItem = getTImageItem(type: type),
+            let path = tImageItem.path else {
+            return nil
+        }
         var isDir: ObjCBool = false
-        isExist = false
-        if self.direction == .outgoing {
-            //上传方本地原图是否有效
-            path = "\(TUIKit_Image_Path)\(self.path.lastPathComponent)"
-            if FileManager.default.fileExists(atPath: path!, isDirectory: &isDir) {
-                if isDir.boolValue {
-                    isExist = true
-                }
+        if FileManager.default.fileExists(atPath: path, isDirectory: &isDir) {
+            if !isDir.boolValue {
+                return path
             }
         }
         
-        if !isExist {
-            //查看本地是否存在
-            let tImageItem: TUIImageItem? = getTImageItem(type: type)
-            if let uuid = tImageItem?.uuid {
-                path = "\(TUIKit_Image_Path)\(uuid)"
-                if FileManager.default.fileExists(atPath: path!, isDirectory: &isDir) {
-                    if isDir.boolValue {
-                        isExist = true
-                    }
-                }
-            }
-        }
-        
-        return path
+        return nil
     }
     
     
@@ -178,95 +153,25 @@ class TUIImageMessageCellData: TUIMessageCellData {
      *  5、下载成功后，会生成图像 path 并存储下来。
      */
     func downloadImage(type: TUIImageType) {
-        fatalError()
-        //        BOOL isExist = NO;
-        //        NSString *path = [self getImagePath:type isExist:&isExist];
-        //        if(isExist)
-        //        {
-        //            [self decodeImage:type];
-        //            return;
-        //        }
-        //
-        //        if(self.isDownloading) {
-        //            return;
-        //        }
-        //        self.isDownloading = YES;
-        //
-        //        //网络下载
-        //        TIMImage *imImage = [self getIMImage:type];
-        //
-        //        @weakify(self)
-        //        [imImage getImage:path progress:^(NSInteger curSize, NSInteger totalSize) {
-        //            @strongify(self)
-        //            [self updateProgress:curSize * 100 / totalSize withType:type];
-        //        } succ:^{
-        //            @strongify(self)
-        //            self.isDownloading = NO;
-        //            [self updateProgress:100 withType:type];
-        //            [self decodeImage:type];
-        //        } fail:^(int code, NSString *msg) {
-        //            @strongify(self)
-        //            self.isDownloading = NO;
-        //        }];
-    }
-    
-    func updateProgress(progress: UInt, type: TUIImageType) {
-        fatalError()
-        //        dispatch_async(dispatch_get_main_queue(), ^{
-        //            if (type == TImage_Type_Thumb)
-        //                self.thumbProgress = progress;
-        //            if (type == TImage_Type_Large)
-        //                self.largeProgress = progress;
-        //            if (type == TImage_Type_Origin)
-        //                self.originProgress = progress;
-        //        });
-    }
-    /**
-     *  解码图像，并将图像赋值到对应类型的变量（缩略图、大图或者原图）中。
-     *
-     *  @param type 图像类型
-     */
-    func decodeImage(type: TUIImageType) {
-        fatalError()
-        //        BOOL isExist = NO;
-        //        NSString *path = [self getImagePath:type isExist:&isExist];
-        //        if(!isExist)
-        //        {
-        //            return;
-        //        }
-        //
-        //        void (^finishBlock)(UIImage *) = ^(UIImage *image){
-        //            if (type == TImage_Type_Thumb) {
-        //                self.thumbImage = image;
-        //                self.thumbProgress = 100;
-        //                self.uploadProgress = 100;
-        //            }
-        //            if (type == TImage_Type_Large) {
-        //                self.largeImage = image;
-        //                self.largeProgress = 100;
-        //            }
-        //            if (type == TImage_Type_Origin) {
-        //                self.originImage = image;
-        //                self.originProgress = 100;
-        //            }
-        //        };
-        //
-        //        NSString *cacheKey = [path substringFromIndex:TUIKit_Image_Path.length];
-        //
-        //
-        //        UIImage *cacheImage = [[SDImageCache sharedImageCache] imageFromCacheForKey:cacheKey];
-        //        if (cacheImage) {
-        //            finishBlock(cacheImage);
-        //        } else {
-        //            [THelper asyncDecodeImage:path complete:^(NSString *path, UIImage *image) {
-        //                dispatch_async(dispatch_get_main_queue(), ^{
-        //                    if(![path containsString:@".gif"]) { // gif 图片过大, 不在内存进行缓存
-        //                        [[SDImageCache sharedImageCache] storeImageToMemory:image forKey:cacheKey];
-        //                    }
-        //                    finishBlock(image);
-        //                });
-        //            }];
-        //        }
+        guard let path = getImagePath(type: type) else {
+            return
+        }
+        guard let data = FileManager.default.contents(atPath: path) else {
+            return
+        }
+        
+        guard let image = NSImage(data: data) else {
+            return
+        }
+        
+        switch type {
+        case .large:
+            largeImage.accept(image)
+        case .origin:
+            originImage.accept(image)
+        case .thumb:
+            thumbImage.accept(image)
+        }
     }
     
     func getTImageItem(type: TUIImageType) -> TUIImageItem? {
@@ -302,7 +207,18 @@ class TUIImageMessageCellData: TUIMessageCellData {
     }
     
     override func contentSize() -> CGSize {
-        fatalError()
+        return CGSize(width: 100, height: 100)
+//        var size = CGSize.zero
+//        var isDir: ObjCBool = false
+//        if let path = self.path {
+//            if FileManager.default.fileExists(atPath: path, isDirectory: &isDir) {
+//                if !(isDir.boolValue) {
+////                    size = NSImage
+//                }
+//            }
+//        }
+        
+        
         //        CGSize size = CGSizeZero;
         //        BOOL isDir = NO;
         //        if(![self.path isEqualToString:@""] &&

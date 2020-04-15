@@ -23,7 +23,7 @@ class UserDataManager {
         }
     }
     
-    private var filePath: String // 数据路径
+    let filePath: String // 数据路径
     private let contactDBFilePath: String
     
     private var _friendDBs: [FriendDB]?

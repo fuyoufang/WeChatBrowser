@@ -91,20 +91,16 @@ class TIMMessage {
                 textElem.text = messageInfo
                 elems.append(textElem)
             case .image:
-                
-                let imageList = [TIMImage]()
-                
-                let imageElem = TIMImageElem()
-                imageElem.imageList = imageList
-                elems.append(imageElem)
+                let imageElem = MessageImageTool.getImageElem(imageFilePath: conversation.imageFilePath, message: messageInfo, index: messageDB.MesLocalID ?? 0)
+                if imageElem != nil {
+                    elems.append(imageElem!)
+                }
             default:
                 break
             }
         }
         self.elems = elems
     }
-    
-    
     
     /**
      *  1.5 消息状态
@@ -146,17 +142,14 @@ class TIMMessage {
      *
      *  @return 时间戳
      */
-    private var _timestamp: Date?
-    var timestamp: Date {
-        if _timestamp == nil {
-            if let createTime = messageDB.CreateTime {
-                _timestamp = Date(timeIntervalSince1970: TimeInterval(createTime))
-            } else {
-                _timestamp = Date()
-            }
+    private (set) lazy var timestamp: Date = {
+        if let createTime = messageDB.CreateTime {
+            return Date(timeIntervalSince1970: TimeInterval(createTime))
+        } else {
+            return Date()
         }
-        return _timestamp!
-    }
+    }()
+    
     
     /**
      *  1.11 自己是否已读
@@ -217,7 +210,9 @@ class TIMMessage {
      *  @param  profileCallBack 发送者资料回调
      *
      */
-    //- (void)getSenderProfile:(ProfileCallBack)profileCallBack;
+    func getSenderProfile(profileCallBack: ProfileCallBack) {
+        
+    }
     
     /**
      *  1.19 获取发送者群内资料
@@ -388,7 +383,10 @@ class TIMImage {
     /**
      *  下载URL
      */
-    var url: String?
+//    var url: String?
+    
+    /// 图片保存路径
+    var path: String?
     
     /**
      *  获取图片
@@ -399,9 +397,9 @@ class TIMImage {
      *  @param succ 成功回调，返回图片数据
      *  @param fail 失败回调，返回错误码和错误描述
      */
-    func getImage(path: String, succ: TIMSucc, fail: TIMFail) {
-        fatalError()
-    }
+//    func getImage(path: String, succ: TIMSucc, fail: TIMFail) {
+//        fatalError()
+//    }
     
     /**
      *  获取图片（有进度回调）
@@ -413,9 +411,9 @@ class TIMImage {
      *  @param succ 成功回调，返回图片数据
      *  @param fail 失败回调，返回错误码和错误描述
      */
-    func getImage(path: String, progress: TIMProgress, succ: TIMSucc, fail: TIMFail) {
-        fatalError()
-    }
+//    func getImage(path: String, progress: TIMProgress, succ: TIMSucc, fail: TIMFail) {
+//        fatalError()
+//    }
 }
 
 /**

@@ -58,7 +58,7 @@ class TIMUserManager {
             let md5 = tableName.replacingOccurrences(of: ChatTableNamePrefix, with: "")
             for friend in friends {
                 if md5 == friend.identifier?.MD5() {
-                    conversations.append(TIMConversation(database: userData.chatMessageDatabase, tableName: tableName, friend: friend, friendshipManager: friendshipManager))
+                    conversations.append(TIMConversation(database: userData.chatMessageDatabase, tableName: tableName, filePath: userData.filePath, friend: friend, friendshipManager: friendshipManager))
                     break
                 }
             }

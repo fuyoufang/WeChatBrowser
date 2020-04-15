@@ -186,18 +186,6 @@ class TUIMessageDataProviderService: TUIMessageDataProviderServiceProtocol {
     }
     
     
-    //    + (id)shareInstance
-    //    {
-    //        static TUIMessageDataProviderService *shareInstance;
-    //        static dispatch_once_t onceToken;
-    //        dispatch_once(&onceToken, ^{
-    //            shareInstance = [[self alloc] init];
-    //        });
-    //        return shareInstance;
-    //    }
-    //
-    
-    
     func getFaceCellData(messag: TIMMessage, forElem elem: TIMFaceElem) -> TUIFaceMessageCellData? {
         //
         //        TIMFaceElem *face = (TIMFaceElem *)elem;
@@ -228,28 +216,27 @@ class TUIMessageDataProviderService: TUIMessageDataProviderServiceProtocol {
     //
     func getImageCellData(message: TIMMessage, formElem elem: TIMImageElem) -> TUIImageMessageCellData? {
         
-        //        TIMImageElem *image = (TIMImageElem *)elem;
-        //        TUIImageMessageCellData *imageData = [[TUIImageMessageCellData alloc] initWithDirection:(message.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming)];
-        //        imageData.path = [image.path safePathString];
-        //        imageData.items = [NSMutableArray array];
-        //        for (TIMImage *item in image.imageList) {
-        //            TUIImageItem *itemData = [[TUIImageItem alloc] init];
-        //            itemData.uuid = item.uuid;
-        //            itemData.size = CGSizeMake(item.width, item.height);
-        //            itemData.url = item.url;
-        //            if(item.type == TIM_IMAGE_TYPE_THUMB){
-        //                itemData.type = TImage_Type_Thumb;
-        //            }
-        //            else if(item.type == TIM_IMAGE_TYPE_LARGE){
-        //                itemData.type = TImage_Type_Large;
-        //            }
-        //            else if(item.type == TIM_IMAGE_TYPE_ORIGIN){
-        //                itemData.type = TImage_Type_Origin;
-        //            }
-        //            [imageData.items addObject:itemData];
-        //        }
-        //        return imageData;
-        return nil
+        let imageData = TUIImageMessageCellData(direction: message.isSelf ? .outgoing : .incoming)
+        if let imageList = elem.imageList {
+            var items = [TUIImageItem]()
+            for item in imageList {
+                let itemData = TUIImageItem()
+                itemData.uuid = item.uuid
+                itemData.size = CGSize(width: item.width ?? 0, height: item.height ?? 0)
+                // itemData.url = item.url
+                itemData.path = item.path
+                if item.type == .THUMB {
+                    itemData.type = .thumb
+                } else if item.type == .LARGE {
+                    itemData.type = .large
+                } else if item.type == .ORIGIN {
+                    itemData.type = .origin
+                }
+                items.append(itemData)
+            }
+            imageData.items = items
+        }
+        return imageData
     }
     //
     func getVoiceCellData(message: TIMMessage, formElem elem: TIMSoundElem) -> TUIVoiceMessageCellData? {

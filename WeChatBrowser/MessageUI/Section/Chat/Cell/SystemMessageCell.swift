@@ -41,7 +41,6 @@ class SystemMessageCell: BubbleMessageCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     /**
      *  填充数据
      *  根据 data 设置系统消息的数据
@@ -65,10 +64,11 @@ class SystemMessageCell: BubbleMessageCell {
     override func layout() {
         super.layout()
         if let superview = self.container.superview {
-            self.container.center = superview.center
+            let center = CGPoint(x: superview.width / 2, y: superview.height / 2)
+            self.container.center = center
         }
         if let superview = self.messageLabel.superview {
-            self.messageLabel.bounds = superview.frame
+            self.messageLabel.frame = CGRect(x: 0, y: 0, width: superview.width, height: superview.height)
         }
     }
 }

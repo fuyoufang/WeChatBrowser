@@ -36,6 +36,7 @@ class UIMessageCell: CommonCell {
      *  包裹了 MesageCell 的各类视图，作为 MessageCell 的“底”，方便进行视图管理与布局。
      */
     let container = NSView().then {
+        $0.wantsLayer = true
         $0.layer?.backgroundColor = .clear
     }
     private let readReceiptLabel = Label()

@@ -24,6 +24,50 @@ class MessageImageTool: NSObject {
         return MessageImageTool(message: message).getImage()
     }
     
+    class func getImageElem(imageFilePath: String, message: String, index: Int) -> TIMImageElem? {
+        guard let image = MessageImageTool(message: message).getImage() else {
+            return nil
+        }
+        let imageList = MessageImageTool.getImageList(imageFilePath: imageFilePath, messageImage: image, index: index)
+        let imageElem = TIMImageElem()
+        imageElem.imageList = imageList
+        return imageElem
+    }
+    
+    class func imageList(imageFilePath: String, message: String, index: Int) -> [TIMImage] {
+        guard let image = MessageImageTool(message: message).getImage() else {
+            return []
+        }
+        return MessageImageTool.getImageList(imageFilePath: imageFilePath, messageImage: image, index: index)
+    }
+    
+    class func getImageList(imageFilePath: String, messageImage: MessageImage, index: Int) -> [TIMImage] {
+        var images = [TIMImage]()
+        let thumbImage = TIMImage()
+        thumbImage.uuid = messageImage.cdnthumbaeskey
+        thumbImage.type = .THUMB
+        if messageImage.cdnthumblength != nil {
+            thumbImage.size = Int(messageImage.cdnthumblength!)
+        }
+        if messageImage.cdnthumbwidth != nil {
+            thumbImage.width = Int(messageImage.cdnthumbwidth!)
+        }
+        if messageImage.cdnthumbheight != nil {
+            thumbImage.height = Int(messageImage.cdnthumbheight!)
+        }
+        thumbImage.path = "\(imageFilePath)/\(index).pic_thum"
+//        thumbImage.url = messageImage.cdnthumburl
+        images.append(thumbImage)
+        
+        if messageImage.cdnbigimgurl != nil {
+            let largeImage = TIMImage()
+//            largeImage.url = messageImage.cdnbigimgurl
+            largeImage.path = "\(imageFilePath)/\(index).pic"
+            images.append(largeImage)
+        }
+        return images
+    }
+    
     func getImage() -> MessageImage? {
         guard let imageData = message.data(using: .utf8) else {
             return nil
@@ -68,26 +112,14 @@ extension MessageImageTool: XMLParserDelegate {
     
     // 遇到字符串时调用
     func parser(_ parser: XMLParser, foundCharacters string: String) {
-        //        let data = string.trimmingCharacters(in: .whitespacesAndNewlines)
-        //接下来每遇到一个字符，将该字符追加到相应的 property 中
-        //        switch currentElement{
-        //        case "name":
-        //            user.name = user.name ?? "" + data
-        //        case "mobile":
-        //            user.mobile = user.mobile ?? "" +  data
-        //        case "home":
-        //            user.home = user.home ?? "" + data
-        //        default:
-        //            break
-        //        }
+        
     }
     
     // 遇到结束标签时调用
-    func parser(_ parser: XMLParser, didEndElement elementName: String,
-                namespaceURI: String?, qualifiedName qName: String?) {
-        //标签User结束时将该用户对象，存入数组容器。
-        //        if elementName == "User"{
-        //            users.append(user)
-        //        }
+    func parser(_ parser: XMLParser,
+                didEndElement elementName: String,
+                namespaceURI: String?,
+                qualifiedName qName: String?) {
+        
     }
 }

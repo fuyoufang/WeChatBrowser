@@ -175,9 +175,7 @@ class ConversationMessageController: TableViewController {
             
             if msg.status == .LOCAL_REVOKED {
                 let revoke = msg.revokeCellData()
-                if revoke != nil {
-                    uiMsgs.append(revoke)
-                }
+                uiMsgs.append(revoke)
                 continue
             }
             
@@ -189,50 +187,49 @@ class ConversationMessageController: TableViewController {
                     continue
                 }
                 
-//                if([[msg getConversation] getType] == TIM_GROUP && !msg.isSelf
-//                   && ![data isKindOfClass:[TUISystemMessageCellData class]]){
-//                    data.showName = YES;
-//                }
-                
-//                    data.direction = msg.isSelf ? MsgDirectionOutgoing : MsgDirectionIncoming;
-//                    data.identifier = [msg sender];
-//                    //由于拉取名称的过程，可能收到异步/网络等因素的影响，所以在此处现将 userID 设为 userName，防止出现昵称为空的情况。
-//                    data.name = data.identifier;
-//
-//                    void (^block)(TIMUserProfile *) = ^(TIMUserProfile *profile)  {
-//                        if([[msg getConversation] getType] == TIM_GROUP){
-//                            //如果是群组消息，优先拉取群名片
-//                            data.name = [msg getSenderGroupMemberProfile].nameCard;
-//                        }
-//                        //更新 profile
-//                        NSString *showName = [profile showName];
-//                        if (showName.length > 0)
-//                            data.name = showName;
-//                        if (profile.faceURL)
-//                            data.avatarUrl = [NSURL URLWithString:[profile faceURL]];
-//                    };
-//
-//                    [msg getSenderProfile:block];
-//                    //此处改为 群名片>昵称>ID。当高优先级为空时在使用低优先级变量。
-//                    //TIMUserProfile *userProfile = [[TIMFriendshipManager sharedInstance] queryUserProfile:msg.sender];
-//                    //data.name = nameCard.length ? nameCard : userProfile.showName;
-//                    switch (msg.status) {
-//                        case TIM_MSG_STATUS_SEND_SUCC:
-//                            data.status = Msg_Status_Succ;
-//                            break;
-//                        case TIM_MSG_STATUS_SEND_FAIL:
-//                            data.status = Msg_Status_Fail;
-//                            break;
-//                        case TIM_MSG_STATUS_SENDING:
-//                            data.status = Msg_Status_Sending_2;
-//                            break;
-//                        default:
-//                            break;
-//                    }
+                if msg.conversation.getType() == .GROUP
+                    && !msg.isSelf
+                    && !(data is TUISystemMessageCellData) {
+                    data.showName = true
+                }
+
+                data.direction = msg.isSelf ? .outgoing : .incoming
+                data.identifier = msg.sender
+                //由于拉取名称的过程，可能收到异步/网络等因素的影响，
+                //所以在此处现将 userID 设为 userName，防止出现昵称为空的情况。
+                data.name = data.identifier
+                msg.getSenderProfile { (profile) in
+                    if msg.conversation.getType() == .GROUP {
+                        //如果是群组消息，优先拉取群名片
+                        data.name = msg.getSenderGroupMemberProfile()?.nameCard
+                    }
+                    
+                     //更新 profile
+                    if let friendshipManager = self.friendshipManager {
+                        if let showName = profile.showName(friendshipManager: friendshipManager), showName.count > 0 {
+                            data.name = showName
+                        }
+                    }
+                    if let faceURL = profile.faceURL {
+                        data.avatarUrl = URL(string: faceURL)
+                    }
+                }
+                    
+                //此处改为 群名片>昵称>ID。当高优先级为空时在使用低优先级变量。
+// let userProfile: TIMUserProfile? = self.friendshipManager?.queryUserProfile(msg.sender)
+// data.name = nameCard.length ? nameCard : userProfile.showName;
+                    switch (msg.status) {
+                    case .SEND_SUCC:
+                        data.status = .succ
+                    case .SEND_FAIL:
+                        data.status = .fail
+                    case .SENDING:
+                        data.status = .sending_2;
+                        default:
+                            break;
+                    }
                 uiMsgs.append(data)
                 data.innerMessage = msg
-                    
-//                }
             }
         }
         return uiMsgs
@@ -264,69 +261,6 @@ class ConversationMessageController: TableViewController {
 //        }
     }
 
-//    - (void)changeMsg:(TUIMessageCellData *)msg status:(TMsgStatus)status
-//    {
-//        msg.status = status;
-//        NSInteger index = [_uiMsgs indexOfObject:msg];
-//        TUIMessageCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-//        [cell fillWithData:msg];
-//    }
-
-    func transIMMsgFromUIMsg(data: TUIMessageCellData) -> TIMMessage {
-        fatalError()
-//        TIMMessage *msg = [[TIMMessage alloc] init];
-//        if([data isKindOfClass:[TUITextMessageCellData class]]){
-//            TIMTextElem *imText = [[TIMTextElem alloc] init];
-//            TUITextMessageCellData *text = (TUITextMessageCellData *)data;
-//            imText.text = text.content;
-//            [msg addElem:imText];
-//        }
-//        else if([data isKindOfClass:[TUIFaceMessageCellData class]]){
-//            TIMFaceElem *imImage = [[TIMFaceElem alloc] init];
-//            TUIFaceMessageCellData *image = (TUIFaceMessageCellData *)data;
-//            imImage.index = (int)image.groupIndex;
-//            imImage.data = [image.faceName dataUsingEncoding:NSUTF8StringEncoding];
-//            [msg addElem:imImage];
-//        }
-//        else if([data isKindOfClass:[TUIImageMessageCellData class]]){
-//            TIMImageElem *imImage = [[TIMImageElem alloc] init];
-//            TUIImageMessageCellData *uiImage = (TUIImageMessageCellData *)data;
-//            imImage.path = uiImage.path;
-//            [msg addElem:imImage];
-//        }
-//        else if([data isKindOfClass:[TUIVideoMessageCellData class]]){
-//            TIMVideoElem *imVideo = [[TIMVideoElem alloc] init];
-//            TUIVideoMessageCellData *uiVideo = (TUIVideoMessageCellData *)data;
-//            imVideo.videoPath = uiVideo.videoPath;
-//            imVideo.snapshotPath = uiVideo.snapshotPath;
-//            imVideo.snapshot = [[TIMSnapshot alloc] init];
-//            imVideo.snapshot.width = uiVideo.snapshotItem.size.width;
-//            imVideo.snapshot.height = uiVideo.snapshotItem.size.height;
-//            imVideo.video = [[TIMVideo alloc] init];
-//            imVideo.video.duration = (int)uiVideo.videoItem.duration;
-//            imVideo.video.type = uiVideo.videoItem.type;
-//            [msg addElem:imVideo];
-//        }
-//        else if([data isKindOfClass:[TUIVoiceMessageCellData class]]){
-//            TIMSoundElem *imSound = [[TIMSoundElem alloc] init];
-//            TUIVoiceMessageCellData *uiSound = (TUIVoiceMessageCellData *)data;
-//            imSound.path = uiSound.path;
-//            imSound.second = uiSound.duration;
-//            imSound.dataSize = uiSound.length;
-//            [msg addElem:imSound];
-//        }
-//        else if([data isKindOfClass:[TUIFileMessageCellData class]]){
-//            TIMFileElem *imFile = [[TIMFileElem alloc] init];
-//            TUIFileMessageCellData *uiFile = (TUIFileMessageCellData *)data;
-//            imFile.path = uiFile.path;
-//            imFile.fileSize = uiFile.length;
-//            imFile.filename = uiFile.fileName;
-//            [msg addElem:imFile];
-//        }
-//        data.innerMessage = msg;
-//        return msg;
-
-    }
     let MAX_MESSAGE_SEP_DLAY: TimeInterval = (5 * 60)
     
     func transSystemMsg(fromDate date: Date) -> TUISystemMessageCellData? {
@@ -430,8 +364,7 @@ class ConversationMessageController: TableViewController {
 
 //    -(BOOL)canPerformAction:(SEL)action withSender:(id)sender
 //    {
-//        if (action == @selector(onDelete:) ||
-//            action == @selector(onRevoke:) ||
+//        if (action == @selector(onRevoke:) ||
 //            action == @selector(onReSend:) ||
 //            action == @selector(onCopyMsg:)){
 //            return YES;
@@ -444,23 +377,6 @@ class ConversationMessageController: TableViewController {
 //        return YES;
 //    }
 
-//    - (void)onDelete:(id)sender
-//    {
-//        TIMMessage *imMsg = _menuUIMsg.innerMessage;
-//        if(imMsg == nil){
-//            return;
-//        }
-//        if([imMsg remove]){
-//            [self.tableView beginUpdates];
-//            NSInteger index = [_uiMsgs indexOfObject:_menuUIMsg];
-//            [_uiMsgs removeObjectAtIndex:index];
-//            [_heightCache removeObjectAtIndex:index];
-//            [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-//
-//            [self.tableView endUpdates];
-//        }
-//    }
-//
 //    - (void)menuDidHide:(NSNotification*)notification
 //    {
 //        if(_delegate && [_delegate respondsToSelector:@selector(didHideMenuInMessageController:)]){
@@ -480,36 +396,7 @@ class ConversationMessageController: TableViewController {
 //
 //    - (void)onRevoke:(id)sender
 //    {
-//        __weak typeof(self) ws = self;
-//        [self.conv revokeMessage:_menuUIMsg.innerMessage succ:^{
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                [ws revokeMsg:ws.menuUIMsg];
-//            });
-//        } fail:^(int code, NSString *msg) {
-//            NSLog(@"");
-//        }];
 //    }
-//
-//    - (void)revokeMsg:(TUIMessageCellData *)msg
-//    {
-//        TIMMessage *imMsg = msg.innerMessage;
-//        if(imMsg == nil){
-//            return;
-//        }
-//        NSInteger index = [_uiMsgs indexOfObject:msg];
-//        if (index == NSNotFound)
-//            return;
-//        [_uiMsgs removeObject:msg];
-//
-//        [self.tableView beginUpdates];
-//        [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-//        TUISystemMessageCellData *data = [imMsg revokeCellData];
-//        [_uiMsgs insertObject:data atIndex:index];
-//        [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-//        [self.tableView endUpdates];
-//        [self scrollToBottom:YES];
-//    }
-//
 //    - (void)playVoiceMessage:(TUIVoiceMessageCell *)cell
 //    {
 //        for (NSInteger index = 0; index < _uiMsgs.count; ++index) {
@@ -800,27 +687,23 @@ extension ConversationMessageController: NSTableViewDataSource, NSTableViewDeleg
             if reuseId == Constants.TTextMessageCell_ReuseId {
                 cell = TextMessageCell(frame: .zero)
             } else if reuseId == Constants.TFaceMessageCell_ReuseId {
-//                TUIFaceMessageCell
+                cell = FaceMessageCell(frame: .zero)
             } else if reuseId == Constants.TImageMessageCell_ReuseId {
-//                TUIImageMessageCell
+                cell = ImageMessageCell(frame: .zero)
             } else if reuseId == Constants.TVideoMessageCell_ReuseId {
-//                TUIVideoMessageCell
+                cell = VideoMessageCell(frame: .zero)
             } else if reuseId == Constants.TVoiceMessageCell_ReuseId {
-                // TUIVoiceMessageCell
-                
+                cell = VoiceMessageCell(frame: .zero)
             } else if reuseId == Constants.TFileMessageCell_ReuseId {
-//                TUIFileMessageCell
+                cell = FileMessageCell(frame: .zero)
             } else if reuseId == Constants.TJoinGroupMessageCell_ReuseId {
-//                TUIJoinGroupMessageCell
+                cell = JoinGroupMessageCell(frame: .zero)
             } else if reuseId == Constants.TSystemMessageCell_ReuseId {
-//                TUISystemMessageCell
+                cell = SystemMessageCell(frame: .zero)
             }
              cell?.identifier = NSUserInterfaceItemIdentifier(rawValue: reuseId)
         }
            
-        
-        
-        
         //        cell = [tableView dequeueReusableCellWithIdentifier:data.reuseId forIndexPath:indexPath];
         //        //对于入群小灰条，需要进一步设置其委托。
         //        if([cell isKindOfClass:[TUIJoinGroupMessageCell class]]){
