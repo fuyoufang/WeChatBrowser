@@ -1331,15 +1331,7 @@ class TIMFriend: TIMCodingModel {
 //        return nil
 //    }
     
-    var _isGroup: Bool? = nil
-    var isGroup: Bool {
-        get {
-            if _isGroup == nil {
-                _isGroup = (identifier ?? "").hasSuffix("@chatroom")
-            }
-            return _isGroup!
-        }
-    }
+    private(set) lazy var isGroup: Bool = (identifier ?? "").hasSuffix("@chatroom")
     
     var headImage: HeadImage?
     
@@ -1366,7 +1358,8 @@ class TIMFriend: TIMCodingModel {
         
         let start = "\u{12}" // 开始
         let end = "\u{0}" // 结束
-        let separator = String("\u{08}\u{03}\u{1A}")
+        let separator1 = String("\u{08}\u{03}\u{1A}")
+        let separator2 = String("\u{08}\u{02}\u{1A}")
         
         guard let startRange = result.range(of: start) else {
             return nil
@@ -1380,16 +1373,30 @@ class TIMFriend: TIMCodingModel {
         }
         let info = String(result[startRange.upperBound..<endIndex])
         
+        var separatorRange = info.range(of: separator1)
+        if separatorRange == nil {
+            separatorRange = info.range(of: separator2)
+        }
         
-        if let separatorRange = info.range(of: separator) {
-            
-            let url1 = String(info[info.index(after: info.startIndex)..<separatorRange.lowerBound])
-            
-            let url2 = String(info[info.index(after: separatorRange.upperBound)..<info.endIndex])
-            return getHeadImage(texts: [url1, url2])
+        if separatorRange != nil {
+            let url1 = String(info[info.index(after: info.startIndex)..<separatorRange!.lowerBound])
+            let url2 = String(info[info.index(after: separatorRange!.upperBound)..<info.endIndex])
+            let urls = [url1, url2].map {
+                return removeHeadURLCharacters(url: $0)
+            }
+            return getHeadImage(texts: urls)
         } else {
             return getHeadImage(texts: [String(info)])
         }
+    }
+    
+    private class func removeHeadURLCharacters(url: String) -> String {
+        var result = url
+        
+        _ = ["\u{91}", "\u{94}", "\u{96}", "\""].map {
+            result = result.replacingOccurrences(of: $0, with: "")
+        }
+        return result
     }
     
     private class func getHeadImage(texts: [String]) -> HeadImage {
@@ -1405,19 +1412,19 @@ class TIMFriend: TIMCodingModel {
             
             switch first {
             case "T":
-                let imageURL = String(text[start...]).replacingOccurrences(of: "\"", with: "")
+                let imageURL = String(text[start...])
                 headImage.t = imageURL
             case "R":
-                let imageURL = String(text[start...]).replacingOccurrences(of: "\"", with: "")
+                let imageURL = String(text[start...])
                 headImage.r = imageURL
             case "S":
-                let imageURL = String(text[start...]).replacingOccurrences(of: "\"", with: "")
+                let imageURL = String(text[start...])
                 headImage.s = imageURL
             case "U":
-                let imageURL = String(text[start...]).replacingOccurrences(of: "\"", with: "")
+                let imageURL = String(text[start...])
                 headImage.u = imageURL
             case "\u{01}":
-                let imageURL = String(text[start...]).replacingOccurrences(of: "\"", with: "")
+                let imageURL = String(text[start...])
                 if headImage.t == nil {
                     headImage.t = imageURL
                 } else {
@@ -1425,9 +1432,9 @@ class TIMFriend: TIMCodingModel {
                 }
             default:
                 if headImage.t == nil {
-                    headImage.t = text.replacingOccurrences(of: "\"", with: "")
+                    headImage.t = text
                 } else {
-                    headImage.r = text.replacingOccurrences(of: "\"", with: "")
+                    headImage.r = text
                 }
             }
         }

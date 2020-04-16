@@ -11,25 +11,9 @@ import WCDBSwift
 
 class TIMFriendshipManager {
     
-    var _friends: [TIMFriend]?
-    var friends: [TIMFriend] {
-        get {
-            if _friends == nil {
-                _friends = getFriendList()
-            }
-            return _friends!
-        }
-    }
+    private(set) lazy var friends: [TIMFriend] = getFriendList()
     
-    var _friendDBs: [FriendDB]?
-    public var friendDBs: [FriendDB] {
-        get {
-            if _friendDBs == nil {
-                _friendDBs = getFriendDBs()
-            }
-            return _friendDBs!
-        }
-    }
+    private(set) lazy var friendDBs: [FriendDB] = getFriendDBs()
     
     /**
      *  获取好友管理器实例
