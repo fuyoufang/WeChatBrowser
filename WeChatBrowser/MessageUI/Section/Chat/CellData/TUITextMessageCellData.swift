@@ -115,10 +115,7 @@ class TUITextMessageCellData: TUIBubbleMessageCellData {
         
         let rect: CGRect = attributedString.boundingRect(with: CGSize(width: TTextMessageCell_Text_Width_Max, height: CGFloat.greatestFiniteMagnitude), options: [.usesLineFragmentOrigin, .usesFontLeading])
         
-        
-        // TODO: 应该要取正的
-        // let size: CGSize = CGSize(width: CGFLOAT_CEIL(rect.size.width), height: CGFLOAT_CEIL(rect.size.height))
-        var size: CGSize = CGSize(width: rect.size.width, height: rect.size.height)
+        var size: CGSize = CGSize(width: ceil(rect.size.width), height: ceil(rect.size.height))
         
         self.textSize = size;
         self.textOrigin = CGPoint(x: cellLayout.bubbleInsets.left, y: cellLayout.bubbleInsets.top + self.bubbleTop)

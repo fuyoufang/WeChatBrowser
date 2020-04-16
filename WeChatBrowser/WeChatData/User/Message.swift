@@ -159,22 +159,10 @@ struct WebviewShared  {
 class MessageURL {
     var title: String?
     var des: String?
-    var type: String?
+    var action: String?
+    var type: Int?
     var showtype: String?
-    var soundtype: String?
-    var contentattr: String?
     var url: String?
-    var cdnthumburl: String?
-    var cdnthumbmd5: String?
-    var cdnthumblength: String?
-    var cdnthumbwidth: String?
-    var cdnthumbheight: String?
-    var cdnthumbaeskey: String?
-    var aeskey: String?
-    var encryver: String?
-    var filekey: String?
     var thumburl: String?
-    var directshare: String?
-    var webviewshared: WebviewShared?
 }
 

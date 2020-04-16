@@ -95,6 +95,11 @@ class TIMMessage {
                 if imageElem != nil {
                     elems.append(imageElem!)
                 }
+            case .webURL:
+                let urlElem = MessageURLTool.urlElem(message: messageInfo)
+                if urlElem != nil {
+                    elems.append(urlElem!)
+                }
             default:
                 break
             }
@@ -1100,3 +1105,15 @@ class TIMProfileSystemElem: TIMElem {
 }
 
 
+// MARK:  十七，分享URL 的信息
+/////////////////////////////////////////////////////////////////////////////////
+//
+//                      十七，分享URL 的信息 Elem
+//
+/////////////////////////////////////////////////////////////////////////////////
+class TIMURLElem: TIMElem {
+    var title: String?
+    var des: String?
+    var thumburl: String?
+    var type: Int?
+}

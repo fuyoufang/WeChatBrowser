@@ -38,7 +38,7 @@ class TUIMessageDataProviderService: TUIMessageDataProviderServiceProtocol {
                     str = text.text
                     break
                 } else if let _ = elem as? TIMCustomElem {
-                    //                    str = custom.ext
+                    // str = custom.ext
                     str = "自定义消息"
                     break
                 } else if let _ = elem as? TIMImageElem {
@@ -56,6 +56,8 @@ class TUIMessageDataProviderService: TUIMessageDataProviderServiceProtocol {
                 } else if let _ = elem as? TIMFileElem {
                     str = "[文件]"
                     break
+                }  else if let url = elem as? TIMURLElem {
+                    str = "[连接]\(url.title ?? "")"
                 } else if let tips = elem as? TIMGroupTipsElem {
                     let opUser = getOpUser(fromTip: tips)
                     let userList = getUserList(fromTip: tips)
@@ -165,6 +167,8 @@ class TUIMessageDataProviderService: TUIMessageDataProviderServiceProtocol {
             data = getVideoCellData(message: message, formElem: video)
         } else if let file = elem as? TIMFileElem {
             data = getFileCellData(message: message, fromElem: file)
+        } else if let url = elem as? TIMURLElem {
+            data = getUrlCellData(message: message, fromElem: url)
         } else {
             data = getSystemCellData(message: message, forElem: elem)
         }
@@ -271,7 +275,16 @@ class TUIMessageDataProviderService: TUIMessageDataProviderServiceProtocol {
         //        return videoData;
         return nil
     }
-    //
+    
+    func getUrlCellData(message: TIMMessage, fromElem elem: TIMURLElem) -> TUIURLMessageCellData? {
+        
+        let urlData = TUIURLMessageCellData(direction: message.isSelf ? .outgoing : .incoming)
+        urlData.title = elem.title
+        urlData.detail = elem.des
+        urlData.image = elem.thumburl
+        return urlData
+    }
+    
     func getFileCellData(message: TIMMessage, fromElem elem: TIMFileElem) -> TUIFileMessageCellData? {
         
         //        TIMFileElem *file = (TIMFileElem *)elem;

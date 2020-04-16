@@ -25,6 +25,18 @@ class MessageURLTool: NSObject {
         return MessageURLTool(message: message).getMessageURL()
     }
     
+    class func urlElem(message: String) -> TIMURLElem? {
+        guard let messageURL = MessageURLTool(message: message).getMessageURL() else {
+            return nil
+        }
+        let elem = TIMURLElem()
+        elem.type = messageURL.type
+        elem.title = messageURL.title
+        elem.des = messageURL.des
+        elem.thumburl = messageURL.thumburl
+        return elem
+    }
+    
     func getMessageURL() -> MessageURL? {
         guard let data = message.data(using: .utf8) else {
             return nil
@@ -64,37 +76,15 @@ extension MessageURLTool: XMLParserDelegate {
         case "des":
             messageURL.des = data
         case "type":
-            messageURL.type = data
+            messageURL.type = Int(data)
         case "showtype":
             messageURL.showtype = data
-        case "soundtype":
-            messageURL.soundtype = data
-        case "contentattr":
-            messageURL.contentattr = data
+        case "action":
+            messageURL.action = data
+        case "thumburl":
+            messageURL.thumburl = "\(messageURL.thumburl ?? "")\(data)"
         case "url":
             messageURL.url = data
-        case "cdnthumburl":
-            messageURL.cdnthumburl = data
-        case "cdnthumbmd5":
-            messageURL.cdnthumbmd5 = data
-        case "cdnthumblength":
-            messageURL.cdnthumblength = data
-        case "cdnthumbwidth":
-            messageURL.cdnthumbwidth = data
-        case "cdnthumbheight":
-            messageURL.cdnthumbheight = data
-        case "cdnthumbaeskey":
-            messageURL.cdnthumbaeskey = data
-        case "aeskey":
-            messageURL.aeskey = data
-        case "encryver":
-            messageURL.encryver = data
-        case "filekey":
-            messageURL.filekey = data
-        case "thumburl":
-            messageURL.thumburl = data
-        case "directshare":
-            messageURL.directshare = data
         default:
             break
         }

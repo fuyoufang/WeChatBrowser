@@ -81,6 +81,13 @@ let TImageMessageCell_Progress_Color = NSColor(red: 0, green: 0, blue: 0, alpha:
 //#define TVoiceMessageCell_Back_Width_Min 60
 //#define TVoiceMessageCell_Duration_Size CGSizeMake(33, 33)
 
+// url
+
+let TURLMessageCell_Title_Width_Max: CGFloat = TTextMessageCell_Text_Width_Max
+let TURLMessageCell_Title_Height_Max: CGFloat = 60
+let TURLMessageCell_Detail_Width_Max: CGFloat = 130
+let TURLMessageCell_Detail_Height_Max: CGFloat = 60
+let TURLMessageCell_Image_Size = CGSize(width: 60, height: 60)
 
 //path
 //#define TUIKit_DB_Path [NSHomeDirectory() stringByAppendingString:@"/Documents/com_tencent_imsdk_data/"]

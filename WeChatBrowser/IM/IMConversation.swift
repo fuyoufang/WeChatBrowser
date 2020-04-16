@@ -66,15 +66,30 @@ class TIMConversation {
      *  @return 0：本次操作成功；1：本次操作失败
      */
     
-    func getChatMessageDBs(count: Int, last: TIMMessage?) -> [MessageDB]? {
+    func getChatMessageDBs(count: Int, last: TIMMessage?) -> [TIMMessage]? {
         do {
-            let chatMessages: [MessageDB] = try database.getObjects(fromTable: tableName, limit: count)
+            if last != nil {
+                // fatalError()
+            }
+            let orderBy = [MessageDB.CodingKeys.MesLocalID.asOrder(by: .descending)]
+            let messsages: [TIMMessage] =
+                try database
+                    .getObjects(fromTable: tableName,
+                                orderBy: orderBy,
+                                limit: count).map { TIMMessage(messageDB: $0, conversation: self)
+            }
             
-            return chatMessages
+            return messsages
         } catch let e {
             debugPrint(e)
         }
         return nil
+    }
+    
+    func getLocalMessage(count: Int, last: TIMMessage?, succ: TIMGetMsgSucc, fail:TIMFail) -> Bool {
+        let messages = getChatMessageDBs(count: count, last: last) ?? []
+        succ(messages)
+        return true
     }
     
     /**
@@ -88,32 +103,12 @@ class TIMConversation {
     
     func getLastMsg() -> TIMMessage? {
         if lastMsg == nil {
-            if let messageDB = getChatMessageDBs(count: 1, last: nil)?.first {
-                lastMsg = TIMMessage(messageDB: messageDB, conversation: self)
-            }
+            lastMsg = getChatMessageDBs(count: 1, last: nil)?.first
         }
         return lastMsg
     }
     
-    func getLocalMessage(count: Int, last: TIMMessage?, succ: TIMGetMsgSucc, fail:TIMFail) -> Bool {
-        do {
-            if last != nil {
-//                fatalError()
-            }
-            let orderBy = [MessageDB.CodingKeys.MesLocalID.asOrder(by: .descending)]
-            let msssage: [TIMMessage] =
-                try database
-                    .getObjects(fromTable: tableName,
-                                orderBy: orderBy,
-                                limit: count).map { TIMMessage(messageDB: $0, conversation: self)
-            }
-            succ(msssage)
-            
-        } catch let e {
-            debugPrint(e)
-        }
-        return true
-    }
+    
     
     // MARK: 五，获取会话信息
     /////////////////////////////////////////////////////////////////////////////////

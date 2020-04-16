@@ -591,6 +591,7 @@ extension ConversationMessageController: NSTableViewDataSource, NSTableViewDeleg
         static let TVoiceMessageCell_ReuseId = "TVoiceMessaageCell"
         static let TFileMessageCell_ReuseId = "TFileMessageCell"
         static let TTextMessageCell_ReuseId = "TTextMessageCell"
+        static let TURLMessageCell_ReuseId = "TURLMessageCell"
 
     }
     
@@ -671,6 +672,8 @@ extension ConversationMessageController: NSTableViewDataSource, NSTableViewDeleg
                 data.reuseId = Constants.TJoinGroupMessageCell_ReuseId
             } else if data is TUISystemMessageCellData {
                 data.reuseId = Constants.TSystemMessageCell_ReuseId
+            } else if data is TUIURLMessageCellData {
+                data.reuseId = Constants.TURLMessageCell_ReuseId
             } else {
                 return nil
             }
@@ -700,6 +703,8 @@ extension ConversationMessageController: NSTableViewDataSource, NSTableViewDeleg
                 cell = JoinGroupMessageCell(frame: .zero)
             } else if reuseId == Constants.TSystemMessageCell_ReuseId {
                 cell = SystemMessageCell(frame: .zero)
+            } else if reuseId == Constants.TURLMessageCell_ReuseId {
+                cell = TUIURLMessageCell(frame: .zero)
             }
              cell?.identifier = NSUserInterfaceItemIdentifier(rawValue: reuseId)
         }
