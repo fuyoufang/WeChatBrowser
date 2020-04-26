@@ -73,6 +73,12 @@
 		C555FFB6243F21EE00997166 /* TUITextMessageCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFB5243F21EE00997166 /* TUITextMessageCellData.swift */; };
 		C555FFB9243F26FB00997166 /* TUIKitConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFB8243F26FB00997166 /* TUIKitConfig.swift */; };
 		C555FFBB243F280B00997166 /* TUIFaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C555FFBA243F280B00997166 /* TUIFaceView.swift */; };
+		C558A54A24556617006FD06E /* SilkDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = C558A53D24556617006FD06E /* SilkDecoder.m */; };
+		C558A54B24556617006FD06E /* PCMEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = C558A54124556617006FD06E /* PCMEncoder.m */; };
+		C558A54C24556617006FD06E /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C558A54224556617006FD06E /* libmp3lame.a */; };
+		C558A54D24556617006FD06E /* libSKP_SILK_SDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C558A54324556617006FD06E /* libSKP_SILK_SDK.a */; };
+		C558A54E24556617006FD06E /* WXAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C558A54424556617006FD06E /* WXAudioManager.m */; };
+		C558A54F24556617006FD06E /* NSError+LZSCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = C558A54824556617006FD06E /* NSError+LZSCategory.m */; };
 		C5CAE63A244410CA00EA0ACB /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAE639244410CA00EA0ACB /* Date.swift */; };
 		C5CAE63C2444565C00EA0ACB /* TUISystemMessageCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAE63B2444565C00EA0ACB /* TUISystemMessageCellData.swift */; };
 		C5CAE63E24445D7200EA0ACB /* TUIFaceMessageCellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CAE63D24445D7200EA0ACB /* TUIFaceMessageCellData.swift */; };
@@ -214,6 +220,22 @@
 		C555FFB5243F21EE00997166 /* TUITextMessageCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUITextMessageCellData.swift; sourceTree = "<group>"; };
 		C555FFB8243F26FB00997166 /* TUIKitConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIKitConfig.swift; sourceTree = "<group>"; };
 		C555FFBA243F280B00997166 /* TUIFaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIFaceView.swift; sourceTree = "<group>"; };
+		C558A53B24556617006FD06E /* WXAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXAudioManager.h; sourceTree = "<group>"; };
+		C558A53C24556617006FD06E /* PCMEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCMEncoder.h; sourceTree = "<group>"; };
+		C558A53D24556617006FD06E /* SilkDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SilkDecoder.m; sourceTree = "<group>"; };
+		C558A53E24556617006FD06E /* NSError+LZSCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+LZSCategory.h"; sourceTree = "<group>"; };
+		C558A53F24556617006FD06E /* SKP_Silk_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKP_Silk_control.h; sourceTree = "<group>"; };
+		C558A54024556617006FD06E /* SKP_Silk_typedef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKP_Silk_typedef.h; sourceTree = "<group>"; };
+		C558A54124556617006FD06E /* PCMEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCMEncoder.m; sourceTree = "<group>"; };
+		C558A54224556617006FD06E /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
+		C558A54324556617006FD06E /* libSKP_SILK_SDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSKP_SILK_SDK.a; sourceTree = "<group>"; };
+		C558A54424556617006FD06E /* WXAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXAudioManager.m; sourceTree = "<group>"; };
+		C558A54524556617006FD06E /* SKP_Silk_SDK_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKP_Silk_SDK_API.h; sourceTree = "<group>"; };
+		C558A54624556617006FD06E /* SilkDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SilkDecoder.h; sourceTree = "<group>"; };
+		C558A54724556617006FD06E /* SKP_Silk_errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKP_Silk_errors.h; sourceTree = "<group>"; };
+		C558A54824556617006FD06E /* NSError+LZSCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+LZSCategory.m"; sourceTree = "<group>"; };
+		C558A54924556617006FD06E /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
+		C558A55724556876006FD06E /* WeChatBrovser_bridge_header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeChatBrovser_bridge_header.h; sourceTree = "<group>"; };
 		C5CAE639244410CA00EA0ACB /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		C5CAE63B2444565C00EA0ACB /* TUISystemMessageCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUISystemMessageCellData.swift; sourceTree = "<group>"; };
 		C5CAE63D24445D7200EA0ACB /* TUIFaceMessageCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TUIFaceMessageCellData.swift; sourceTree = "<group>"; };
@@ -259,7 +281,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C558A54D24556617006FD06E /* libSKP_SILK_SDK.a in Frameworks */,
 				95CED6F93F8FF7FBA698741E /* Pods_WeChatBrowser.framework in Frameworks */,
+				C558A54C24556617006FD06E /* libmp3lame.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -557,9 +581,40 @@
 			path = Global;
 			sourceTree = "<group>";
 		};
+		C558A53A24556617006FD06E /* AudioTool */ = {
+			isa = PBXGroup;
+			children = (
+				C558A55324556705006FD06E /* SKP_Silk */,
+				C558A53B24556617006FD06E /* WXAudioManager.h */,
+				C558A54424556617006FD06E /* WXAudioManager.m */,
+				C558A53C24556617006FD06E /* PCMEncoder.h */,
+				C558A54124556617006FD06E /* PCMEncoder.m */,
+				C558A54624556617006FD06E /* SilkDecoder.h */,
+				C558A53D24556617006FD06E /* SilkDecoder.m */,
+				C558A53E24556617006FD06E /* NSError+LZSCategory.h */,
+				C558A54824556617006FD06E /* NSError+LZSCategory.m */,
+			);
+			path = AudioTool;
+			sourceTree = "<group>";
+		};
+		C558A55324556705006FD06E /* SKP_Silk */ = {
+			isa = PBXGroup;
+			children = (
+				C558A53F24556617006FD06E /* SKP_Silk_control.h */,
+				C558A54024556617006FD06E /* SKP_Silk_typedef.h */,
+				C558A54524556617006FD06E /* SKP_Silk_SDK_API.h */,
+				C558A54724556617006FD06E /* SKP_Silk_errors.h */,
+				C558A54224556617006FD06E /* libmp3lame.a */,
+				C558A54924556617006FD06E /* lame.h */,
+				C558A54324556617006FD06E /* libSKP_SILK_SDK.a */,
+			);
+			path = SKP_Silk;
+			sourceTree = "<group>";
+		};
 		C5FB3D95243DBB1E00C09814 = {
 			isa = PBXGroup;
 			children = (
+				C558A55724556876006FD06E /* WeChatBrovser_bridge_header.h */,
 				C5FB3DA0243DBB1E00C09814 /* WeChatBrowser */,
 				C5FB3DB3243DBB2200C09814 /* WeChatBrowserTests */,
 				C5FB3DBE243DBB2200C09814 /* WeChatBrowserUITests */,
@@ -582,6 +637,7 @@
 		C5FB3DA0243DBB1E00C09814 /* WeChatBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				C558A53A24556617006FD06E /* AudioTool */,
 				C5505B28244070B100B8F0AC /* WeChatData */,
 				C5505AFA24401CBD00B8F0AC /* Extension */,
 				C555FF8E243EAE3800997166 /* IM */,
@@ -987,6 +1043,7 @@
 				C555FF9C243EBAA200997166 /* IMFriendshipDefine.swift in Sources */,
 				C5CAE63A244410CA00EA0ACB /* Date.swift in Sources */,
 				C5505B43244074D300B8F0AC /* TableViewController.swift in Sources */,
+				C558A54B24556617006FD06E /* PCMEncoder.m in Sources */,
 				C5535A4F2441C0F9005B4A23 /* TUIMessageDataProviderService.swift in Sources */,
 				C5CAE64A244464A800EA0ACB /* TUIConversationDataProviderServiceProtocol.swift in Sources */,
 				C555FFAB243F0B4300997166 /* TUIMessageCellLayout.swift in Sources */,
@@ -996,6 +1053,7 @@
 				C5505B412440745400B8F0AC /* UserListViewController.swift in Sources */,
 				C5FB3DA4243DBB1E00C09814 /* ViewController.swift in Sources */,
 				C5505AF924401BD500B8F0AC /* ConversationListController.swift in Sources */,
+				C558A54E24556617006FD06E /* WXAudioManager.m in Sources */,
 				C5CAE64624445DBB00EA0ACB /* TUIFileMessageCellData.swift in Sources */,
 				C555FFA2243EBAFA00997166 /* IMManager.swift in Sources */,
 				C5505B3C2440715000B8F0AC /* MessageURLTool.swift in Sources */,
@@ -1013,6 +1071,7 @@
 				C5505B1B2440539700B8F0AC /* TIMUserProfile+DataProvider.swift in Sources */,
 				C5FB4075243DD51000C09814 /* FileMessageCell.swift in Sources */,
 				C555FF90243EAE5000997166 /* IMMessage.swift in Sources */,
+				C558A54A24556617006FD06E /* SilkDecoder.m in Sources */,
 				C5FB3DD6243DC21000C09814 /* UserListTableCellView.swift in Sources */,
 				C5505B3B2440715000B8F0AC /* MessageTool.swift in Sources */,
 				C5505B2B2440714600B8F0AC /* StringExtension.swift in Sources */,
@@ -1028,6 +1087,7 @@
 				C5505B202440558800B8F0AC /* TCServiceProtocol.swift in Sources */,
 				C5FB4091243DD72C00C09814 /* UIMessageCell.swift in Sources */,
 				C5FB3DD2243DBE6A00C09814 /* UsersMessageState.swift in Sources */,
+				C558A54F24556617006FD06E /* NSError+LZSCategory.m in Sources */,
 				C5520B8C2445A196002233B0 /* NSImage+Extension.swift in Sources */,
 				C5FB3DA2243DBB1E00C09814 /* AppDelegate.swift in Sources */,
 				C5FB407D243DD53100C09814 /* JoinGroupMessageCell.swift in Sources */,
@@ -1223,11 +1283,14 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/WeChatBrowser/TUIKit/Classes/Third/voiceConvert/opencore-amrwb",
+					"$(PROJECT_DIR)/WeChatBrowser/AudioTool",
+					"$(PROJECT_DIR)/WeChatBrowser/AudioTool/SKP_Silk",
 					"$(PROJECT_DIR)/WeChatBrowser/TUIKit/Classes/Third/voiceConvert/opencore-amrnb",
+					"$(PROJECT_DIR)/WeChatBrowser/TUIKit/Classes/Third/voiceConvert/opencore-amrwb",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fuyoufang.WeChatBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = WeChatBrovser_bridge_header.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1253,9 +1316,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/WeChatBrowser/TUIKit/Classes/Third/voiceConvert/opencore-amrwb",
 					"$(PROJECT_DIR)/WeChatBrowser/TUIKit/Classes/Third/voiceConvert/opencore-amrnb",
+					"$(PROJECT_DIR)/WeChatBrowser/AudioTool",
+					"$(PROJECT_DIR)/WeChatBrowser/AudioTool/SKP_Silk",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fuyoufang.WeChatBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = WeChatBrovser_bridge_header.h;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

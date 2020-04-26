@@ -46,6 +46,12 @@ class UserListViewController: TableViewController {
         if let cell = tableView.accessibilityVisibleCells()?.first as? NSCell {
             tableView.selectCell(cell)
         }
+        
+        if (userManagers?.count ?? 0) > 0 {
+            let indexes = IndexSet(integer: 0)
+            tableView.selectRowIndexes(indexes, byExtendingSelection: false)
+        }
+        
     }
     
     override func viewDidAppear() {

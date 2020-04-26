@@ -53,6 +53,7 @@ class ConversationListController: TableViewController {
             let conversation = self.userManager?.getConversation(type: data.convType, conversationId: convId)
             return conversation
         }.bind(to: selectedConversation).disposed(by: disposeBag)
+        
     }
     
     override func viewDidAppear() {
@@ -64,6 +65,10 @@ class ConversationListController: TableViewController {
     func refreshViewModel() {
         defer {
             tableView.reloadData()
+            if (self.viewModel?.dataList.count ?? 0) > 0 {
+                let indexes = IndexSet(integer: 0)
+                tableView.selectRowIndexes(indexes, byExtendingSelection: false)
+            }
         }
         guard let userManager = userManager else {
             self.viewModel = nil
@@ -77,6 +82,8 @@ class ConversationListController: TableViewController {
             }
             return model
         }()
+        
+        
     }
     
 }

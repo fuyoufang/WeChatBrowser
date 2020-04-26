@@ -12,6 +12,11 @@ class Label: NSTextField {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         self.isEnabled = false
+        //self.translatesAutoresizingMaskIntoConstraints = false
+        //l.textColor = .primaryText
+        self.cell?.backgroundStyle = .dark
+//        self.lineBreakMode = .byTruncatingTail
+        self.lineBreakMode = .byCharWrapping
     }
     
     required init?(coder: NSCoder) {

@@ -47,11 +47,15 @@ class TIMManager {
      *  @return 管理器实例
      */
     private let weChatManager: MessageManager
+    private(set) lazy var lastLoginUser: IMUser? = getLastLoginUser()
+    private let localInfoPath: String
     
     private let filePath: String
     init(filePath: String) {
         self.filePath = filePath
         self.weChatManager = MessageManager(appPath: filePath)
+        self.localInfoPath = "\(filePath)/Documents/LocalInfo.lst"
+        
     }
     
     // MARK: 登录用户
@@ -71,8 +75,49 @@ class TIMManager {
             guard let userData = weChatManager.getData(userNameMD5: fileName) else {
                 return nil
             }
-            return TIMUserManager(userData: userData, user: IMUser(userNameMD5: fileName))
+            let user: IMUser
+            if lastLoginUser != nil, lastLoginUser?.userNameMD5 == fileName {
+                user = lastLoginUser!
+            } else {
+                user = IMUser(userNameMD5: fileName)
+            }
+            
+            return TIMUserManager(userData: userData, user: user)
         }
+    }
+    
+    private func getLastLoginUser() -> IMUser? {
+        guard FileManager.default.fileExists(atPath: localInfoPath) else {
+            return nil
+        }
+        guard let dic = NSDictionary(contentsOfFile: localInfoPath),
+            let objects = dic["$objects"] as? [Any] else {
+            return nil
+        }
+        
+        debugPrint(dic)
+        
+        var user = IMUser()
+        for (index, item) in objects.enumerated() {
+            if index == 2, let userName = item as? String {
+                user.userName = userName
+            } else if index == 3, let phoneName = item as? String {
+                user.phoneName = phoneName
+            } else if index == 4, let nickName = item as? String {
+                user.nickName = nickName
+            } else if index == 5, let v = item as? Dictionary<String, Any> {
+                debugPrint(v)
+            } else if index == 7, let v = item as? Data {
+                debugPrint(v)
+            } else if index == 9, let v = item as? Data {
+                debugPrint(v)
+            } else if index == 10, let phone = item as? String {
+                user.phone = phone
+            }
+        }
+        user.userNameMD5 = user.userName?.MD5()
+        return user
+
     }
     
 }
